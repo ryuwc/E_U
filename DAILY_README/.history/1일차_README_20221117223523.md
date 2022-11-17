@@ -1,0 +1,285 @@
+# 1일차 
+
+# 류원창
+
+개발목록: 유저 기능 관련
+날짜: 2022년 11월 16일
+
+# 장고 유저 커스텀하기
+
+---
+
+### DRF 공식문서에서 제안하는 인증 절차 방법
+
+![https://k.kakaocdn.net/dn/buINjI/btrReFwBbNg/QyKoncN4xX0meJQYdhQJSK/img.jpg](https://k.kakaocdn.net/dn/buINjI/btrReFwBbNg/QyKoncN4xX0meJQYdhQJSK/img.jpg)
+
+### 인증 방식 중 TokenAuthentication
+
+- 매우 간단하게 구현 할 수 있음
+- 기본적인 보안 기능 제공
+- 다양한 외부 패키지가 있음
+- (중요) settings.py에서 DEFAULT_AUTHENTICATION_CLASSES를 정의
+  - TokenAuthentication 인증 방식을 사용할 것임을 명시
+
+![https://k.kakaocdn.net/dn/Zpo8n/btrRdyxXZUn/tHfjd3EI1O6y3QbhxJuWpK/img.jpg](https://k.kakaocdn.net/dn/Zpo8n/btrRdyxXZUn/tHfjd3EI1O6y3QbhxJuWpK/img.jpg)
+
+### TokenAuthentication 사용 방법
+
+- User는 발급 받은 Token을 headers에 담아 요청과 함께 전송
+  - 단, 반드시 아래의 형식을 지켜야함
+
+![https://k.kakaocdn.net/dn/blVFgU/btrRcO86TDa/vv8q4xwKUM9as4EH1OOLL1/img.jpg](https://k.kakaocdn.net/dn/blVFgU/btrRcO86TDa/vv8q4xwKUM9as4EH1OOLL1/img.jpg)
+
+### dj-rest-auth
+
+- 회원가입, 인증(소셜미디어 인증 포함), 비밀번호 재설정, 사용자 세부 정보 검색, 회원 정보 수정 등을 위한 REST API end point 제공
+- [https://dj-rest-auth.readthedocs.io/en/latest/](https://dj-rest-auth.readthedocs.io/en/latest/)
+
+![https://k.kakaocdn.net/dn/5P58i/btrRd6uqOWK/jFE9GvnGCBY67Q8733dKU0/img.jpg](https://k.kakaocdn.net/dn/5P58i/btrRd6uqOWK/jFE9GvnGCBY67Q8733dKU0/img.jpg)
+
+- 시작하기 전, auth.User를 accounts.User로 변경 필요
+- auth.User로 설정된 DB 제거
+
+![https://k.kakaocdn.net/dn/bXm3Xv/btrRcEFHxS3/bemufilTkirdras477lD0k/img.jpg](https://k.kakaocdn.net/dn/bXm3Xv/btrRcEFHxS3/bemufilTkirdras477lD0k/img.jpg)
+
+![https://k.kakaocdn.net/dn/cdku9n/btrRb8tuRg8/z3kTXEkI14500VOeLEJ21k/img.jpg](https://k.kakaocdn.net/dn/cdku9n/btrRb8tuRg8/z3kTXEkI14500VOeLEJ21k/img.jpg)
+
+![https://k.kakaocdn.net/dn/dFgP7w/btrRdx6SOng/oLuRAkiZiVnneFrQKZ5K9k/img.jpg](https://k.kakaocdn.net/dn/dFgP7w/btrRdx6SOng/oLuRAkiZiVnneFrQKZ5K9k/img.jpg)
+
+- 하지만 이 dj-rest-auth는 기본적으로는 회원 가입 기능이 없음
+- 공식 문서의 Registation 참고
+- [https://dj-rest-auth.readthedocs.io/en/latest/installation.html#registration-optional](https://dj-rest-auth.readthedocs.io/en/latest/installation.html#registration-optional)
+- Registation 기능 사용 위해 추가 기능 등록 및 설치 필요
+
+![https://k.kakaocdn.net/dn/bm559o/btrRdyLygIe/JVn0ktjk3s6TbkYnUk8Ew1/img.jpg](https://k.kakaocdn.net/dn/bm559o/btrRdyLygIe/JVn0ktjk3s6TbkYnUk8Ew1/img.jpg)
+
+![https://k.kakaocdn.net/dn/4uB7t/btrRa279M6L/DIBXC1AcC62kRxKczOqoKK/img.jpg](https://k.kakaocdn.net/dn/4uB7t/btrRa279M6L/DIBXC1AcC62kRxKczOqoKK/img.jpg)
+
+![https://k.kakaocdn.net/dn/YeyZo/btrReI7U8qG/B9GNsK7TI9VHp0US7vz7ak/img.jpg](https://k.kakaocdn.net/dn/YeyZo/btrReI7U8qG/B9GNsK7TI9VHp0US7vz7ak/img.jpg)
+
+- 이 과정 이후 python manage.py migrate 필요
+
+![https://k.kakaocdn.net/dn/xKw5O/btrRbYLatwA/6z3y7w5H5KhyuOcygo7cak/img.jpg](https://k.kakaocdn.net/dn/xKw5O/btrRbYLatwA/6z3y7w5H5KhyuOcygo7cak/img.jpg)
+
+---
+
+# 여기서 부터 진짜!
+
+### accounts_user 필드 커스텀 하기
+
+- dj-rest-auth에서 제공하는 유저의 필드는 username, email, password밖에 없음
+- 하지만, 이번 프로젝트에서는 다음의 필드가 추가적으로 필요함
+- profile_path : user의 프로필 이미지를 나타낼 수 있는 필드 (문자열로 이미지주소를 저장)
+- nickname : 유저가 홈페이지에서 활동할 때의 닉네임을 정의
+- accounts_user 모델
+
+![Untitled](1일차_류원창/Untitled.png)
+
+- 회원 가입 홈페이지에서는 profile_path는 입력하지 않게 하고 닉네임은 입력하게 할 것
+- (닉네임을 따로 입력하지 않으면 username이 닉네임이 되도록 설계할 것)
+- profile_path는 프로필 수정 홈페이지에서 우리가 가지고 있는 특정 이미지를 보여주고 그 중에서 선택 하도록 할 것
+
+### 예시
+
+![Untitled](1일차_류원창/Untitled%201.png)
+
+- 그러기 위해서는 추가적인 작업을 해줘야함
+
+# CustomRegisterSerializer
+
+`dj_rest_auth`에서는 회원가입 시 기본적으로 `RegisterSerializer`를 사용한다. 따라서, 필드를 추가적으로 만드려면 serializer상속을 통해 필드를 추가해야 한다.
+
+```python
+# accounts/serializers.py
+
+from rest_framework import serializers
+from dj_rest_auth.registration.serializers import RegisterSerializer
+
+# nickname, profile_path 추가를 위한 CustomRegisterSerializer생성
+class CustomRegisterSerializer(RegisterSerializer):
+    nickname = serializers.CharField(max_length=20)
+    profile_path = serializers.CharField(max_length=500, required=False)
+
+    def get_cleaned_data(self):
+        data_dict = super().get_cleaned_data()
+        data_dict['nickname'] = self.validated_data.get('nickname', '')
+        data_dict['profile_path'] = self.validated_data.get('profile_path', '')
+        return data_dict
+```
+
+위 작업 후 커스텀시리얼라이저를 프로젝트의 세팅에 알려줘야 한다.
+
+```python
+# <project_name>/settings.py
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+}
+```
+
+# **CustomAccountAdapter**
+
+로 회원가입을 하고자 하면, 회원정보를 데이터베이스에 저장하는 역할은 `all-auth` 의 `DefaultAccountAdapter` 다. 구체적으로는 해당 클래스의 `save_user` 메서드에서 회원 정보를 저장한다.
+
+```python
+# django-allauth/blob/master/allauth/account/adapter.py
+
+class DefaultAccountAdapter(object):
+
+    # (...)
+
+    def save_user(self, request, user, form, commit=True):
+        """
+        Saves a new `User` instance using information provided in the
+        signup form.
+        """
+        from .utils import user_email, user_field, user_username
+
+        data = form.cleaned_data
+        first_name = data.get("first_name")
+        last_name = data.get("last_name")
+        email = data.get("email")
+        username = data.get("username")
+        user_email(user, email)
+        user_username(user, username)
+        if first_name:
+            user_field(user, "first_name", first_name)
+        if last_name:
+            user_field(user, "last_name", last_name)
+        if "password1" in data:
+            user.set_password(data["password1"])
+        else:
+            user.set_unusable_password()
+        self.populate_username(request, user)
+        if commit:
+            # Ability not to commit makes it easier to derive from
+            # this adapter by adding
+            user.save()
+        return user
+```
+
+이 작업 또한 상속을 통해 기존 `DefaultAccountAdapter` 를 상속받아 어댑터를 만들어 주면 된다.
+
+```python
+# accounts/adapters.py
+
+from allauth.account.adapter import DefaultAccountAdapter
+
+class CustomAccountAdapter(DefaultAccountAdapter):
+
+    def save_user(self, request, user, form, commit=True):
+        data = form.cleaned_data
+        user = super().save_user(request, user, form, True)
+        # 추가 저장 필드: nickname, profile_path
+
+        user.nickname = data.get('nickname')
+        user.profile_path = data.get('profile_path')
+
+        user.save()
+        return user
+```
+
+또한, 이 어뎁터를 프로젝트의 `settings.py` 에 알려줘야 한다.
+
+```python
+# <project_name>/settings.py
+
+ACCOUNT_ADAPTER = 'accounts.adapters.CustomAccountAdapter'
+```
+
+![Untitled](1일차_README_류원창/Untitled%202.png)
+
+![Untitled](1일차_README_류원창/Untitled%203.png)
+
+## 완료!!
+
+---
+
+### vuex 모듈화
+
+- 많은 유저 관련 데이터와 다양한 영화 관련 데이터를 관리하는 공간이 한 곳이면 복잡하다.
+- 모듈화를 통해 앱 단위로 나누어서 만들자
+
+![Untitled](1일차_류원창/Untitled%204.png)
+
+- store/modules/accountsStore.js를 만들어 유저 관련된 정보는 여기에서 다룬다.
+- 여기에 유저 정보와 관련된 코드를 적어줬다.
+- 만약 vue 컴포넌트에서 이곳으로 접근하고자 하면 다음과 같이 vuex헬퍼 메서드를 사용할 수 있다.
+
+![Untitled](1일차_류원창/Untitled%205.png)
+
+# 문제 상황
+
+- dj-rest-auth는 기본적으로 유저 정보를 조회, 수정, 등을 할 때 (유저의 정보를 접근할때)
+- pk, username, email, first_name, last_name 이것들만 제공을 해준다.
+- 이는 후에 유저 정보를 조회 뿐만 아니라 수정, 삭제 등 다양하게 접근해야 하는데, 이 과정에 크게 지장을 준다. 최악의 경우 dj-rest-auth를 사용하는 의미가 없어질 수도 있다.
+- (로그인 토큰 관련만 사용할 수도 있다.)
+- 그러기 위해서는 유저 정보를 주는 api를 만들 필요가 있다.
+
+## 첫 번째 문제 상황
+
+- 문제를 인식하고 accounts/profile/<str:username>이라는 url을 만들고 이 곳으로 get요청을 보내면 내가 원하는 정보를 json으로 리턴하게 한다.
+
+accounts/views.py
+
+![Untitled](1일차_류원창/Untitled%206.png)
+
+![Untitled](1일차_류원창/Untitled%207.png)
+
+위 함수를 통해 유저의 정보에 접근 할 수 있다.
+
+- 하지만 큰 문제점이 하나 있다.
+- 바로 누구나 url로 유저의 정보를 볼 수 있다는 보안적인 측면이다.
+- 그리하여 처음에는 메서드가 post로 온 요청에 대해서만 데이터를 제공한다는 생각인데,
+- 그러기 위해서는 csrf토큰이 필요하다.
+- 장고의 템플릿에서는 태그 하나로 해결했지만, 2시간 넘게 구글링을 하여도 답을 찾지 못하였다.
+
+## 두 번째 문제 상황
+
+- 그럼, movie에서 제공하는 api와 같이 Serailizer를 만들고 Response(serailzer.data)로 리턴하면 어떨까?
+- 결과는 ?
+
+![Untitled](1일차_류원창/Untitled%208.png)
+
+- 그리하여 이것을 행할 수 있는 방법을 몇 시간이나 찾아봤지만, 시간 낭비였다.
+
+# 해결 방법을 찾은 것 같다..?
+
+- 현재 글을 작성하는 오늘의 마무리 시점에서 한번 밑의 방법을 시도해봤다.
+- 위의 두 번째 문제 상황에서 유저의 토큰을 건네주면 응답이 제대로 온다.
+- 이 방법으로 해결 할 수 있겠다.
+
+
+&nbsp;
+
+# 이지은
+
+개발목록: ERD, django
+날짜: 2022년 11월 16일
+
+# 모델링 - ERD
+
+---
+
+![Untitled](1일차_이지은/Untitled.png)
+
+- user관련
+- movie_like_user 관련
+
+## TMDB에서 데이터 받아와 DB에 저장하기
+
+![Untitled](1일차_이지은/Untitled%201.png)
+
+⇒ 현재 상영 중인 영화에 대한 데이터 터 받아오기.
+
+![Untitled](1일차_이지은/Untitled%202.png)
+
+주의할 점은 def now_playing_data() 의 반복문과  def movie_data()의 반복문에서 쓰이는 값이 동일하면 안된다. 
+
+처음에는 movie_dict 으로 같은 이름을 주었더니 unique오류가 떴다.
+
+ 
+
+![Untitled](1일차_이지은/Untitled%203.png)
+
+ id 컬럼의 값으로 이미 저장된 데이터와 같은 값을 설정한 데이터를 추가할 경우 뜨는 에러.
