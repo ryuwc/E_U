@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Genre(models.Model):
     name = models.CharField(max_length=50)
@@ -32,11 +33,10 @@ class Nowplaying(models.Model):
 
 class Review(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    rank_choices = ((5, '★★★★★'),(4, '★★★★'),(3, '★★★'),(2, '★★'),(1, '★'))
-    rank = models.IntegerField(choices=rank_choices)
-    good_user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='good_rewiews')
-    bad_user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='bad_rewiews')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
+    rank = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    good_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='good_reviews')
+    bad_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='bad_reviews')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
