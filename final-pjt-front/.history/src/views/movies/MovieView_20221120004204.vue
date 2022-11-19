@@ -23,8 +23,8 @@
 </template>
 
 <script>
-// import MovieCard from '@/components/MoviveCard.vue'
-// import NowMovie from '@/components/NowMovie.vue'
+import MovieCard from '@/components/MoviveCard.vue'
+import NowMovie from '@/components/NowMovie.vue'
 import { mapGetters } from 'vuex';
 
 
@@ -33,8 +33,8 @@ const moviesStore = 'moviesStore'
 export default {
   name: 'MovieView',
   components: {
-    // MovieCard,
-    // NowMovie,
+    MovieCard,
+    NowMovie,
   },
   data() {
     return {
