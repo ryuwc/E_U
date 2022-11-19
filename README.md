@@ -1,4 +1,4 @@
-# 1일차 
+# 3일차
 
 # 류원창
 
@@ -7,8 +7,8 @@
 
 할 일
 
-- [x]  회원가입, 로그인, 정보수정 페이지 유효성검사, 라우팅 가드 설정
-- [ ]  네브바 만들기
+- [x] 회원가입, 로그인, 정보수정 페이지 유효성검사, 라우팅 가드 설정
+- [ ] 네브바 만들기
 
 # 회원가입 페이지 유저네임, 패스워드 유효성 검사
 
@@ -109,7 +109,6 @@ router/index.js
 - 로그인 했다면 유저의 프로필을 보여준다.
 - 유저의 이미지를 클릭하면 드랍다운이 나오며 클릭시 해당 링크로 이동한다.
 
-
 &nbsp;
 ...  
 ...  
@@ -119,12 +118,12 @@ router/index.js
 개발목록: django
 날짜: 2022년 11월 18일
 
-- [x]  django - vue 연동하여 movie detail  정보 불러오기
-- [x]  django review 모델 정의 ⇒
-- [ ]  11.19 에 good_user / bad_user 다시 정의
-- [x]  review CRUD
-- [ ]  django - vue 연동하여 movie detail  페이지에서 리뷰 CRUD → 조회만 완성
-- [x]  README_ 3일차 소감 📕
+- [x] django - vue 연동하여 movie detail  정보 불러오기
+- [x] django review 모델 정의 ⇒
+- [ ] 11.19 에 good_user / bad_user 다시 정의
+- [x] review CRUD
+- [ ] django - vue 연동하여 movie detail  페이지에서 리뷰 CRUD → 조회만 완성
+- [x] README_ 3일차 소감 📕
 
 ## DB → Vue / movie detail  정보 불러오기
 
@@ -192,7 +191,6 @@ bad_user ⇒ 리뷰 싫어요를 누른 사용자
 **back-end/movies/views.py**
 
 ```python
-
 # movie_Detail -> 전체 리뷰 조회(GET) 리뷰 생성(POST)
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticatedOrReadOnly])
@@ -253,7 +251,6 @@ def review_detail(request, review_pk):
 {
 "detail": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다."
 }
-
 ```
 
 ### ERR 해결 방안
@@ -289,8 +286,6 @@ def review_detail(request, review_pk):
 페어프로그래밍 진행도 강의실에서보다 원활히 진행되었다. 
 
 페어인 원창님과 디스코드 화면 공유를 통해 프로젝트에 대해 이야기를 나누고 서로의 코드를 리뷰, 합병하는 것이 앞선 이틀의 페어프로그래밍 보다 더 잘되었다. 
-
-  
 
 **-배운 것**
 
