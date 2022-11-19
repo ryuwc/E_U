@@ -16,9 +16,9 @@
           <p class="text-2xl leading-normal">{{ movie.overview }}</p>
           <!-- 가로 스크롤바 시작 -->
           <div
-            style="margin-top: 130px;"
+            style="margin-top: 150px;"
             id="journal-scroll"
-            class="relative flex w-full gap-6 pb-4 overflow-x-auto snap-x snap-mandatory"
+            class="relative flex w-full gap-6 pb-1 overflow-x-auto snap-x snap-mandatory"
           >
             <div class="snap-start shrink-0">
               <img

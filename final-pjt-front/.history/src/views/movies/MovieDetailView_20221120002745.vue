@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <nav>
       <router-link  to="/home">| Home |</router-link>
       <router-link v-if="!isLogin" to="/signup">| Sign Up |</router-link>
@@ -13,53 +13,37 @@
       <router-link v-if="isLogin" to="/profile">Profile |</router-link>
       <router-link to="/practice">연습</router-link> |
     </nav>
-    <router-view/>
+    <MovieDetailInfo/>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-
-const moviesStore = 'moviesStore'
+import MovieDetailInfo from '@/components/MovieDetailInfo.vue';
 
 export default {
-
-  name: 'App',
+  name: 'MovieDetailView',
 
   data() {
     return {
+      
     };
   },
-  methods: {
-    ...mapActions('accountsStore', ['logOut']),
-    ...mapActions(moviesStore, ['getMovies']),
-    ...mapActions(moviesStore, ['getNowMovies']),
+  components: {
+    MovieDetailInfo,
+  },
+
+  mounted() {
     
   },
-  computed: {
-    ...mapGetters('accountsStore', ['isLogin']),
-    ...mapGetters('accountsStore', ['nickname']),
+
+  methods: {
+    
   },
-  created() {
-    this.getMovies(),
-    this.getNowMovies()
-  }
 };
 </script>
 
-<style>
-
+<style scoped>
 nav {
-  padding: 30px;
-  z-index: 1;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+  z-index: 8;
 }
 </style>

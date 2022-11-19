@@ -16,9 +16,9 @@
           <p class="text-2xl leading-normal">{{ movie.overview }}</p>
           <!-- 가로 스크롤바 시작 -->
           <div
-            style="margin-top: 130px;"
+            style="margin-top: 150px;"
             id="journal-scroll"
-            class="relative flex w-full gap-6 pb-4 overflow-x-auto snap-x snap-mandatory"
+            class="relative flex w-full gap-6 overflow-x-auto snap-x snap-mandatory pb-14"
           >
             <div class="snap-start shrink-0">
               <img
@@ -100,7 +100,7 @@ export default {
   width: 60%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: -1;
+  z-index: 0;
 }
 
 #main_poster {
@@ -109,7 +109,7 @@ export default {
   left: 0;
   /*이미지 앞에 검은색 배경  */
   /* background-color: rgba(0, 0, 0, 0.5); */
-  z-index: -2;
+  z-index: -1;
   height: 100vh;
   width: 60%;
 }

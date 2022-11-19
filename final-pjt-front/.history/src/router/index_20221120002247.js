@@ -63,9 +63,14 @@ const routes = [
     component: () => import('../views/accounts/ChoiceMovieView.vue')
   },
   {
+    path: '/',
+    name: 'ChoiceMovieView',
+    component: () => import('../views/accounts/ChoiceMovieView.vue')
+  },
+  {
     path: '/:id',
-    name: 'MovieDetailInfoView',
-    component: () => import('../views/movies/MovieDetailInfoView.vue')
+    name: 'MovieDetailView',
+    component: () => import('../views/movies/MovieDetailView.vue')
   },
 ]
 
