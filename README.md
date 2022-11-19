@@ -1,344 +1,297 @@
-# 2일차
+# 1일차 
 
 # 류원창
 
 개발목록: 유저 기능 관련
-날짜: 2022년 11월 17일
+날짜: 2022년 11월 18일
 
 할 일
 
-- [x]  유저 정보 수정
-- [x]  유저 비밀번호 수정
-- [x]  유저가 선택할 프로필 이미지 구하기
-- [ ]  팔로우, 팔로잉 기능 구현하기
-- [x]  유저 관련 기능을 위한 장고 api만들기
-- [x]  로그인, 회원가입 퍼블리싱
-- [ ]  유저 정보 수정 페이지 만들기
+- [x]  회원가입, 로그인, 정보수정 페이지 유효성검사, 라우팅 가드 설정
+- [ ]  네브바 만들기
 
-# 유저 로그아웃
+# 회원가입 페이지 유저네임, 패스워드 유효성 검사
 
-- 유저 로그아웃은 dj-rest-auth에서 제공하는 api를 사용하고,
-- 현재 vuex에 저장되어 있는 token과 user정보를 없애면 될 것같다.
+- 회원가입 페이지에서, 유저네임과 패스워드에 대해 유효성 검사를 하고 적절하게 밑에
+- 비밀번호가 너무 짧습니다 등을 띄우고 싶다.
+- 하지만, 좀 해보니 어려운 작업이다.
+- 일단, username에 대해 이미 있는 이름이면 사용할 수 없다고 밑에 메세지를 띄우자
 
-로그아웃 함수
+### 유저네임 유효성 검사
 
-![Untitled](2일차_류원창/Untitled.png)
+- 유저네임의 유효성 검사를 하는 것은 크게 두 가지다
+- 하나는 너무 짧은 이름, 또 하나는 이미 있는 경우
+- 이번 프로젝트는 이미 있는 경우만 체크하도록 하자.
+- 그걸 위해 accountsStore의 state에 usernames라는 빈 배열을 하나 만들고 회원가입 할 때 마다
+- username을 push해주자
+- 그러고 usernames를 회원가입 페이지의 computed속성에 가지고 와서 비교를 한다.
 
-# 유저 정보 수정
+![Untitled]3일차_류원창.png)
 
-- 유저 정보 수정은 어제 만들어 놓은 유저 정보를 제공하는 api를 사용하면 될 것 같다.
-- 정보 수정 함수는 메서드를 PUT으로 요청 보내고, 받은 정보를 다시 SET_USER로 정해주면 될 것같다.
+![Untitled](3일차_류원창/Untitled%201.png)
 
-유저 정보 수정 함수
+이런 식으로 작업한다.
 
-![Untitled](2일차_류원창/Untitled%201.png)
+### 유저네임 유효성 검사 완료
 
-## 문제 1 장고 serializer관련
+![Untitled](3일차_류원창/Untitled%202.png)
 
-- 데이터를 수정한 데이터를 보냈으나, 시리얼라이저를 다시 저장해야 한다.
-- 이 과정에서 처음엔 단순히
+### 비밀번호 유효성 검사 완료
 
-```python
-serializer = UserSerializer(person, data=request.data)
-serializer.save()
-return Response(serializer.data)
-```
+- 사실은 좀 더 이쁘게 꾸미고 싶었으나, 지금의 css실력으론 무리라고 판단
+- 단순 비밀번호의 글자 수와 일치하는지 여부를 보여줌
 
-- 위와 같은 코드를 작성하였으나, serializer가 유효한지 검사하라는 에러가 떳다.
+![Untitled](3일차_류원창/Untitled%203.png)
 
-## 해결
+# 로그인 여부에 따른 라우터 가드 설정
 
-```python
-@api_view(['GET', 'PUT'])
-def profile(request, username):
-    person = get_object_or_404(get_user_model(), username=username)
-    if request.method == 'GET':
-        serializer = UserSerializer(person)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
-        serializer = UserSerializer(person, data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data)
-```
+- 로그인 한 유저라면 회원가입과 로그인 페이지로 못가게 해야하고
+- 로그인 하지 않은 유저라면 정보수정 페이지와 프로필 페이지에 가지 못하게 해야한다.
 
-- GET요청과 PUT요청에 대한 기능을 나누어 준다.
+### 전역 가드
 
-![Untitled](2일차_류원창/Untitled%202.png)
+- 로그인 하지 않은 사용자가 특정 페이지에 가지 못하게한다.
 
-![Untitled](2일차_류원창/Untitled%203.png)
+router/index.js
 
-## 비밀번호 변경
+![Untitled](3일차_류원창/Untitled%204.png)
 
-- 비밀번호 변경은 dj-rest-auth에서 제공하는 api로 충분하다.
+### 라우터 가드
 
-문서
+- 이제 로그인한 사용자는 회원가입과 로그인 페이지에 접근하지 못하게 해야하는데,
+- 라우터의 index.js에서 로그인을 한 여부를 어떻게 확인해야할지 잘 모르겠다.
+- 로컬 스토리지에는 vuex로 앱마다 나누어져서 제이슨으로 저장되어서 이걸 객체로 풀고 하면 될 것같긴 한데,
+- 그냥 로그인페이지와 회원가입페이지의 creaetd에 로그인 했으면 ‘/’으로 이동 하도록 했다.
 
-![Untitled](2일차_류원창/Untitled%204.png)
+![Untitled](3일차_류원창/Untitled%205.png)
 
-- 기존 비밀번호와 새로운 비밀번호를 보내면 될 것 같다.
-- `LOGOUT_ON_PASSWORD_CHANGE = False` 은 비밀번호를 변경해도 로그인 상태를 유지하는 옵션인 것 같다.
+## 문제 라우터의 index.js에서 로그인 여부 확인
 
-비밀번호 변경 함수
+- 개별 vue파일에서는 vuex의 index.js에서 로그인 여부를 확인 할 수 있으나,
+- 라우터의 index.js에선 로컬스토리지에 저장된 값을 가져와야한다.
+- 하지만 로컬스토리지에는 json형태를 가진 객체가 저장되어 있다.
+- 이를 잘 접근하면 되겠다.
 
-```jsx
-editPassword({ getters }, password) {
-        // console.log(password);
-        axios({
-          method: 'post',
-          url: `${API_URL}/accounts/password/change/`,
-          headers: getters.authHead,
-          data: { ...password }, 
-        })
-        .then(() => {
-          console.log('비밀번호 변경에 성공했습니다.');
-        })
-        .catch(err => {
-          console.log(err);
-        })
-      },
-```
+## 라우터 문제 해결
 
-- 정상 작동한다.
+![Untitled](3일차_류원창/Untitled%206.png)
 
-# 회원가입, 로그인 사이트 퍼블리싱
+- 위의 방식대로 조회를 하면 개별 token의 값을 가져올 수 있다.
 
-- css부분은 tailwind라는 프레임워크를 사용한다.
-- 회원가입과 로그인의 기능에 대해서는 이미 만들었으니 페이지를 만들고 기능을 달아주면 된다.
+# 네브바 만들기
 
-### 회원가입 사이트
+- 이제 유저 관련에서 벗어나 메인인 영화에 관련한 페이지를 구축해야한다.
+- 일단, 네브바를 만들어 보자
 
-![Untitled](2일차_류원창/Untitled%205.png)
+### 초안 1
 
-### 로그인 사이트
+![Untitled](3일차_류원창/Untitled%207.png)
 
-![Untitled](2일차_류원창/Untitled%206.png)
+- 아직 누르면 이동하는 기능은 없다
+- 껍데기 코드이다
 
-- 각 사이트에서 사용하는 이미지는 달라질 수 도 있고, 랜덤으로 바뀔 수 있다. (예정)
+### 초안 2
 
-## 회의
+![Untitled](3일차_류원창/Untitled%208.png)
 
-- 현재 작업 방식으로는 서로 뭘하는지 정확히 알 수가 없고, 체계적으로 움직이는 느낌이 아니라 회의를 했다.
-- 각자 서로의 할 일을 명확히 정하고 보고하고 노션에 기록하기로 했다.
+- 오른쪽에 유저 프로필 이미지를 놓고, 누르면 드롭다운 형태로 링크들이 뜨는 것을 만들었다.
+- 이제 초안 2의 프로필 이미지 코드를 초안 1의 맨 오른쪽에 붙이면 되겠다.
+- 맨 오른쪽에는 로그인을 안한 경우는 로그인을 할 수 있는 버튼을 보여주고
+- 로그인을 했다면 프로필 이미지를 보여주면 되겠다.
 
-# 정보 수정 페이지 만들기
+## 네브바 대충 완성
 
-- 일단, 우리의 아이디어는 유저는 넷플릭스와 같이 정보 수정 페이지에서 자신의 프로필 이미지를 선택할 수 있다.
-- 그러기 위해서는 사전 작업이 좀 필요하다.
-- 현재 유저의 정보는 username, nickname, password, profile_path라는 필드를 가지고 있는데,
-- 기본적으로 회원가입할 때 에는 profile_path를 받지 않는다.
-- 디폴트 값으로 넣어줄 작업이 백엔드 서버에서 필요하다
-- `[serializers.py](http://serializers.py)` 를 수정하면 된다.
+![Untitled](3일차_류원창/Untitled%209.png)
 
-![Untitled](2일차_류원창/Untitled%207.png)
+![Untitled](3일차_류원창/Untitled%2010.png)
 
-회원 가입 후 데이터베이스 확인
+- 유저가 로그인 하지 않았다면 로그인과 회원가입 버튼을 보여주고
+- 로그인 했다면 유저의 프로필을 보여준다.
+- 유저의 이미지를 클릭하면 드랍다운이 나오며 클릭시 해당 링크로 이동한다.
 
-![Untitled](2일차_류원창/Untitled%208.png)
-
-- 정상 작동 된다.
-
-### 정보 수정 페이지 프로토타입
-
-- 우리가 만들 정보 수정페이지는 단순히 데이터를 입력 받고, 수정하는 것이 메인이 아니다.
-- 중요한 점은 몇개의 이미지를 제공하여 이미지를 클릭하면, 그 이미지의 src속성을 user의 profile_path로 수정해주는게 핵심이다.
-- 아래는 페이지의 프로토타입이다.
-
-![Untitled](2일차_류원창/Untitled%209.png)
-
-- 기본 프로필은 페이지 상단에 있는 웃고있는 얼굴이다.
-- 이제, 왼쪽의 이미지를 클릭하면 그 이미지의 src를 유저의 profile_path로 수정해줘야한다.
-
-### script 코드와 간단한 문제 상황
-
-```jsx
-<script>
-import { mapActions, mapGetters } from 'vuex';
-
-const accountsStore = 'accountsStore'
-
-export default {
-  name: 'EditUserView',
-  data() {
-    return {
-        username: '',
-        nickname: '',
-        profile_path: '',
-        old_password: '',
-        new_password1: '',
-        new_password2: '',
-        msg: '닉네임를 입력해주세요!'
-    };
-  },
-  methods: {
-    ...mapActions(accountsStore, ['editUserInfo']),
-    ...mapActions(accountsStore, ['editPassword']),
-    test(event) {
-      console.log(event.target.getAttribute('src'));
-      this.profile_path = event.target.getAttribute('src');
-      
-    },
-  },
-  computed: {
-    ...mapGetters(accountsStore, ['user']),
-    // eslint-disable-next-line vue/return-in-computed-property
-    
-  },
-  created() {
-    this.nickname = this.user.nickname;
-    this.profile_path = this.user.profile_path;
-    this.username = this.user.username;
-  }
-};
-</script>
-```
-
-- 대충 내용은 처음에 user의 정보를 받아와서 data의 각 필드에 매칭을 시켜준다.
-- 그 후 내용을 입력 받거나 프로필 이미지를 선택하면 그 값들이 데이터에 다시 매핑된다
-- profile_path의 경우 src속성의 문자열인데, 길다. 좀이 아니라 많이 길다.
-- 초반에 모델에 설계 할 때 profile_path필드의 max_length를 500자로 했는데,
-- 500자가 넘어서 계속 상태코드 400오류가 떳다.
-- max_length를 수정해야겠다.
-
-![Untitled](2일차_류원창/Untitled%2010.png)
-
-### 글자수 문제 해결
-
-![Untitled](2일차_류원창/Untitled%2011.png)
-
-- 처음에 max_length를 3000으로 넉넉하게 줬다고 생각했는데, 이 또한 초과했었다.
-- max_length에 한계가 있는지 두려웠지만 10000으로 줬더니 정상작동했다.
-
-# 유저 정보 수정 페이지 대충 완료
-
-![Untitled](2일차_류원창/Untitled%2012.png)
-
-- 유저 정보 수정시, getUserInfo를 통해 다시 한번 유저의 정보를 데이터베이스에 요청한다.
-- 현재 username과 nickname이 수정이 가능한데, username을 수정하는 경우, 다음에 요청을 보낼때 accounts/profile/<str:username>으로 요청을 보내는데, 이 과정에서 에러가 날 것 같다.
-- 유저네임은 그냥 보여주기만 하고 수정은 불가능하도록 생각 중이다.
-- **유효성검사와 라우팅 가드만 설정해주면 완벽해질 것 같다. 해야한다.**
 
 &nbsp;
+...  
+...  
 
 # 이지은
 
-개발목록: django, javascript, vue
-날짜: 2022년 11월 17일
+개발목록: django
+날짜: 2022년 11월 18일
 
-- [x]  vuex , module 사용
-- [x]  프로필 페이지 ui
-- [x]  axios를 사용하여 DB의 데이터 받아오기
+- [x]  django - vue 연동하여 movie detail  정보 불러오기
+- [x]  django review 모델 정의 ⇒
+- [ ]  11.19 에 good_user / bad_user 다시 정의
+- [x]  review CRUD
+- [ ]  django - vue 연동하여 movie detail  페이지에서 리뷰 CRUD → 조회만 완성
+- [x]  README_ 3일차 소감 📕
 
-# Vuex, store module 사용
+## DB → Vue / movie detail  정보 불러오기
 
-### 1. 디렉토리 구조 만들기
+### …mapActions 인자 넘기기 문제 해결
 
-user를 관리하기 위한 스토어와
-
-movie를 관리하기 위한 스토어를 나눠서 관리
-
-<aside>
-💡 store
-├─modules
-│  ├─accountsStore.js
-│  ├─moviesStore.js
-└index.js
-
-</aside>
-
-### 2. store index에 작성한 모듈 등록
-
-**src/store/index.js**
+movie detail 페이지로 이동 시 `mapActions에 ‘movieId’` 인자 함께 넘겨주기
 
 ```jsx
-import Vue from 'vue'
-import Vuex from 'vuex'
-
-Vue.use(Vuex)
-
-// 작성한 모듈가져오기
-import accountsStore from '@/store/modules/accountsStore.js'
-import moviesStore from '@/store/modules/moviesStore.js'
-
-// 키 :값 형태로 저장
-const store = new Vuex.Store({
-  modules: {
-    accountsStore,
-    moviesStore
-  }
-})
-
-export default store
-```
-
-### 3. module 관리
-
-**src/store/modules/accountsStore.js**
-
-```jsx
-const accountsStore = {
-  namespaced: true,
-
-  state: {
-    name: "",
-  },
-
-  getters: {
-    name: (state) => state.user.name,
-  },
-
-  mutations: {
-    SET_TOKEN: (state, token) => ( state.token = token ),
-    SET_NAME: (state, user) => (state.user = user),
-  },
-
-  actions: {
-		set_name: ({commit}) {
-		commit('SET_NAME', name)
-	}
-```
-
-### 4. 다른 컴포넌트에서 vuex- module 데이터 접근
-
- 
-
-**src/views/TempView.vue**
-
-```jsx
-<script>
-import { mapActions } from 'vuex';
-
-const accountsStore = 'accountsStore'
+const moviesStore = 'moviesStore'
 
 export default {
-  name: 'tempView',
-
-  data() {
-    return {
-      username: '',
-    };
+  name: 'MovieDetailInfoView',
+  computed: {
+    ...mapGetters(moviesStore, ['movie']),
   },
   methods: {
-    ...mapActions(accountsStore, ['methods_name']),
+    ...mapActions(moviesStore, ['getMovieDetail']),
   },
-};
-</script>
+  created() {
+    const movieId = this.$route.params.id
+    this.getMovieDetail(movieId)
+  }
+}
 ```
 
-### ⇒ **다른 컴포넌트에서 vuex 데이터 접근 시 유의 할 점**
+params로 넘겨 받은 인자를 store/modules/moviesStore의 actions 인자로 넘겨 주기.
 
-=> 만약 **모듈이 독립적으로 사용되길 원한다면, namespaced: true라고 각 store에 명시**하면 된다.
+ 변수로 선언 후에   `this.getMovieDetail(movieId)` 처리
 
-하지만 **state** 접근시에는 달라진다.
+## Review 모델 정의
 
-`$store.state.state값 => **$store.state.명시된 store 모듈 이름.state값** 으로 접근해야한다.`
+**back-end/movies/models.py**
 
-mapActions 이나 mapGetters 를 사용할 경우
+```python
+class Review(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
+    rank = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    good_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='good_reviews')
+    bad_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='bad_reviews')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+```
 
- `...mapActions(accountsStore, ['methods_name']) 방식을 사용해서 접근해야한다.`
+![Untitled](3일차_이지은/Untitled.png)
 
-### 
+movie - review ⇒
 
-## Figma 를 사용 하여 프로필 페이지 UI잡기
+- review-movie ⇒ 1:N
+- reivew-user ⇒ 1:N
+- review-good_user ⇒ 1:N
+- review-bad_user ⇒ 1:N
 
-![Untitled](2일차_이지은/Untitled.png)
+rank ⇒ 영화 평점
+
+good_user ⇒ 리뷰 좋아요를 누른 사용자
+
+bad_user ⇒ 리뷰 싫어요를 누른 사용자 
+
+—>유저가 N / review 가 1 dls 1:N 관계 =⇒ User Model 에서 FK 다시 정의 
+
+## Review(CRUD)
+
+**back-end/movies/views.py**
+
+```python
+
+# movie_Detail -> 전체 리뷰 조회(GET) 리뷰 생성(POST)
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def review_list_create(request, movie_pk):
+  if request.method == 'GET':
+    reviews = Review.objects.filter(movie_id=movie_pk)
+    # 외래키의 movie_id가 movie_pk와 일치하는 경우 .filter(movie_id=movie_pk)
+    serializer = ReviewListSerializer(reviews, many=True)
+    # 복수 객체
+    return Response(serializer.data)
+  else:
+  # 생성(POST)
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    serializer = ReviewSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(user=request.user, movie = movie)
+        # user, movie 외래키 참조 객체 설정
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET', 'DELETE', 'PUT'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def review_detail(request, review_pk):
+# movie_Detail -> 리뷰 조회(GET), 수정(PUT), 삭제(DELETE)
+    review = get_object_or_404(Review, pk=review_pk)
+    if request.method == 'GET':
+        serializer = ReviewSerializer(review)
+        return Response(serializer.data)
+    else:
+        if request.user == review.user:
+            # 작성자와 같은 경우
+            if request.method == 'DELETE':
+                review.delete()
+                data = {
+                    f'{review_pk}번 리뷰가 삭제되었습니다.'
+                }
+                return Response(data, status=status.HTTP_204_NO_CONTENT)
+            if request.method == 'PUT':
+                serializer = ReviewSerializer(review, data=request.data)
+                if serializer.is_valid(raise_exception=True):
+                    serializer.save()
+                    return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+            # 작성자와 다른 경우
+```
+
+## postman 을 이용하여 DB에 review 작성하기
+
+### ****Error Response****
+
+**HTTP Status Code**
+
+`401 Unauthorized`
+
+-로그인 되지 않은 사용자에게 요청이 들어올 경우 / 로그인 정보가 잘못된 경우
+
+```
+{
+"detail": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다."
+}
+
+```
+
+### ERR 해결 방안
+
+### **Permission**
+
+`IsAuthenticatedOrReadOnly`
+
+인증된 user만 요청에 성공 할 수 있으며,  인증되지 않은 user는 읽기(method `GET`)만 가능합니다.
+
+**Token인증 방법**
+
+아래와 같이 헤더에 Token값을 입력하여 요청을 보냅니다.
+
+![Untitled](3일차_이지은/Untitled%201.png)
+
+![Untitled](3일차_이지은/Untitled%202.png)
+
+**⇒ 정상 응답 확인**
+
+→ 이 때 good_user 과 bad_user의 FK 에 null=True 를 해 줄 경우 빈 값 사용 가능
+
+## 
+
+## 📕3일차 소감
+
+ 3일차가 되어서야 프로젝트 진행에 탄력을 받은 느낌이다. 
+
+1, 2 일차에는 프로젝트 진행 속도가 느렸고 README 정리도 생각한 만큼 잘 하지 못했다.
+
+집에서 프로젝트한 것이 강의실에서 보다 업무 효율이 더 높았고, 이번 온라인 수업을 통해 재택근무가 내게 더 맞지 않을까 하는 생각이 들었다.
+
+페어프로그래밍 진행도 강의실에서보다 원활히 진행되었다. 
+
+페어인 원창님과 디스코드 화면 공유를 통해 프로젝트에 대해 이야기를 나누고 서로의 코드를 리뷰, 합병하는 것이 앞선 이틀의 페어프로그래밍 보다 더 잘되었다. 
+
+  
+
+**-배운 것**
+
+Review-Movie-User 모델의 관계를 정리하며 1:N  or N:M 관계의 모델들이 서로 어떤 식으로 데이터를 참조하는지 정리가 되었다.
