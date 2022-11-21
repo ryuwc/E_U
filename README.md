@@ -1,292 +1,382 @@
-# 3일차
+# 5일차
 
 # 류원창
 
-개발목록: 유저 기능 관련
-날짜: 2022년 11월 18일
+날짜: 2022년 11월 20일
 
-할 일
+할일
 
-- [x] 회원가입, 로그인, 정보수정 페이지 유효성검사, 라우팅 가드 설정
-- [ ] 네브바 만들기
+- [ ]  온보딩 페이지 만들기
+- [x]  지금까지 만든 페이지 다듬기
+- [x]  영화 장르별로 vuex의 getters에 넣기
+- [x]  랜덤 추천 페이지 만들기
+- [x]  없는 페이지 라우팅 가드 만들기
+- [ ]  카드 다듬기
 
-# 회원가입 페이지 유저네임, 패스워드 유효성 검사
+# 영화 디테일 홈페이지의 장르 관련
 
-- 회원가입 페이지에서, 유저네임과 패스워드에 대해 유효성 검사를 하고 적절하게 밑에
-- 비밀번호가 너무 짧습니다 등을 띄우고 싶다.
-- 하지만, 좀 해보니 어려운 작업이다.
-- 일단, username에 대해 이미 있는 이름이면 사용할 수 없다고 밑에 메세지를 띄우자
+- movie가 가지고 있는 장르는 장르의 이름이 아니라 장르의 id이다
+- 이를 이름으로 변환시켜야 된다.
 
-### 유저네임 유효성 검사
+### 장르 아이디와 장르명 추가
 
-- 유저네임의 유효성 검사를 하는 것은 크게 두 가지다
-- 하나는 너무 짧은 이름, 또 하나는 이미 있는 경우
-- 이번 프로젝트는 이미 있는 경우만 체크하도록 하자.
-- 그걸 위해 accountsStore의 state에 usernames라는 빈 배열을 하나 만들고 회원가입 할 때 마다
-- username을 push해주자
-- 그러고 usernames를 회원가입 페이지의 computed속성에 가지고 와서 비교를 한다.
+- vuex에 장르 아이디와 장르명을 추가한다.
 
-![Untitled]3일차_류원창.png)
+![Untitled](5일차_류원창/Untitled.png)
 
-![Untitled](3일차_류원창/Untitled%201.png)
+![Untitled](5일차_류원창/Untitled%201.png)
 
-이런 식으로 작업한다.
+- 근데 위와 같이 계속 하나의 배열에 여러개의 장르의 객체가 들어있는 형태로 저장이 된다
+- 왜그런지 도저히 모르겠다.
+- 여튼 반복문을 통해 일치하는 장르명을 추가한다.
 
-### 유저네임 유효성 검사 완료
+![Untitled](5일차_류원창/Untitled%202.png)
 
-![Untitled](3일차_류원창/Untitled%202.png)
+### 문제 상황
 
-### 비밀번호 유효성 검사 완료
+- 일단 장르명을 잘 가져와지긴 하는데, 다른 페이지로 가면 똑같은 장르명이 나오고, 다시 새로고침해야 제대로 장르를 또 가져온다.
 
-- 사실은 좀 더 이쁘게 꾸미고 싶었으나, 지금의 css실력으론 무리라고 판단
-- 단순 비밀번호의 글자 수와 일치하는지 여부를 보여줌
+![Untitled](5일차_류원창/Untitled%203.png)
 
-![Untitled](3일차_류원창/Untitled%203.png)
+- 위 사진은 처음 잘 가져온 장르
 
-# 로그인 여부에 따른 라우터 가드 설정
+![Untitled](5일차_류원창/Untitled%204.png)
 
-- 로그인 한 유저라면 회원가입과 로그인 페이지로 못가게 해야하고
-- 로그인 하지 않은 유저라면 정보수정 페이지와 프로필 페이지에 가지 못하게 해야한다.
+- 다른 디테일 페이지로 가면 같은 장르명이 나오고 새로고침해야 제대로 장르명이 바뀐다.
+- 아무래도 라이프사이클에서 뭔가 처리를 해줘야 될 것 같다. 아니면 computed로 넣으면 될려나 싶다.
 
-### 전역 가드
+### 또 문제
 
-- 로그인 하지 않은 사용자가 특정 페이지에 가지 못하게한다.
+![Untitled](5일차_류원창/Untitled%205.png)
 
-router/index.js
+- 잠깐 외출하고 오니까 다시 제대로 객체로 가져온다.
+- 반복문 돌린 코드가 의미 없어진다
+- 하.. 그리고 아직 라이프사이클 문제가 있다.
 
-![Untitled](3일차_류원창/Untitled%204.png)
+### 문제 해결
 
-### 라우터 가드
+- 처음에 디테일 페이지에 가면 getmovieinfo라는 함수를 실행시켜 path에 맞는 movie정보를 가져오는데,
+- 이때 movie객체에 추가로 thisMovieGenre라는 배열을 추가시켜, 장르id에 맞는 장르명을 넣어준다.
 
-- 이제 로그인한 사용자는 회원가입과 로그인 페이지에 접근하지 못하게 해야하는데,
-- 라우터의 index.js에서 로그인을 한 여부를 어떻게 확인해야할지 잘 모르겠다.
-- 로컬 스토리지에는 vuex로 앱마다 나누어져서 제이슨으로 저장되어서 이걸 객체로 풀고 하면 될 것같긴 한데,
-- 그냥 로그인페이지와 회원가입페이지의 creaetd에 로그인 했으면 ‘/’으로 이동 하도록 했다.
+![Untitled](5일차_류원창/Untitled%206.png)
 
-![Untitled](3일차_류원창/Untitled%205.png)
+# 장르별 영화 뽑아내기
 
-## 문제 라우터의 index.js에서 로그인 여부 확인
+- 나중의 작업을 위해 장르별로 영화를 뽑아내면 편할 것 같다.
+- vuex의 getters에 넣으면 적절할 것 같다.
 
-- 개별 vue파일에서는 vuex의 index.js에서 로그인 여부를 확인 할 수 있으나,
-- 라우터의 index.js에선 로컬스토리지에 저장된 값을 가져와야한다.
-- 하지만 로컬스토리지에는 json형태를 가진 객체가 저장되어 있다.
-- 이를 잘 접근하면 되겠다.
+![Untitled](5일차_류원창/Untitled%207.png)
 
-## 라우터 문제 해결
+# 랜덤 추천 페이지 만들기
 
-![Untitled](3일차_류원창/Untitled%206.png)
+- 간단하게 랜덤으로 추천하는 페이지를 만들기로 한다.
+- 파이널 프로젝트 바로 전에 했던 페이지를 가져다 쓰면 될 것 같다.
 
-- 위의 방식대로 조회를 하면 개별 token의 값을 가져올 수 있다.
+### 영화 카드 관련 문제
 
-# 네브바 만들기
+- 영화 카드라는 컴포넌트를 사용하는데, 이 컴포넌트는 누르면 라우터링크로 이동할 수 있도록
+- 라우터 링크가 걸려있다.
+- 이상하게 라우터 링크로 감사놓으면 넓이가 커진다. 인라인 스타일에 넓이를 적용해도 말을 듣지 않는다.
 
-- 이제 유저 관련에서 벗어나 메인인 영화에 관련한 페이지를 구축해야한다.
-- 일단, 네브바를 만들어 보자
+### 해결
 
-### 초안 1
+- a태그는 좀 희한한 속성을 갖고 있는 것 같다.
+- 그냥 클릭시 라우터 push을 통해 이동시키게 하고, 스타일에 포인터를 준다.
 
-![Untitled](3일차_류원창/Untitled%207.png)
+![Untitled](5일차_류원창/Untitled%208.png)
 
-- 아직 누르면 이동하는 기능은 없다
-- 껍데기 코드이다
+# 404낫파운드 페이지
 
-### 초안 2
+- 없는 경로로 이동할 경우 404낫파운드 페이지로 이동시킨다.
+- 라우터의 index.js와 페이지를 적절히 만든다.
 
-![Untitled](3일차_류원창/Untitled%208.png)
+![Untitled](5일차_류원창/Untitled%209.png)
 
-- 오른쪽에 유저 프로필 이미지를 놓고, 누르면 드롭다운 형태로 링크들이 뜨는 것을 만들었다.
-- 이제 초안 2의 프로필 이미지 코드를 초안 1의 맨 오른쪽에 붙이면 되겠다.
-- 맨 오른쪽에는 로그인을 안한 경우는 로그인을 할 수 있는 버튼을 보여주고
-- 로그인을 했다면 프로필 이미지를 보여주면 되겠다.
+![Untitled](5일차_류원창/Untitled%2010.png)
 
-## 네브바 대충 완성
+- 없는 경로로 이동시 위의 페이지를 보여준다.
 
-![Untitled](3일차_류원창/Untitled%209.png)
+# 카드 다듬기
 
-![Untitled](3일차_류원창/Untitled%2010.png)
+- 현재 우리는 카드를 단순히 이미지, 제목, 평점 정도로 놓고 있다.
+- 카드를 일단 그냥 이미지만 보여주고 마우스롤 위에 올리면 정보가 오버레이되게 하고싶다.
 
-- 유저가 로그인 하지 않았다면 로그인과 회원가입 버튼을 보여주고
-- 로그인 했다면 유저의 프로필을 보여준다.
-- 유저의 이미지를 클릭하면 드랍다운이 나오며 클릭시 해당 링크로 이동한다.
+### 예시
+
+![Untitled](5일차_류원창/Untitled%2011.png)
+
+- 아직 해결 못함
+
+# 리뷰 관련 문제
+
+- 리뷰를 생성하고, 바로 삭제가 불가능함, 새로고침 하고 삭제 눌러야 삭제됨
+- 또한, 삭제 후 리뷰가 남아있고, 새로고침하면 사라짐
+
+### 리뷰 생성 후 바로 삭제 문제 해결
+
+- 시리얼라이저가 반환하는 데이터값이 몇개가 빠져 있었다.
+- 시리얼라이저의 필드와 리드온리 필드를 건드린다.
+
+![Untitled](5일차_류원창/Untitled%2012.png)
+
+![Untitled](5일차_류원창/Untitled%2013.png)
+
+- 리뷰의 id와 작성시간역시 보내준다.
+- 일단 생성 후 삭제는 해결되었으나, 추가적으로 좋아요한 사람의 수와 싫어요한 사람의 수 역시 넘겨줘야 되서
+- 수정이 더 필요하다.
+- 잘못 생각했다. 어차피 처음 만들면 좋아요, 싫어요 한 사람의 수는 0이니까 의미가 없다.
+- 아니다, 그래도 일단 보여줘야되니까 넣어주자
+
+### 시리얼라이저 수정
+
+![Untitled](5일차_류원창/Untitled%2014.png)
+
+![Untitled](5일차_류원창/Untitled%2015.png)
+
+- 좋아요와 싫어요 수를 반환해준다.
 
 &nbsp;
-...  
-...  
 
 # 이지은
 
-개발목록: django
-날짜: 2022년 11월 18일
+# 5일차
 
-- [x] django - vue 연동하여 movie detail  정보 불러오기
-- [x] django review 모델 정의 ⇒
-- [ ] 11.19 에 good_user / bad_user 다시 정의
-- [x] review CRUD
-- [ ] django - vue 연동하여 movie detail  페이지에서 리뷰 CRUD → 조회만 완성
-- [x] README_ 3일차 소감 📕
+개발목록: 영화 디테일 페이지
 
-## DB → Vue / movie detail  정보 불러오기
+- [x]  디테일 페이지 리뷰 CRD
+- [x]  ReviewCreateSerializer 수정
+- [x]  vue에서 리뷰 작성 시 DB에 저장
+- [x]  vue에서 리뷰 삭제 시 DB에서 삭제 / 삭제 시 삭제 alert 띄우기
 
-### …mapActions 인자 넘기기 문제 해결
+- 현재 **디테일 페이지 컴포넌트 구조**
+    
+    **MovieDetailInfo**
+    
+    **└MovieDetailR**
+    
+    **│  ├MovieReview**
+    
+    **│   │  ├CreateReview**
+    
+    **│   │  ├MovieReviewItem**
+    
+    **│  ├MovieClup**
+    
+    ## ReviewCreateSerializer 수정
+    
+    ```python
+    class ReviewCreateSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Review
+            # fields = ('content', 'user', 'movie', 'rank',)
+            fields = ('content', 'user', 'rank',)
+            # read_only_fields = ('user', 'movie',)
+            # 작성 불요 (read_only_fields)
+    ```
+    
+    **⇒ 리뷰 작성 시 movie 정보에 대한 fields 를 수정해 주었다.**
+    
+    ![Untitled](5일차_이지은/Untitled.png)
+    
+    ![Untitled](5일차_이지은/Untitled%201.png)
+    
+    ### ⇒ 생성(POST) 과 조회(GET) 요청이 잘 되는 것을 확인 할 수 있다.
+    
+    **movieId 에 대한 정보는 따로 넘겨주지 않더라도 store 에서 가져다 쓸 수 있도록 수정**
+    
+    ## CreateReview에서 moviesStore 로 mapActions 요청 시 인자 넘겨 주기 ⇒ 해결
+    
+    ```jsx
+    <template>
+      <div>
+         <div>
+          <input type="text" v-model.trim="content" placeholder="리뷰를 작성하세요">
+        </div>
+        <div>
+          <input type="text" v-model.trim="rank" @keyup.enter="createReview" placeholder="1부터 5까지 평점을 입력하세요">
+        </div>
+        <button type="button"  
+    		@click="createReview({ content: content, movieId: movieId, 
+    		rank: rank, user: user.id, authHead: authHead  })">등록하기</button>
+      
+    </div>
+    </template>
+    
+    <script>
+    import {  mapActions, mapGetters } from 'vuex';
+    const moviesStore = 'moviesStore'
+    const accountsStore = 'accountsStore'
+    
+    export default {
+        name: 'CreateReview',
+        computed: {
+          ...mapGetters(moviesStore, ['movieId']),
+          ...mapGetters(accountsStore, ['authHead', 'user'])
+        },
+        data() {
+          return {
+            content: null,
+            rank: null,
+          }
+        },
+        methods: {
+          ...mapActions(moviesStore, ["createReview"]),
+        },
+        created() {
+          this.movieID = this.movieId
+        }
+    }
+    </script>
+    
+    <style>
+    
+    </style>
+    ```
+    
+    **⇒ …mapActions 에 payload 를 넘겨 줄 때는 mutation에 직접 적어서 넘겨줘야한다.**
+    
+    ## 리뷰 생성 ⇒ state의 reviews에 추가
+    
+    ![Untitled](5일차_이지은/Untitled%202.png)
+    
+    **store/modules/moviesStore ⇒ actions**
+    
+    ```jsx
+    createReview( { commit }, reviewItem) {
+          commit
+          console.log('리뷰아이템', reviewItem)
+          // if (reviewItem.content) {
+          axios({
+            method: "post",
+            url: `${API_URL}/movies/${reviewItem.movieId}/review/`,
+            data: {content: reviewItem.content, rank: reviewItem.rank, user: reviewItem.user},
+            headers: reviewItem.authHead
+          })
+          .then((res) => {
+            console.log(res)
+            commit('CREATE_REVIEW', res.data)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        }
+    ```
+    
+    리뷰 생성 후 mutations 에서 state reviews 변경을 하려고 한다.
+    
+     **store/modules/moviesStore ⇒ mutations**
+    
+    ```jsx
+    
+    CREATE_REVIEW: (state, review) => (state.reviews.add(review))
+    
+    -- 수정 후
+    
+    CREATE_REVIEW: (state, review) => (state.reviews.push(review))
+    ```
+    
+    push 가 아니라 add 를 사용해서 난 오류 / 해결
+    
+    ## 리뷰 추가 시 , 데이터 누락 & 새로 고침을 해야 데이터가 들어가는 에러
+    
+    ![Untitled](5일차_이지은/Untitled%203.png)
+    
+    **리뷰 <등록하기> 클릭 후 createReview axios 요청을 하면**
+    
+    ![Untitled](5일차_이지은/Untitled%204.png)
+    
+    **작성 시간 / good_user / bad_user / [review.id](http://review.id) 에 대한 정보가 누락 됨**
+    
+    **이 상태에서 새로고침을 하면**
+    
+    ![Untitled](5일차_이지은/Untitled%205.png)
+    
+    **정보가 들어옴**
+    
+    **이와 같은 오류 들 때문에 deleteReview 도 작동이 안된다.**
+    
+    **리뷰 작성 후 새로고침을 해야 [review.id](http://review.id) 가 생성되고,**
+    
+     **back-end의 리뷰 삭제 url인 /movies/review/<int: review_pk> 에 axios 요청을 보낼 수 있다.**
+    
+    ## 리뷰 삭제
+    
+    **src/components/MovieReviewItem.vue**
+    
+    ```jsx
+    <template>
+      <div id='personal_review'>
+          <div>평점: {{ review.rank }}</div>
+          <div>작성시간 : {{ review.created_at }}</div>
+          <div>사용자: {{ review.user }}</div>
+          <div>{{ review.content }}</div>
+          <div>좋아요한 사용자 : {{ review.good_user }} | 싫어요 한 사용자 : {{review.bad_user }}</div>
+           <button type="button" class="btn btn-sm" @click="deleteReview({ reviewId : review.id, authHead : authHead, user:user.id, movieId: movieId })">x</button>
+      </div>
+    </template>
+    
+    <script>
+    import {  mapActions, mapGetters } from 'vuex';
+    const moviesStore = 'moviesStore'
+    const accountsStore = 'accountsStore'
+    
+    export default {
+        name: 'MovieReviewItem',
+        props: {
+            review: Object
+        },
+        computed: {
+          reviewId() {
+            return this.review.id
+          },
+          ...mapGetters(moviesStore, ['movieId']),
+          ...mapGetters(accountsStore, ['authHead', 'user'])
+        },
+    
+        methods:{
+          ...mapActions(moviesStore, ["deleteReview"]),
+        },
+        
+    }
+    </script>
+    
+    <style>
+    #personal_review {
+      border: black 1px solid;
+      border-radius: 10%;
+    }
+    </style>
+    ```
+    
+     
+    
+     `...mapActions(moviesStore, ["deleteReview"]),`
+    
+    리뷰 삭제 요청
+    
+    **src/sotore/moviesStore**
+    
+    ```
+    deleteReview( {commit }, reviewItem) {
+          axios({
+            method: "delete",
+            url: `${API_URL}/movies/review/${reviewItem.reviewId}/`,
+            headers: reviewItem.authHead
+          })
+          .then((res) => {
+            console.log(res)
+            commit
+            alert("리뷰가 삭제되었습니다!")
+            // commit('DELETE_REVIEW', res.data)
+            this.$router.push({ name: "MovieDetailInfoView", params: { id: reviewItem.movieId } })
+    
+          .catch((err) => {
+            console.log(err)
+            alert("본인만 삭제가능합니다!")
+          })
+        })
+      }
+    ```
+    
 
-movie detail 페이지로 이동 시 `mapActions에 ‘movieId’` 인자 함께 넘겨주기
-
-```jsx
-const moviesStore = 'moviesStore'
-
-export default {
-  name: 'MovieDetailInfoView',
-  computed: {
-    ...mapGetters(moviesStore, ['movie']),
-  },
-  methods: {
-    ...mapActions(moviesStore, ['getMovieDetail']),
-  },
-  created() {
-    const movieId = this.$route.params.id
-    this.getMovieDetail(movieId)
-  }
-}
-```
-
-params로 넘겨 받은 인자를 store/modules/moviesStore의 actions 인자로 넘겨 주기.
-
- 변수로 선언 후에   `this.getMovieDetail(movieId)` 처리
-
-## Review 모델 정의
-
-**back-end/movies/models.py**
-
-```python
-class Review(models.Model):
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
-    rank = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
-    good_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='good_reviews')
-    bad_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='bad_reviews')
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-```
-
-![Untitled](3일차_이지은/Untitled.png)
-
-movie - review ⇒
-
-- review-movie ⇒ 1:N
-- reivew-user ⇒ 1:N
-- review-good_user ⇒ 1:N
-- review-bad_user ⇒ 1:N
-
-rank ⇒ 영화 평점
-
-good_user ⇒ 리뷰 좋아요를 누른 사용자
-
-bad_user ⇒ 리뷰 싫어요를 누른 사용자 
-
-—>유저가 N / review 가 1 dls 1:N 관계 =⇒ User Model 에서 FK 다시 정의 
-
-## Review(CRUD)
-
-**back-end/movies/views.py**
-
-```python
-# movie_Detail -> 전체 리뷰 조회(GET) 리뷰 생성(POST)
-@api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticatedOrReadOnly])
-def review_list_create(request, movie_pk):
-  if request.method == 'GET':
-    reviews = Review.objects.filter(movie_id=movie_pk)
-    # 외래키의 movie_id가 movie_pk와 일치하는 경우 .filter(movie_id=movie_pk)
-    serializer = ReviewListSerializer(reviews, many=True)
-    # 복수 객체
-    return Response(serializer.data)
-  else:
-  # 생성(POST)
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    serializer = ReviewSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(user=request.user, movie = movie)
-        # user, movie 외래키 참조 객체 설정
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-@api_view(['GET', 'DELETE', 'PUT'])
-@permission_classes([IsAuthenticatedOrReadOnly])
-def review_detail(request, review_pk):
-# movie_Detail -> 리뷰 조회(GET), 수정(PUT), 삭제(DELETE)
-    review = get_object_or_404(Review, pk=review_pk)
-    if request.method == 'GET':
-        serializer = ReviewSerializer(review)
-        return Response(serializer.data)
-    else:
-        if request.user == review.user:
-            # 작성자와 같은 경우
-            if request.method == 'DELETE':
-                review.delete()
-                data = {
-                    f'{review_pk}번 리뷰가 삭제되었습니다.'
-                }
-                return Response(data, status=status.HTTP_204_NO_CONTENT)
-            if request.method == 'PUT':
-                serializer = ReviewSerializer(review, data=request.data)
-                if serializer.is_valid(raise_exception=True):
-                    serializer.save()
-                    return Response(serializer.data)
-        else:
-            return Response(status=status.HTTP_403_FORBIDDEN)
-            # 작성자와 다른 경우
-```
-
-## postman 을 이용하여 DB에 review 작성하기
-
-### ****Error Response****
-
-**HTTP Status Code**
-
-`401 Unauthorized`
-
--로그인 되지 않은 사용자에게 요청이 들어올 경우 / 로그인 정보가 잘못된 경우
-
-```
-{
-"detail": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다."
-}
-```
-
-### ERR 해결 방안
-
-### **Permission**
-
-`IsAuthenticatedOrReadOnly`
-
-인증된 user만 요청에 성공 할 수 있으며,  인증되지 않은 user는 읽기(method `GET`)만 가능합니다.
-
-**Token인증 방법**
-
-아래와 같이 헤더에 Token값을 입력하여 요청을 보냅니다.
-
-![Untitled](3일차_이지은/Untitled%201.png)
-
-![Untitled](3일차_이지은/Untitled%202.png)
-
-**⇒ 정상 응답 확인**
-
-→ 이 때 good_user 과 bad_user의 FK 에 null=True 를 해 줄 경우 빈 값 사용 가능
-
-## 
-
-## 📕3일차 소감
-
- 3일차가 되어서야 프로젝트 진행에 탄력을 받은 느낌이다. 
-
-1, 2 일차에는 프로젝트 진행 속도가 느렸고 README 정리도 생각한 만큼 잘 하지 못했다.
-
-집에서 프로젝트한 것이 강의실에서 보다 업무 효율이 더 높았고, 이번 온라인 수업을 통해 재택근무가 내게 더 맞지 않을까 하는 생각이 들었다.
-
-페어프로그래밍 진행도 강의실에서보다 원활히 진행되었다. 
-
-페어인 원창님과 디스코드 화면 공유를 통해 프로젝트에 대해 이야기를 나누고 서로의 코드를 리뷰, 합병하는 것이 앞선 이틀의 페어프로그래밍 보다 더 잘되었다. 
-
-**-배운 것**
-
-Review-Movie-User 모델의 관계를 정리하며 1:N  or N:M 관계의 모델들이 서로 어떤 식으로 데이터를 참조하는지 정리가 되었다.
+⇒ 정삭적으로 동작이 된다.
