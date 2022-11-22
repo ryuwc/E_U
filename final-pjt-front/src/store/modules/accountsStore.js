@@ -17,11 +17,15 @@ const accountsStore = {
     nickname: (state) => state.user.nickname || state.user.username,
     isLogin: (state) => state.token ? true : false,
     usernames: (state) => state.usernames,
+    //11,22
+    profileuser: (state) => state.profileuser
 
   },
   mutations: {
     SET_TOKEN: (state, token) => ( state.token = token ),
     SET_USER: (state, user) => (state.user = user),
+    //11.22
+    GET_PROFILE_USER: (state, profileuser) => (state.profileuser = profileuser)
   },
   actions: {
     test() {
