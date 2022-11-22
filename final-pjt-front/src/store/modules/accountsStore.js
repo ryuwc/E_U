@@ -141,6 +141,41 @@ const accountsStore = {
           console.log(err);
         })
       },
+
+      // 11.22 수정 //////////////////////////////////////////////////
+
+      // 프로필 페이지 유저 정보 갖고오기
+      getProfileUser( {commit,getters }, profileUserId ) {
+        axios({
+          method: "get",
+          url: `${API_URL}/accounts/profile/${profileUserId}`,
+          headers: getters.authHead,
+        })
+        .then((res) => {
+          console.log(res.data);
+          commit('GET_PROFILE_USER', res.data)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      },
+
+      // 유저 프로필 페이지에 댓글 남기기
+      // createComment( { commit, getters }, commentItem) {
+      //   console.log(commentItem)
+      //   axios({
+      //     method: "post",
+      //     url: `${API_URL}/accounts/profile/${getters.profileUserId}`,
+      //     headers: getters.authHead,
+      //   })
+      //   .then((res) => {
+      //     console.log(res.data);
+      //     commit('GET_COMMENT', res.data)
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
+      // },
   }
 }
 

@@ -44,7 +44,7 @@
       </p>
       <footer class="flex items-center justify-between flex-none space-x-4">
         <!-- 여기에 유저 프로필로 이동하는 링크를 넣어야 함 -->
-        <router-link :to="{ name:'ProfileView', params: { id: reviewUser.id } }"> | Profile |</router-link>
+        <router-link :to="{ name:'ProfileView', params: { id: reviewUser.id } }">
         <div class="flex items-center">
           <a
             href="#"
@@ -57,6 +57,7 @@
             <a href="#" class="font-semibold text-blue-600 hover:text-blue-400"> {{ reviewUser.nickname ? reviewUser.nickname : reviewUser.username }} </a>
             </div>
         </div>
+        </router-link>
         <img
           v-if="review.user === user.id"
           data-bs-toggle="modal"
