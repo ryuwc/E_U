@@ -35,6 +35,8 @@ const moviesStore = {
     },
     nowMovieVideo: null,
     wishList: null,
+    // 현재 유저의 위시리스트
+    nowUserWishList: null,
 
   },
   getters: {
@@ -46,6 +48,7 @@ const moviesStore = {
     loading: (state) => state.loading,
     allGenres: (state) => state.allGenres,
     nowMovieVideo: (state) => state.nowMovieVideo,
+    nowUserWishList: (state) => state.nowUserWishList,
     
     // 장르별 영화들
     genre12: (state) => state.movies.filter((movie) => movie.genres.includes(12)),
@@ -100,6 +103,7 @@ const moviesStore = {
     CREATE_REVIEW: (state, review) => (state.reviews.unshift(review)),
     DELETE_REVIEW: (state, reviewId) => (state.reviews = state.reviews.filter((review) => review.id !== reviewId)),
     SET_NOW_MOVIE_VIDEO: (state, nowMovieVideo) => (state.nowMovieVideo = nowMovieVideo),
+    GET_NOW_USER_WISH_LIST: (state, wishList) => (state.nowUserWishList = wishList),
     // 영화 찜하거나 취소
   },
   actions: {
@@ -215,6 +219,25 @@ const moviesStore = {
       })
     })
   },
+
+  // 현재 유저의 위시리스트 영화 목록 불러오는 함수
+  getNowUserWishList({ commit }, userInfo) {
+    commit
+    console.log('유저정보', userInfo)
+    axios({
+      url: `http://localhost:8000/movies/wish/${userInfo.userId}/`,
+      headers: userInfo.authHead
+    })
+    .then(res => {
+      // console.log(res.data);
+      commit("GET_NOW_USER_WISH_LIST", res.data);
+    })
+    .catch(err => {
+      // console.log(err);
+      err
+      console.log('현재 유저가 찜한 영화가 없습니다.')
+    })
+  },
   
   // 영화 찜하거나 취소하는 함수
   addMovieToWishList({ commit }, info) {
@@ -226,7 +249,8 @@ const moviesStore = {
       headers: info.authHead
     })
     .then(res => {
-      console.log(res.data)
+      res
+      // console.log(res.data)
     })
   },
   // setWishList({ commit }){

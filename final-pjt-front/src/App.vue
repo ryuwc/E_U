@@ -1,106 +1,105 @@
 <template>
   <div id="app">
-    <!-- <body>
-    <header id="header">
-      <div class="header">
-        <h1 class="logo">
-          <img id="logo" src="https://e7.pngegg.com/pngimages/941/692/png-clipart-black-small-apple-logo-logo-material-apple-logo.png" alt="logo" />
-        </h1>
+    <body>
+      <header id="header">
+        <div class="header">
+          
+          <img src="./image/logo.png"
+          style="width: 65px; height: 65px; margin-left: 20px; margin-top: 20px; margin-bottom: 20px;"
+          >
 
-        <nav>
-          <ul>
-            <li>
-              <div class="list">
-                <h3 class="nav_text">nav1</h3>
-                <div class="hidden_nav_list">
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav1-1</p>
-                  </a>
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav1-2</p>
-                  </a>
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav1-3</p>
-                  </a>
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav1-4</p>
-                  </a>
+          <nav>
+            <ul>
+              <li>
+                <div class="list">
+                  <h3 class="nav_text">임시</h3>
+                  <div class="hidden_nav_list">
+                    <a href="">
+                      <router-link  to="/home"><p class="hidden_nav_list_text">Home</p></router-link>
+                    </a>
+                    <a href="" @click.prevent="logOut">
+                      <p class="hidden_nav_list_text">로그아웃</p>
+                    </a>
+                    <a href="">
+                      <router-link to="/edit"><p class="hidden_nav_list_text">정보수정</p></router-link>
+                    </a>
+                    <a href="">
+                      <router-link to="/profile"><p class="hidden_nav_list_text">프로필</p></router-link>
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              <div class="list">
-                <h3 class="nav_text">nav2</h3>
-                <div class="hidden_nav_list">
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav2-1</p>
-                  </a>
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav2-2</p>
-                  </a>
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav2-3</p>
-                  </a>
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav2-4</p>
-                  </a>
+              </li>
+              <li>
+                <div class="list">
+                  <h3 class="nav_text">nav2</h3>
+                  <div class="hidden_nav_list">
+                    <a href="">
+                      <p class="hidden_nav_list_text">nav2-1</p>
+                    </a>
+                    <a href="">
+                      <p class="hidden_nav_list_text">nav2-2</p>
+                    </a>
+                    <a href="">
+                      <p class="hidden_nav_list_text">nav2-3</p>
+                    </a>
+                    <a href="">
+                      <p class="hidden_nav_list_text">nav2-4</p>
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              <div class="list">
-                <h3 class="nav_text">nav3</h3>
-                <div class="hidden_nav_list">
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav3-1</p>
-                  </a>
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav3-2</p>
-                  </a>
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav3-3</p>
-                  </a>
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav3-4</p>
-                  </a>
+              </li>
+              <li>
+                <div class="list">
+                  <h3 class="nav_text">nav3</h3>
+                  <div class="hidden_nav_list">
+                    <a href="">
+                      <p class="hidden_nav_list_text">nav3-1</p>
+                    </a>
+                    <a href="">
+                      <p class="hidden_nav_list_text">nav3-2</p>
+                    </a>
+                    <a href="">
+                      <p class="hidden_nav_list_text">nav3-3</p>
+                    </a>
+                    <a href="">
+                      <p class="hidden_nav_list_text">nav3-4</p>
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              <div class="list">
-                <h3 class="nav_text">nav4</h3>
-                <div class="hidden_nav_list">
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav4-1</p>
-                  </a>
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav4-2</p>
-                  </a>
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav4-3</p>
-                  </a>
-                  <a href="">
-                    <p class="hidden_nav_list_text">nav4-4</p>
-                  </a>
+              </li>
+              <li>
+                <div class="list">
+                  <h3 class="nav_text">nav4</h3>
+                  <div class="hidden_nav_list">
+                    <a href="">
+                      <p class="hidden_nav_list_text">nav4-1</p>
+                    </a>
+                    <a href="">
+                      <p class="hidden_nav_list_text">nav4-2</p>
+                    </a>
+                    <a href="">
+                      <p class="hidden_nav_list_text">nav4-3</p>
+                    </a>
+                    <a href="">
+                      <p class="hidden_nav_list_text">nav4-4</p>
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </nav>
+              </li>
+            </ul>
+          </nav>
 
-        <div class="header_button_group">
-          <router-link v-if="!isLogin" to="/login">
-            <button class="header_button_signup">Sign up</button>
-          </router-link>
-          <router-link v-if="!isLogin" to="/signup">
-            <button class="header_button_signin">Sign in</button>
-          </router-link>
+          <div class="header_button_group">
+            <router-link v-if="!isLogin" to="/login"><button class="header_button_signin" style="color: black;">Sign in</button></router-link>
+            <router-link v-if="!isLogin" to="/signup"><button class="header_button_signup">Sign up</button></router-link>
+          </div>
         </div>
-      </div>
-    </header>
-  </body> -->
+      </header>
+    </body>
+
+
     <!-- 임시로 사용한 네브바 -->
-    <nav>
+    <!-- <nav>
       <router-link  to="/home">| Home |</router-link>
       <router-link v-if="!isLogin" to="/signup">| Sign Up |</router-link>
       <router-link v-if="!isLogin" to="/login">Login |</router-link>
@@ -108,19 +107,18 @@
       <router-link v-if="isLogin" to="/edit">정보수정</router-link> |
       <router-link v-if="isLogin" to="/profile">Profile |</router-link>
       <router-link to="/practice">연습</router-link> |
-    </nav>
+    </nav> -->
 
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-const moviesStore = 'moviesStore'
+const moviesStore = 'moviesStore';
 
 export default {
-
   name: 'App',
 
   data() {
@@ -148,8 +146,10 @@ export default {
     handleHoverHeader() {
       this.header.style.backgroundColor = '#fff';
       this.header.style.height = '250px';
-      this.headerBtnSignin[0].style.color = '#000';
-      this.logo.src = 'https://e7.pngegg.com/pngimages/941/692/png-clipart-black-small-apple-logo-logo-material-apple-logo.png';
+      // if (this.headerBtnSignin) {
+      //   this.headerBtnSignin[0].style.color = '#000';
+      // }
+      // this.logo.src = 'https://e7.pngegg.com/pngimages/941/692/png-clipart-black-small-apple-logo-logo-material-apple-logo.png';
       Object.values(this.navText).map((text) => (text.style.color = '#000'));
       Object.values(this.hiddenNavText).map((text) => {
         text.style.display = 'block';
@@ -157,25 +157,28 @@ export default {
       });
     },
     handleLeaveHeader() {
-      this.header.style.backgroundColor = 'rgba(0,0,0,0.5)';
+      this.header.style.backgroundColor = 'rgba(0,0,0,0)';
       this.header.style.height = '100px';
-      this.headerBtnSignin[0].style.color = '#fff';
-      this.logo.src = 'https://e7.pngegg.com/pngimages/941/692/png-clipart-black-small-apple-logo-logo-material-apple-logo.png';
+      // if (this.headerBtnSignin) {
+      //   this.headerBtnSignin[0].style.color = '#fff';
+      // }
+      // this.logo.src = 'https://e7.pngegg.com/pngimages/941/692/png-clipart-black-small-apple-logo-logo-material-apple-logo.png';
       Object.values(this.navText).map((text) => (text.style.color = '#fff'));
       Object.values(this.hiddenNavText).map((text) => {
         text.style.display = 'none';
         text.style.color = '#000';
       });
     },
-    
+    main: () => {
+      // header = this.getId('header');
+    },
   },
   computed: {
     ...mapGetters('accountsStore', ['isLogin']),
     ...mapGetters('accountsStore', ['nickname']),
   },
   created() {
-    this.getMovies(),
-    this.getNowMovies()
+    this.getMovies(), this.getNowMovies();
   },
   mounted() {
     this.header = this.getId('header');
@@ -186,33 +189,19 @@ export default {
     // console.log(this.header);
     this.header.addEventListener('mouseover', this.handleHoverHeader);
     this.header.addEventListener('mouseleave', this.handleLeaveHeader);
-  }
+  },
 };
 </script>
 
+
 <style scoped>
 
-nav {
-  padding: 30px;
-  z-index: 1;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-
-html,
 body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  /* background-color: black; */
+  background-color: white;
   color: white;
   font-family: 'Noto Sans KR', sans-serif;
 }
@@ -280,8 +269,8 @@ header {
   /* height: 300px; */
   height: 100px;
   transition: 0.2s ease-in-out;
-  z-index: 3;
-  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0);
   overflow: hidden;
 }
 
@@ -420,4 +409,42 @@ header {
   margin-left: 0;
 }
 
+.balls {
+  width: 10em;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.balls div {
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  background-color: #fc2f70;
+  transform: translateY(-100%);
+  animation: wave 3s ease-in-out alternate infinite;
+}
+
+.balls div:nth-of-type(1) {
+  animation-delay: -0.4s;
+}
+
+.balls div:nth-of-type(2) {
+  animation-delay: -0.2s;
+}
+.balls div:nth-of-type(3) {
+  animation-delay: -0.1s;
+}
+
+@keyframes wave {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(50%);
+  }
+}
+
 </style>
+

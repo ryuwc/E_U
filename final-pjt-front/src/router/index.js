@@ -83,6 +83,11 @@ const routes = [
     component: () => import('../views/TestTwoView.vue')
   },
   {
+    path: '/test3',
+    name: 'TestThree',
+    component: () => import('../views/testThree.vue')
+  },
+  {
     path: '/maintest',
     name: 'MainTest',
     component: () => import('../views/MainTest.vue')

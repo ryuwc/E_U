@@ -12,6 +12,7 @@ module.exports = {
       // './src/components/MoviveCard.vue',
       './src/components/PosterSlider.vue',
       './src/components/MovieClip.vue',
+      './src/components/MovieDetailR.vue',
     ],
   theme: {
     extend: {},

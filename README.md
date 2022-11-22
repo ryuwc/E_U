@@ -1,264 +1,202 @@
-# 6일차
+# 7일차
 
-# 류원창
+할 일
 
-할일
+- [ ]  비디오 프레임 받아와서 디테일 페이지에 적절히 배치하기
 
-- [ ]  디테일 페이지 완성하기
+# 유튜브 영상 받아오기
 
-# 디테일 페이지 리뷰 작성
+- 친절히도 tmdb에서는 영화에 대한 video를 제공해주는 api가 있다.
 
-- 리뷰 작성은 이미 뼈대는 만들어져 있기 때문에 스타일을 다듬는다.
+![Untitled](7일차_류원창/Untitled.png)
 
-![Untitled](6일차_류원창/Untitled.png)
+- 적절히 보내서 영화의 비디오에 대한 정보를 가져오면 되겠다.
 
-- 점수를 3점을 주면 별이 3개가 들어가고, 리뷰를 작성한 유저의 정보가 담아진다.
-- 오른쪽 밑의 삭제버튼 역시 리뷰 작성자만 볼 수 있다.
-- 이제 삭제 후 삭제된 게시물이 안보이게 수정해야한다.
+![Untitled](7일차_류원창/Untitled%201.png)
 
-### 모달 관련 문제
+- 영화의 비디오 정보를 요청해서 데이터에 저장한다.
+- 이 때 지금 컴포넌트의 컴포넌트를 불러오는 구조로 되어있어 vuex가 필요하다
+- vuex에 데이터를 저장해서 사용해야 될 것 같다.
+- 이제 각 비디오에 대한 리스트를 만들고 그걸 누르면 재생이 되는 모달을 띄우면 될 것같은데
+- 썸네일을 사용해야 할 것 같은데 썸네일에 관한 정보는 제공해주지 않는다.
+- 방법을 찾아보자
 
-- 현재 디테일페이지는 다수의 컴포넌트들이 모여있고, 기본적으로 백그라운드이미지와
-- 백그라운드를 가리는 검은색 투명도가 있는 div가 z-index로 설정되어있다.
-- 이때 삭제를 누르면 모달창이 나오며 정말 삭제하시겠습니까? 라는 멘트가 모달로 떠야되는데,
-- z-index문제인지 모달div에 접근할 수 없다.
+### 썸네일을 찾을 수 있을 것 같다.
 
-![Untitled](6일차_류원창/Untitled%201.png)
-
-- 이와 같이 모달버튼을 클릭하면 나오는 백그라운드의 검은색 불투명이 제일 앞으로 인식된다.
-- 다른 페이지에서는 정상작동을 하는데, 향후 이 디테일 페이지에 모달로 프리뷰를 띄울 예정이니까
-- 이 문제를 해결해야한다.
-
-### 해결
-
-![Untitled](6일차_류원창/Untitled%202.png)
-
-- z-index의 속성에 대해 좀 알아봤는데, 만약 자식의 z-index가 9999라도 그 부모의 z-index가 1이면
-- 그 자식은 z-index를 1로 갖게 된다.
-- 쓸데없이 복잡한 것 같다. 그냥 절대값으로 하면 안되나?
-
-### 삭제 시 모달 완료
-
-![Untitled](6일차_류원창/Untitled%203.png)
-
-- 네! 클릭시 버튼 삭제 메서드 호출
-- 디자인에만 시간을 너무 많이씀
-- 이제 삭제 후 리뷰 바로 리뷰 안보이게 조치해야겠다.
-
-### 삭제 후 바로 리뷰 안보이게 하는거 해결
-
-- vuex의 DELETE_REVIEW함수를 통해 삭제한 리뷰의 id를 filter를 통해 걸러넌다
-
-![Untitled](6일차_류원창/Untitled%204.png)
-
-### 리뷰 생성 후 인풋 값 초기화
-
-- v-on 이벤트를 두개를 실행시켜야 한다.
-- 하나는 input들 null로 만들기, 다른 하나는 create하는 함수
-- v-on에 여러개의 이벤트를 달 때에는
-
-```jsx
-@click="[a(), b()]"
-```
-
-- 이런식으로 대괄호 안에 넣어주고 함수는 무조건 ()소괄호를 열어줘야한다.
-
-### 리뷰 좋아요 문제와 해결
-
-- 리뷰의 하트를 누르면 하트가 채워지며 좋아요 상태가 된다.
-- 그런식으로 토글된다
-- 근데 계속 바뀌지가 않아서 원인을 찾아보다 1시간이 걸렸는데 이유는 두 이미지의 주소가 같았다.
-- 어쨋든 해결
-
-![Untitled](6일차_류원창/Untitled%205.png)
-
-# 리뷰 작성 폼 만들기
-
-- 사실 기능은 다 구현이 되어있는데 디자인 하기가 시간이 너무 오래걸린다.
-- 지금 까지 한 폼은 다음과 같다
-
-![Untitled](6일차_류원창/Untitled%206.png)
-
-- 상단의 한줄에는 유저의 프로필이미지와 닉네임 혹은 유저네임이 뜨고 아래 리뷰를 작성하도록 한다.
-- 상단의 오른쪽 위에 별점을 줄 수 있는 애니메이션을 넣고, 제출 버튼을 조금 수정하면 될 것 같다.
-
-![Untitled](6일차_류원창/Untitled%207.png)
-
-- 리뷰 만들기는 완료 했다.
-- 근데, 다른 무비 페이지로가면 test1이 적은 리뷰가 test2가 적었다고 하는 치명적인 에러를 발견
-- 웬지 참조 문제인 것 같은데.. 여러가지 시도를 해봐야겠다.
-
-![Untitled](6일차_류원창/Untitled%208.png)
-
-- 이런 식으로 하고 nowUser를 사용하면 되겠다.
-
-# 영화 포스터 가져오기
-
-- tmdb에서 영화 포스터를 제공하는 api가 있다.
-- 이걸 사용하면 되겠다.
-- 영화 디테일 페이지에 가면 요청을 보낸다.
-
-![Untitled](6일차_류원창/Untitled%209.png)
-
-![Untitled](6일차_류원창/Untitled%2010.png)
-
-- data에 moviePosters를 만들어 영화 포스터 정보를 10개정도만 가져온다.
-
-![Untitled](6일차_류원창/Untitled%2011.png)
-
-- 영화의 포스터 정보를 받아서 PosterSlider라는 컴포넌트에 내려준다.
-- 이미지를 캐러셀 방식으로 만들고 싶어서 찾아보니
-- `vue-slick-carousel` 라는 라이브러리를 사용할 수 있있다.
-- 시간관계상 문서를 읽어보며 코드를 치진 않았고, 구글에 있는 소스코드를 가져와서 다듬었다.
-- vue에서 유용하게 사용할 라이브러리같다. vue를 계속 사용할 거면 문서를 정독해서 사용법을 익히는게 좋을 것 같다.
-- 소스코드를 가져와 사용하다보니 버튼의 위치나 이미지들의 위치, 높이, 너비 등을 다듬어야해서 오히려 시간이 많이 소요되었다.
-- 이제 프리뷰 영상을 오른쪽에 적절히 배치하고 모달로 띄우면 될 것 같다.
-
-&nbsp;
-
-# 이지은
-
-개발목록: 영화 홈 페이지
-
-- [ ]  영화 홈페이지 제작
-
-### 영화 메인 페이지
-
-**장르&감독&배우와 관련된 영화 목록 보여주기**
-
-**src/views/movies/MovieView.vue**
-
-```jsx
-<!-- 장르 (코미디 + 드라마) -->
-
-        <div class="d-flex">
-          <section>
-            <p class="">배꼽 빠지게 웃긴 코미디</p>
-            <div v-for="(movie, index) in mg1" :key='index'>
-              <div class="card-item effect11 left_to_right">
-                <a href="#">
-                  <div class="img w-100">
-                    <img 
-                    :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
-                    alt="img">
-                  </div>
-                <div class="info">
-                  <h3>{{ movie.title }}</h3>
-                  <p>출연: {{  }}</p>
-                  <p>감독: {{  }}</p>
-                </div>
-                </a>
-              </div>
-            </div>
-          </section>
-        </div>
-
- <!-- 감독 (봉준호) -->
-         <div>
-          <section>
-            <p class="">'기생충'의 봉준호 감독</p>
-            <div v-for="(movie, index) in mg1" :key='index'>
-              <div>{{ movie.title }}</div>
-            </div>
-          </section>
-        </div>
-
-<!-- 배우 (톰쿠르즈) -->
-        <div>
-          <section>
-            <p class="">노장은 살아있다! '탑건'의 콤크루즈</p>
-            <div v-for="(movie, index) in rmM35" :key='index'>
-              <div>{{ movie.title }}</div>
-            </div>
-          </section>
-        </div>
-```
-
-사용자가 본인이 선호하는 (장르|배우|감독)의 영화를 고를 수 있도록 영화 카테고리를 묶어두었다.
-
-**src/store/moviesStore**
-
-<장르 별로 묶은 영화 배열 만들기>
-
-```jsx
-// 장르 (코미디 + 드라마)
-    g1: (state) => state.movies.filter((movie) =>  movie.genres.includes(35) && movie.genres.includes(28)&& movie.genres.includes(35)),
-    // 장르 (공포)
-    g2: (state) => state.movies.filter((movie) => movie.genres.includes(27)),
-    // 장르 ( 범죄 + 스릴러 )
-    g3: (state) => state.movies.filter((movie) => movie.genres.includes(53) &&  movie.genres.includes(80)),
-    // 장르 ( 애니메이션 + 가족 )
-    g4: (state) => state.movies.filter((movie) => movie.genres.includes(16) &&  movie.genres.includes(10751)),
-    // 장르 (판타지 + SF)
-    g5: (state) => state.movies.filter((movie) => movie.genres.includes(14) &&  movie.genres.includes(878)),
-```
-
-**src/views/movies/MovieView.vue**
-
-```jsx
-// 홈페이지에 보여 줄 영화 카테고리 불러오기 
-
--create-
-this.getSectionMovies()
-
--methods-
-getSectionMovies() {
-      const m1 = _.sampleSize(this.g1, 12)
-      this.mg1 = m1
-      const m2 = _.sampleSize(this.g2, 12)
-      this.mg2 = m2
-      const m3 = _.sampleSize(this.g3, 12)
-      this.mg3 = m3
-      const m4 = _.sampleSize(this.g4, 12)
-      this.mg4 = m4
-      const m5 = _.sampleSize(this.g5, 12)
-      this.mg5 = m5
- },
-```
-
-→ mapGetters를 통해 갖고온 영화 배열에서, 영화 12 개씩을 랜덤으로 선별하여 MovieView에 나타내기
-
-## 현재 상영중인 영화 유튜브 트레일러 영상 재생
-
-**src/views/movies/MovieView.vue**
+- tmdb의 영화 디테일의 트레일러 재생 a태그를 살펴보니 backgroud이미지의 주소를 알아냈다.
+- 아래는 tmdb의 태그
 
 ```html
-<div>
-        <h1>video</h1>
-        <div id='area'>
-        <iframe id='video' :src=videoURL
-         frameborder="0" allow="autoplay">
-         </iframe>
-        </div>
-      </div>
+<div class="wrapper" style="background-image: url('https://i.ytimg.com/vi/1pbjFu6aIZg/hqdefault.jpg');">
+  <a class="no_click play_trailer" href="/video/play?key=1pbjFu6aIZg" data-site="YouTube" data-id="1pbjFu6aIZg" data-title="[블랙 아담] 코믹콘 영상"><div class="play_background"><span class="glyphicons_v2 play invert svg"></span></div></a>
+</div>
 ```
 
-```jsx
+- 저 주소에 iframe재생을 위한 키를 vi/여기/ 에 입력했더니 가져오는 것 같다
+- 썸네일은 저 주소를 이용해 접근하면 될 것 같다.
 
--computed-
-videoURL() {
-      return `https://www.youtube.com/embed/${this.playMovie}?autoplay=1&mute=1`
-    },
+### 영화 비디오 요청 문제 및 해결
 
--methods-
-**//페이지 상단에 재생 되는 영화 유튜브ID 요청
-    ...mapActions(moviesStore, ['playMovie']),
+- created에 영화 비디오 가져오는 함수를 호출하고, console에 data에 있는 영화비디오정보를 찍어봤다.
+- 근데, 순서가 이상하다. 비동기 처리가 되어서 비디오를 가져오기 전에 호출되는 것 같다.
 
-    // 페이지 상단에 재생 되는 영화 유튜브ID 요청
-    pickPlayMovie() {
-      const play = _.sample(this.nowmovies)
-      this.playMovie = play.youtube_key
-    },
+![Untitled](7일차_류원창/Untitled%202.png)
 
--create-
-// 페이지 상단에 재생 되는 영화 유튜브ID 요청
-    this.pickPlayMovie()**
+- 위의 예시를 보면, 코드는 분명히 데이터를 가져오는 함수를 먼저 호출하고, 데이터를 출력했는데
+- response가 더 늦게 오는 걸 확인했다.
+- setTimeout을 활용하면 되겠다.
+
+![Untitled](7일차_류원창/Untitled%203.png)
+
+![Untitled](7일차_류원창/Untitled%204.png)
+
+- 시간을 1초정도로 주면 될 것 같다. 후에 다른 영화 확인 후 더 필요하면 추가하도록 한다.
+
+![Untitled](7일차_류원창/Untitled%205.png)
+
+![Untitled](7일차_류원창/Untitled%206.png)
+
+- 일단 하나 해결
+
+# 내일의 나에게
+
+- 일단 영화 디테일 페이지에서 비디오 정보까지 받아서 vuex에 저장했으니 적절히 활용하도록 해
+
+![Untitled](7일차_류원창/Untitled%207.png)
+
+- 대충 이런식으로 짜고 저거 누르면 iframe포함한 모달 띄울거야
+- [`https://i.ytimg.com/vi/ZS_8btMjx2U/hqdefault.jpg`](https://i.ytimg.com/vi/ZS_8btMjx2U/hqdefault.jpg) 이게 썸네일 가져오는 url
+- 일단 난 온보딩 스크롤 이벤트좀 해야될듯
+
+# 영화 프레임
+
+- 영화 프레임은 위와 같은 디자인으로 만든다.
+- 저 이미지를 클릭하면, 모달로 유튜브 프리뷰가 띄어지게 할 것이다.
+
+![Untitled](7일차_류원창/Untitled%208.png)
+
+- 위의 주소가 썸네일을 가져오는 주소가 맞았다.
+- 이제 가운데에 누르면 재생할 것 같은 버튼을 넣었어야 되는데, 적절한 이미지를 가져왔다.
+- 이 과정에서 css의 position에 관한 지식을 좀 배웠다.
+- 일단은, 저런 형식으로 씌울려면 유튜브 버튼이 자식이고 저 썸네일이 부모다
+- 이제 부모의 포지션을 related로 주고, 자식의 포지션을 absolute로 주어 top과 left를 조절하면 된다.
+
+![Untitled](7일차_류원창/Untitled%209.png)
+
+- 시간이 없어서 태그들이 너무 보기가 싫다.
+- 다음부턴 체계적으로 정리하기로 한다.
+
+### 프리뷰 모달창 완료
+
+- 모달 창 자체는 저번에 만들어논 삭제 버튼을 누르면 나타나는 모달을 재활용했다.
+- 영화 썸네일은 v-for로 계속 돌며 이중 하나를 클릭하면 clickVideo함수에 그 상태의 video.key를 매개변수로 전해준다.
+- 이 매개변수를 데이터에 저장하여 ifram의 url주소로 활용한다.
+- 코드는 아래의 이미지를 참조
+
+![Untitled](7일차_류원창/Untitled%2010.png)
+
+![Untitled](7일차_류원창/Untitled%2011.png)
+
+![Untitled](7일차_류원창/Untitled%2012.png)
+
+# 영화 찜 api만들기
+
+- 영화 찜 하는 api만드는 것은 생각보다 간단했다.
+- 기존에 존재하는 영화 디테일을 조회하는 url에 post요청으로 추가하면 된다.
+- 자세한건 아래 코드 참고
+
+```python
+# 영화 디테일 조회(GET), 영화 찜하기(POST)
+# 찜할 때는 메서드는 그냥 POST로 data없이 보내면 된다. (보낼 때의 토큰이 해당 유저와 매칭시킨다.)
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def movie_detail(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    # 조회(GET)일 경우
+    if request.method == 'GET':
+        serializer = MovieSerializer(movie)
+        return Response(serializer.data)
+    # 찜하기(POST)일 경우
+    elif request.method == 'POST':
+        # 찜하기는 로그인한 유저만 가능하다.
+        # 찜하기를 누른 유저가 이미 찜을 눌렀는지 확인
+        if request.user in movie.like_users.all():
+            movie.like_users.remove(request.user)
+            movie_like = False
+        else:
+            movie.like_users.add(request.user)
+            movie_like = True
+        context = {
+            'msg': '찜하기 or 찜취소 접근 성공',
+            'movie_like': movie_like,
+        }
+        return Response(context, status=status.HTTP_201_CREATED)
 ```
 
-iframe테그를 이용해 유튜브 영상 자동 재생
+![Untitled](7일차_류원창/Untitled%2013.png)
 
-## MovieView 레이아웃
+# 페이지에서 찜하기 또는 취소 요청보내기
 
-![Untitled](6일차_이지은/Untitled.png)
+- 영화 디테일 페이지에서 현재 로그인된 유저가 요청을 보낼 수 있어야 한다.
+- 페이지의 적절한 곳에 찜하기, 취소하기 버튼을 만들어야 한다.
 
-⇒ 스크롤바 디자인 수정 + 비디오 재생 섹션 디자인 필요
+![Untitled](7일차_류원창/Untitled%2014.png)
+
+![Untitled](7일차_류원창/Untitled%2015.png)
+
+- 버튼을 만들었고 함수도 정상적으로 실행이된다.
+- 근데 좀 이게 생각보다 복잡하다. 일단, 처음 위시리스트 모델을 가져와야 되고, 그 모델에 맞는 유저가
+- 위시리스트에 담았는지 확인하고 어떤 버튼을 보여줄지 정해야 한다.
+- 일단, 전체 위시리스트를 가져와서 moviesStore에 저장하는 함수를 만들어야한다.
+- 먼저 백엔드에서 전체 위시리스트를 조회할 수 있는 api를 만들어야한다.
+
+# manytomany로 연결된 모델 가져오기
+
+- 현재 manytomany라는 데이베이스는 만들어졌지만, 이에 대한 모델은 없어서
+- 가져오려면 영화 전체 데이터를 조회해서 그 안에서 필터를 돌려야 한다.
+- 하지만 이 방법은 너무 비효율적이다. 또한, 양이 적은 user테이블에서 정보를 가져오려고 했는데,
+- dj-rest-auth의 방식이 제공을 안하는 것인지 역참조가 조회가 되지 않는다.
+- 그래서 찾은 방법이 중간 모델을 이요하면 될 것 같다. 아래의 블로그를 보며 따라해보면 될 것 같다.
+
+![Untitled](7일차_류원창/Untitled%2016.png)
+
+- 위의 방법이 사용이 잘 안된다. 애초에 User모델은 다른 앱에 있다. 그리고 다른 에러도 뜬다.
+- 그래서 생각나는대로 코드를 짜봤는데, 전체 위시리스트를 조회하는 것이 아닌
+- 특정 유저의 위시리스트에 담은 영화 정보를 조회하는 것이다.
+
+![Untitled](7일차_류원창/Untitled%2017.png)
+
+![Untitled](7일차_류원창/Untitled%2018.png)
+
+![Untitled](7일차_류원창/Untitled%2019.png)
+
+- 이정도로 될 것 같다.
+
+## 위의 것 변경
+
+- 위의 api는 토큰을 통해 현재 유저가 위시리스트에 담은 정보를 보여준다.
+- 다른 유저가 위시리스트에 담은것은 보지 못한다.
+- 아래는 수정본이다. 자신이 아닌 특정 유저가 위시리스트에 담은 영화를 조회할 수 있다.
+
+![Untitled](7일차_류원창/Untitled%2020.png)
+
+![Untitled](7일차_류원창/Untitled%2021.png)
+
+## 디테일 페이지 다듬기
+
+![Untitled](77일차_류원창/Untitled%2022.png)
+
+- 이정도면 될 것 같다..
+
+## 위시리스트 관련 함수, vuex만들기
+
+- 특정 유저의 위시리스트를 조회할 수 있는 api를 만들었으니, vue에서 사용하도록 한다.
+
+![Untitled](7일차_류원창/Untitled%2023.png)
+
+![Untitled](7일차_류원창/Untitled%2024.png)
+
+- 이제 이 현재 페이지의 영화를 찜 했는지 확인이 필요하다.
+- 찜 했을 경우와 아닐 경우에 보여줄 버튼이 다르기 때문이다.
+- axios요청이 제대로 오면 함수를 실행하도록 하자
+- 생각한대로 머리랑 몸이 안따라준다.

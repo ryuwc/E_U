@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>movie review</h1>
       <CreateReview
+      style="margin-bottom: 8px;"
       v-if="user.username"
       />
       <MovieReviewItem

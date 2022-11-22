@@ -101,13 +101,13 @@ export default {
     text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
 }
 #myform label:hover{
-    text-shadow: 0 0 0 #a00; /* 마우스 호버 */
+    text-shadow: 0 0 0 rgb(175, 211, 233); /* 마우스 호버 */
 }
 #myform label:hover ~ label{
-    text-shadow: 0 0 0 #a00; /* 마우스 호버 뒤에오는 이모지들 */
+    text-shadow: 0 0 0 rgb(175, 211, 233); /* 마우스 호버 뒤에오는 이모지들 */
 }
 #myform input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 #a00; /* 마우스 클릭 체크 */
+    text-shadow: 0 0 0 #3ba7ea; /* 마우스 클릭 체크 */
 }
 
 

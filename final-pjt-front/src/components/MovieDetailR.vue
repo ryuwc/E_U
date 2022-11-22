@@ -1,12 +1,7 @@
 <template>
   <div>
-    <div class="flex items-center">
-      <svg
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
-        class="inline-block w-5 h-5 hi-solid hi-star"
-      >
+    <!-- <div class="flex items-center">
+      <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 hi-solid hi-star">
         <path
           fill-rule="evenodd"
           d="M10 2.5l2.928 5.364 6.072.866-4.428 4.286 1.072 6.07L10 14.93 4.5 18l1.072-6.07L0 7.23l6.072-.866L10 2.5z"
@@ -20,12 +15,15 @@
       <p class="ml-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p>
       <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
       <a href="#" class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">73 reviews</a>
+    </div> -->
+    
+    <div class="flex justify-center mb-2">
+      <a href="#_" @click.prevent="currentTab = 'MovieReview'" class="px-5 py-2.5 text-black font-medium mx-2 bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm">리뷰</a>
+      <a href="#_" @click.prevent="currentTab = 'MovieClip'" class="px-5 py-2.5 text-black font-medium mx-2 bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm">무비 클립</a>
+      <!-- <button @click="currentTab = 'MovieReview'">리뷰 및 평점</button>
+      <button @click="currentTab = 'MovieClip'">무비 클립</button> -->
     </div>
-    <div>
-      <button @click="currentTab = 'MovieReview'">리뷰 및 평점</button>
-      <button @click="currentTab = 'MovieClip'">무비 클립</button>
-      <component :is="currentTabComponent"></component>
-    </div>
+    <component :is="currentTabComponent"></component>
   </div>
 </template>
 
