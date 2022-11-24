@@ -218,7 +218,8 @@ const moviesStore = {
         headers: reviewItem.authHead
       })
       .then((res) => {
-        console.log(res)
+        res
+        // console.log(res)
         commit('DELETE_REVIEW', reviewItem.reviewId)
         this.$router.push({ name: "MovieDetailInfoView", params: { id: reviewItem.movieId } })
 

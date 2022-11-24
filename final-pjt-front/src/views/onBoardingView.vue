@@ -2,17 +2,44 @@
   <!-- <div></div> -->
   <body>
     <section class="section">
-      <div class="section_text section_header">
+      <div class="section_text_me section_header">
         <div>
-          <h2 id="section_1_title">Welcome to Movie App</h2>
+          <h2 style="font-size: 70px; margin-top: 0px;" id="section_1_title">ABOUT US </h2>
+          <div id="myId">
+            <h1 style="position: relative; top: -50px; font-size: 40px;" class="aboutUs">이:유는 키워드 검색 엔진을 통해 사용자의 취향에 맞는 영화를 추천합니다.</h1>
+            <div style="display: flex; margin-top: 30px;">
+              <div style="margin-right: 410px;">
+                <h1 style="margin-top: 20px;" class="aboutUs">- 다양한 카테고리</h1>
+                <h3 style="margin-top: 5px; margin-left: 25px;" class="aboutUs">    카테고리 별 영화 제공</h3>
+              </div>
+              <div>
+                <h1 style="margin-top: 20px;" class="aboutUs">- Search Engine</h1>
+                <h3 style="margin-top: 5px; margin-left: 25px;" class="aboutUs">    제목, 배우,줄거리와 관련된 영화 검색 엔진</h3>
+              </div>
+            </div>
+            <div style="display: flex; margin-top: 30px;">
+              <div style="margin-right: 150px;">
+                <h1 style="margin-top: 20px;" class="aboutUs">- 언제나 즐겁게</h1>
+                <h3 style="margin-top: 5px; margin-left: 25px;" class="aboutUs">   즐거운 테마파크에 온 기분으로 이:유를 즐기세요</h3>
+              </div>
+              <div>
+                <h1 style="margin-top: 20px;" class="aboutUs">- 사용자사이의 소통</h1>
+                <h3 style="margin-top: 5px; margin-left: 25px;" class="aboutUs">    리뷰와 방명록을 통해 다른 사용자와 소통하세요</h3>
+              </div>
+            </div>
+            <h1 class="aboutUs" style="margin-top: 140px; font-size: 70px;">이유있는 영화 추천, 이:유 </h1>
+          </div>
         </div>
       </div>
       <div class="img">
         <!-- <img src="https://images.unsplash.com/photo-1570483358100-6d222cdea6ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1965&q=80" alt="section_header_img" /> -->
         <!-- <img src="https://images.unsplash.com/photo-1514454529242-9e4677563e7b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="section_header_img" /> -->
         <!-- <img src="https://images.unsplash.com/photo-1597571063304-81f081944ee8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80" alt="section_header_img" /> -->
-        <img src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80" alt="section_header_img" />
         <!-- <img src="https://images.unsplash.com/photo-1570483358100-6d222cdea6ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1965&q=80" alt="section_header_img" /> -->
+        <!-- <img src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80" alt="section_header_img" /> -->
+        <!-- <img src="https://www.ghibli.jp/gallery/chihiro011.jpg" alt="section_header_img" /> -->
+        <!-- <img src="https://www.ghibli.jp/gallery/karigurashi022.jpg" alt="section_header_img" /> -->
+        <img src="https://www.ghibli.jp/gallery/karigurashi049.jpg" alt="section_header_img" />
       </div>
     </section>
 
@@ -154,6 +181,39 @@ export default {
 </script>
 
 <style scoped>
+
+/* 불투명에서 투명이 되는 애니메이션과 아래에서 위로 내려오는 애니메이션 */
+#myId {
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-name: fadeIn;
+  animation-play-state: running;
+  animation-timing-function: ease-in-out;
+  animation-duration: 1s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-name: fadeIn;
+  animation-play-state: running;
+  animation-timing-function: ease-in-out;
+  transform: translateY(100px);
+  transition: all 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+
 .section {
   position: relative;
   width: 100vw;
@@ -168,6 +228,15 @@ export default {
   width: 100vw;
   z-index: 2;
   top: 150px;
+}
+
+.section_text_me {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  z-index: 2;
+  top: 0;
 }
 
 .section_header {

@@ -5,15 +5,15 @@
       <!-- 영상 재생 -->
       <div>
         <div id='area'>
-          <h2 style="padding-top: 70px;" class="welcome">Welcome</h2>
-          <iframe id='video' :src=videoURL
+          <!-- <h2 style="padding-top: 70px;" class="welcome">Welcome</h2> -->
+          <iframe style="margin-top: 120px;" id='video' :src=videoURL
           frameborder="0" allow="autoplay">
           </iframe>
         </div>
       </div>
 
       <!-- 영화 카테고리 시작-->
-      <div class="mx-5">
+      <div class="mx-5" id="sectionarea">
 
         <h1 style="font-size:50px">{{ user.nickname }} 님이 찜한 영화와 비슷한 영화</h1>
         <!-- 알고리즘 추천 영화 담기 2-3개-->
@@ -264,9 +264,6 @@ export default {
 
       // 현재 유저가 위시리스트에 담은 영화들에서 관련 배우들이 출연한 영화들을 저장할 빈 배열
       actorMoviesWishList: [],
-
-      
-
     }
   },
   computed: {
@@ -278,10 +275,10 @@ export default {
     },
     
     videoURL() {
-      // return `https://www.youtube.com/embed/2JomSAO_TGo?autoplay=1&mute=1`
+      return `https://www.youtube.com/embed/2JomSAO_TGo?autoplay=1&mute=1`
       // return `https://www.youtube.com/embed/CkeiTBtCm7Y?autoplay=1&mute=1`
-      return `https://www.youtube.com/embed/WscLMTs-9Rw?autoplay=1&mute=1`
-      // return `https://www.youtube.com/embed/2JomSAO_TGo?autoplay=1&mute=1`
+      // return `https://www.youtube.com/embed/WscLMTs-9Rw?autoplay=1&mute=1`
+      // return `https://www.youtube.com/embed/p0_F0R1AWiA?autoplay=1&mute=1`
     },
     // 유저의 클릭수가 제일 많은 영화를 순서대로 나열 (user_click 키가 0이면 안가져옴)
     userClickMovies() {
@@ -376,16 +373,19 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cute+Font&family=Do+Hyeon&family=Pacifico&display=swap');
 
+
+
 * {
   z-index: 1;
   font-family: 'Do Hyeon', sans-serif;
   font-size: 40px;
   font-weight: 7500;
-  color: white;
+  color: black;
   /* background-color: black; */
 }
 #bg{
-  background-color: rgb(1, 13, 23);
+  /* background-color: rgb(1, 13, 23); */
+  background: linear-gradient(#b4daf3, #fff, #b4daf3, #fff, #b4daf3, #fff, #b4daf3, #fff, #b4daf3, #fff);
 }
 .welcome {
   color: rgba(255, 255, 255, 0.1);
@@ -407,7 +407,6 @@ export default {
   }
   
 }
-
 
 .scroll{
     width: 100%;
@@ -444,7 +443,11 @@ export default {
   padding-bottom: 35%;
   padding-left: 15%; /* 16:9 비율 */
   justify-content: center;
-  background-image: url('@/assets/background.jpg');
+  /* background-image: url('https://www.ghibli.jp/gallery/kazetachinu024.jpg'); */
+  /* background-image: url('https://www.ghibli.jp/gallery/kazetachinu022.jpg'); */
+  /* background-image: url('https://www.ghibli.jp/gallery/kazetachinu023.jpg'); */
+  /* background-image: url('https://www.ghibli.jp/gallery/kazetachinu019.jpg'); */
+  background-image: url('https://www.ghibli.jp/gallery/ponyo049.jpg');
   background-size: cover;
   background-position: center;
   

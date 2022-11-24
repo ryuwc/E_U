@@ -18,7 +18,6 @@ const accountsStore = {
     nickname: (state) => state.user.nickname || state.user.username,
     isLogin: (state) => state.token ? true : false,
     usernames: (state) => state.usernames,
-    //11,22
     profileuser: (state) => state.profileuser,
 
   },
@@ -107,7 +106,8 @@ const accountsStore = {
           headers: getters.authHead,
         })
         .then(res => {
-          console.log(res);
+          res
+          // console.log(res);
           commit('SET_TOKEN', '');
           commit('SET_USER', {});
         })
@@ -163,7 +163,7 @@ const accountsStore = {
           headers: getters.authHead,
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           commit('GET_PROFILE_USER', res.data)
         })
         .catch((err) => {
