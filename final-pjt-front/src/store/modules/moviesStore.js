@@ -231,8 +231,8 @@ const moviesStore = {
 
   // 현재 유저의 위시리스트 영화 목록 불러오는 함수
   getNowUserWishList({ commit }, userInfo) {
-    commit
-    console.log('유저정보', userInfo)
+    // console.log('유저정보', userInfo)
+    // console.log('유저userId', userInfo.userId)
     axios({
       url: `http://localhost:8000/movies/wish/${userInfo.userId}/`,
       headers: userInfo.authHead

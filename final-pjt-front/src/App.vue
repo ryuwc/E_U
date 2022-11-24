@@ -48,7 +48,7 @@
                   </div>
                 <div id="searchInput">
                   <input style="background: rgba(255, 255, 255, 0.5); color: black;"  type="text" placeholder="영화를 검색해주세요!"
-                  v-model="searchContent" @keyup.enter="searchMoviesFind(searchContent)" />
+                  v-model="searchContent" @keyup.enter="[searchMoviesFind(searchContent), searchClick()]" />
                   >
                 </div>
                 <div id="close" @click="searchClick">

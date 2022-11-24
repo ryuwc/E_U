@@ -6,9 +6,10 @@
         <img id="img" :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" alt="">
       </div>
       <div id="details">
-          <h3>{{ movie.title }}<br><span style="font-size: 19px;">{{ movie.thisMovieGenre.join(', ') }}</span></h3>
+          <h1>{{ movie.title }}<br><span style="font-size: 26px;">{{ movie.thisMovieGenre.join(', ') }}</span><br></h1>
           
         <h4 style="font-size: 17px;">{{ movie.release_date }} 개봉</h4>
+        <br>
         <p>{{ movie.overview }}</p>
         <div style="position: absolute; bottom: 30px; left: 0;" id="wishBtn" class="flex justify-center">
           <button style="background: #4646CD; border: none;" class="w-32 ml-20 mr-10 text-xl hover:scale-110"

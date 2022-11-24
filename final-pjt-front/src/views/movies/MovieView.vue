@@ -262,20 +262,26 @@ export default {
       mg5: null,
       mg6: null,
 
+      // 현재 유저가 위시리스트에 담은 영화들에서 관련 배우들이 출연한 영화들을 저장할 빈 배열
+      actorMoviesWishList: [],
+
     }
   },
   computed: {
     ...mapGetters(moviesStore, ['g1', 'g2', 'g3', 'g4', 'g5', 'g6']),
-    ...mapGetters(moviesStore, ['movies', 'nowmovies', 'loading',]),
-    ...mapGetters(accountsStore, ['user']),
+    ...mapGetters(moviesStore, ['movies', 'nowmovies', 'loading', 'nowUserWishList']),
+    ...mapGetters(accountsStore, ['user', 'authHead']),
+    nowUser() {
+      return JSON.parse(JSON.stringify(this.user))
+    },
     
     videoURL() {
-      return `https://www.youtube.com/embed/${this.playMovie}?autoplay=1&mute=1`
+      // return `https://www.youtube.com/embed/2JomSAO_TGo?autoplay=1&mute=1`
+      // return `https://www.youtube.com/embed/CkeiTBtCm7Y?autoplay=1&mute=1`
+      return `https://www.youtube.com/embed/WscLMTs-9Rw?autoplay=1&mute=1`
+      // return `https://www.youtube.com/embed/2JomSAO_TGo?autoplay=1&mute=1`
     },
-
-
   },
-  
 
   methods: {
     // DB 영화 정보 axios요청
@@ -288,7 +294,7 @@ export default {
     ...mapActions(moviesStore, ['playMovie']),
 
     // 사용자가 좋아요 한 영화 정보 axios 요청
-    ...mapActions(moviesStore, ['getLikeMovies']),
+    ...mapActions(moviesStore, ['getNowUserWishList']),
 
     // 페이지 상단에 재생 되는 영화 유튜브ID 요청
     pickPlayMovie() {
@@ -315,9 +321,9 @@ export default {
       const m6 = _.sampleSize(this.g6, 12)
       this.mg6 = m6
     },
+    // 현재 유저의 위시리스트에 담긴 영화 정보 중 배우들이 출연한 다른 영화들을 불러오는 함수
 
   },
-
   created() {
 
     // DB => 영화 정보 axios요청
@@ -333,7 +339,9 @@ export default {
     this.getSectionMovies()
 
     // 사용자가 좋아요 한 영화 목록 불러오기
-    this.getLikeMovies()
+    this.nowUser['userId'] = this.nowUser['id']
+    this.nowUser['authHead'] = this.authHead
+    this.getNowUserWishList(this.nowUser)
 
   },
 };
@@ -410,7 +418,7 @@ export default {
 #area {
   position: relative; /* absolute는 부모가 relative일 때 부모를 따라간다. */
   width: 100%;
-  height: 830px;
+  height: 995px;
   padding-bottom: 35%;
   padding-left: 15%; /* 16:9 비율 */
   justify-content: center;
@@ -422,14 +430,14 @@ export default {
 
 #video {
   position: absolute;
-  width: 70%; /* 부모에 맞게 꽉 채운다. */
-  height: 70%;
+  width: 65%; /* 부모에 맞게 꽉 채운다. */
+  height: 745px;
   margin: auto;
   margin-bottom: 5%;
   margin-top: 3%;
   animation: fadein 10s;
   animation-delay: 10s; 
-  -webkit-animation: fadein 5s; /* Safari and Chrome */
+  -webkit-animation: fadein 3s; /* Safari and Chrome */
 }
 @keyframes fadein {
     from {
