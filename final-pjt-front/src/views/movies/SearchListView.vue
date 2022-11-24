@@ -9,7 +9,7 @@
     <div style="margin-left: 300px;" class="container px-4 py-16 ml-64 space-y-16 lg:px-8 lg:py-32">
       <div class="text-center">
         <h2 class="mb-4 text-3xl font-extrabold md:text-4xl">
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500">숨 막힐듯한 팽팽한 긴장감이 흐르는 범죄 / 스릴러 영화!</span>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500">검색한 내용과 관련된 영화!</span>
         </h2>
       </div>
   

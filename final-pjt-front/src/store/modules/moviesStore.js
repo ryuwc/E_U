@@ -250,7 +250,7 @@ const moviesStore = {
   
   // 영화 찜하거나 취소하는 함수
   addMovieToWishList({ commit }, info) {
-    // console.log(info)
+    console.log(info)
     commit
     axios({
       method: "post",

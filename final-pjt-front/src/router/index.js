@@ -143,6 +143,11 @@ const routes = [
     component: () => import('../views/movies/AllMoviesView.vue')
   },
   {
+    path: '/addwishlist',
+    name: 'AddWishListView',
+    component: () => import('../views/accounts/AddWishListView.vue')
+  },
+  {
     path: '*',
     name: 'NotPound404View',
     component: () => import('../views/NotPound404View.vue')

@@ -30,7 +30,6 @@ export default {
     console.log(this.user)
     this.createProfileUser({ usernumber: this.user.id,  authHead: this.authHead})
   },
-
 };
 </script>
 

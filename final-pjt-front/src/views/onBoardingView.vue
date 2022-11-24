@@ -8,66 +8,69 @@
         </div>
       </div>
       <div class="img">
-        <img src="https://img.freepik.com/free-vector/cinema-film-festival-movie-poster-background_1017-33461.jpg" alt="section_header_img" />
+        <!-- <img src="https://images.unsplash.com/photo-1570483358100-6d222cdea6ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1965&q=80" alt="section_header_img" /> -->
+        <!-- <img src="https://images.unsplash.com/photo-1514454529242-9e4677563e7b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="section_header_img" /> -->
+        <!-- <img src="https://images.unsplash.com/photo-1597571063304-81f081944ee8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80" alt="section_header_img" /> -->
+        <img src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80" alt="section_header_img" />
+        <!-- <img src="https://images.unsplash.com/photo-1570483358100-6d222cdea6ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1965&q=80" alt="section_header_img" /> -->
       </div>
     </section>
 
     <section class="section">
       <div class="section_text">
         <div>
-          <h2 id="section_2_title">Fantasy</h2>
+          <h2 style="font-size: 100px;" id="section_2_title">액션</h2>
         </div>
       </div>
       <div class="img">
-        <img src="https://www.sll.co.kr/jtbcstudio/images/introduction/mainVisual/2022/05/447cdb68-fd27-4eb9-ae0b-6c153a6ceff9.jpg" alt="section1_img" />
+        <img src="https://www.themoviedb.org/t/p/original/vIPIyTJqcgOKgKcExCvTDpLpTYW.jpg" alt="section1_img" />
       </div>
     </section>
 
     <section class="section">
       <div class="section_text">
         <div>
-          <h2 id="section_3_title">Horror / thriller</h2>
+          <h2 style="font-size: 100px;" id="section_3_title">범죄 / 스릴러</h2>
         </div>
       </div>
       <div class="img">
-        <img src="https://www.sll.co.kr/jtbcstudio/images/introduction/mainVisual/2022/04/a52b5eb3-b8e6-4535-9073-464c98e79543.jpg" alt="section2_img" />
+        <img src="https://www.themoviedb.org/t/p/original/v8P3MuHo46tDtbfwqkGz3ajtqxe.jpg" alt="section2_img" />
       </div>
     </section>
 
     <section class="section">
       <div class="section_text">
         <div>
-          <h2 id="section_4_title">Action</h2>
+          <h2 style="font-size: 100px;" id="section_4_title">애니메이션</h2>
         </div>
       </div>
       <div class="img">
-        <img src="https://www.sll.co.kr/jtbcstudio/images/introduction/mainVisual/2022/04/5861ccc7-cfd4-4ec8-b632-3730f80a563f.jpg" alt="section3_img" />
+        <img src="https://www.themoviedb.org/t/p/original/zNugnnR5KEmq9EzLcl0Me1UmHYk.jpg" alt="section3_img" />
       </div>
     </section>
 
     <section class="section">
       <div class="section_text">
         <div>
-          <h2 id="section_5_title">Romance</h2>
+          <h2 style="font-size: 100px;" id="section_5_title">로맨스</h2>
         </div>
       </div>
       <div class="img">
-        <img src="https://www.sll.co.kr/jtbcstudio/images/introduction/mainVisual/2020/04/main_visual_img5.jpg" alt="section4_img" />
+        <img src="https://www.themoviedb.org/t/p/original/xGzoTqbOlCR4mAzeRs4PB53i8c7.jpg" alt="section4_img" />
       </div>
     </section>
 
     <section class="section">
       <div class="section_text">
         <div>
-          <h2 id="section_6_title">Drama</h2>
+          <h2 id="section_6_title">코메디</h2>
         </div>
       </div>
-
-      <div id="section_6_btn" class="section_text more_btn">
-        <div><button>더 많은 영화 보러가기</button></div>
-      </div>
+      <a href="/home"><div id="section_6_btn" class="section_text more_btn">
+        <div><button>Let's Go!</button></div>
+      </div></a>
       <div class="img">
-        <img src="https://www.sll.co.kr/jtbcstudio/images/introduction/mainVisual/2020/04/main_visual_img3.jpg" alt="section5_img" />
+        <img src="https://www.themoviedb.org/t/p/original/4zsJyxF2UGSgvs53ikysuexjlpU.jpg" alt="section5_img" />
       </div>
     </section>
   </body>

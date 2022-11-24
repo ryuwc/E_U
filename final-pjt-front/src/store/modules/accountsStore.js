@@ -45,8 +45,28 @@ const accountsStore = {
           console.log(err);
         });
     },
-    
-    signUp({ state }, user) {
+    login({ commit, dispatch }, user) {
+      // console.log(user);
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/login/`,
+        data: { ...user },
+      })
+      .then(res => {
+        // console.log(res);
+        commit('SET_TOKEN', res.data.key);
+        dispatch('getUserInfo', user.username);
+        if (user.uporin === true) {
+          router.push('/addwishlist')
+        } else {
+          router.push('/home');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
+    signUp({ dispatch, state }, user) {
       // console.log("sign up");
       // console.log(user);
       let signUpuser = {
@@ -71,28 +91,14 @@ const accountsStore = {
         .then((res) => {
           res
           state.usernames.push(user.username);
-          router.push({ name: "LoginView" });
+          dispatch("login", { username: user.username, password: user.password1, uporin: true });
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    login({ commit, dispatch }, user) {
-        // console.log(user);
-        axios({
-          method: 'post',
-          url: `${API_URL}/accounts/login/`,
-          data: { ...user },
-        })
-        .then(res => {
-          // console.log(res);
-          commit('SET_TOKEN', res.data.key);
-          dispatch('getUserInfo', user.username);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      },
+    
+    
       logOut({ commit, getters }) {
         // console.log("logout", getters.authHead);
         axios({

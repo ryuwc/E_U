@@ -98,6 +98,7 @@ export default {
   },
   methods: {
     ...mapActions(accountsStore, ['signUp']),
+  
   },
   computed: {
     ...mapGetters(accountsStore, ['usernames']),
@@ -128,7 +129,8 @@ export default {
     if (this.$store.getters[accountsStore + "/isLogin"]) {
       this.$router.push("/");
     }
-  }
+  },
+
 };
 </script>
 

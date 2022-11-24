@@ -24,7 +24,7 @@
               <form
                 class="space-y-6"
                 @submit.prevent="
-                  login({ username: username, password: password })
+                  login({ username: username, password: password, uporin: false })
                 "
               >
                 <div class="space-y-1">

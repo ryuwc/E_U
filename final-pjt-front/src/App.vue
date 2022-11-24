@@ -64,16 +64,16 @@
                     <img :src="user.profile_path" alt="Avatar Photo" class="w-16 h-16" />
                   </div>
                   <ul style="border: none;background-color: rgba(0, 0, 0, 0);position: absolute;inset: 0px auto auto 0px;margin: 0px;transform: translate(0px, 50px);position: relative;" class="dropdown-menu">
-                    <li style="padding-left: 1px; padding-right: 1px;" @click="[getProfileUser({ user: user.id, nickname: nickname })]"><router-link :to="{ name:'ProfileView', params: { id: user.id } }"><a id="profilemenu" class="dropdown-item" href="#"> 프로필</a></router-link></li>
-                    <li style="padding-left: 1px; padding-right: 1px;"><router-link to="/edit"><a id="profilemenu" class="dropdown-item" href="#">정보수정</a></router-link></li>
-                    <li style="padding-left: 1px; padding-right: 1px;" @click.prevent="logOut"><a id="profilemenu" class="dropdown-item" href="#">로그아웃</a></li>
+                    <li @click="[getProfileUser({ user: user.id, nickname: nickname })]"><router-link :to="{ name:'ProfileView', params: { id: user.id } }"><a id="profilemenu" class="dropdown-item" href="#"> 프로필</a></router-link></li>
+                    <li><router-link to="/edit"><a id="profilemenu" class="dropdown-item" href="#">정보수정</a></router-link></li>
+                    <li @click.prevent="logOut"><a id="profilemenu" class="dropdown-item" href="#">로그아웃</a></li>
                   </ul>
                 </div>
               </li>
             </ul>
           </nav>
 
-          <div class="header_button_group" style="margin-left: 100px;">
+          <div class="header_button_group">
             <router-link v-if="!isLogin" to="/login"><button class="header_button_signin" style="color: black; background-color: white; width: 80px;">Sign in</button></router-link>
             <router-link v-if="!isLogin" to="/signup"><button class="header_button_signup" style="width: 80px;">Sign up</button></router-link>
           </div>
@@ -131,7 +131,7 @@ export default {
     },
     handleHoverHeader() {
       this.header.style.backgroundColor = '#fff';
-      this.header.style.height = '250px';
+      this.header.style.height = '270px';
       // if (this.headerBtnSignin) {
       //   this.headerBtnSignin[0].style.color = '#000';
       // }
