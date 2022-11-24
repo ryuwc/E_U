@@ -18,7 +18,7 @@
 
 # 3. 데이터 베이스 모델링 (ERD)
 
-![ERD](img/ERD.jpg)
+![ERD](img/ERD.JPG)
 
 [ERD 보러가기](https://app.quickdatabasediagrams.com/#/d/7lRpZ6)
 
