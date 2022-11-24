@@ -9,6 +9,7 @@ const accountsStore = {
     token: "",
     user: {},
     usernames: [],
+    profileuser: null,
   },
   getters: {
     authHead: (state) => ({ Authorization: `Token ${state.token}` }),
@@ -18,13 +19,12 @@ const accountsStore = {
     isLogin: (state) => state.token ? true : false,
     usernames: (state) => state.usernames,
     //11,22
-    profileuser: (state) => state.profileuser
+    profileuser: (state) => state.profileuser,
 
   },
   mutations: {
     SET_TOKEN: (state, token) => ( state.token = token ),
     SET_USER: (state, user) => (state.user = user),
-    //11.22
     GET_PROFILE_USER: (state, profileuser) => (state.profileuser = profileuser)
   },
   actions: {
@@ -38,7 +38,7 @@ const accountsStore = {
         headers: getters.authHead,
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           commit("SET_USER", res.data);
         })
         .catch((err) => {
@@ -149,10 +149,11 @@ const accountsStore = {
       // 11.22 수정 //////////////////////////////////////////////////
 
       // 프로필 페이지 유저 정보 갖고오기
-      getProfileUser( {commit,getters }, profileUserId ) {
+      getProfileUser( {commit, getters }, profileUserId ) {
+        // console.log(profileUserId)
         axios({
           method: "get",
-          url: `${API_URL}/accounts/profile/${profileUserId}`,
+          url: `${API_URL}/accounts/profile/${profileUserId.user}`,
           headers: getters.authHead,
         })
         .then((res) => {
@@ -163,23 +164,6 @@ const accountsStore = {
           console.log(err);
         });
       },
-
-      // 유저 프로필 페이지에 댓글 남기기
-      // createComment( { commit, getters }, commentItem) {
-      //   console.log(commentItem)
-      //   axios({
-      //     method: "post",
-      //     url: `${API_URL}/accounts/profile/${getters.profileUserId}`,
-      //     headers: getters.authHead,
-      //   })
-      //   .then((res) => {
-      //     console.log(res.data);
-      //     commit('GET_COMMENT', res.data)
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   })
-      // },
   }
 }
 

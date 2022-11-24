@@ -1,202 +1,332 @@
-# 7일차
+# 8일차
 
-할 일
+# 류원창
 
-- [ ]  비디오 프레임 받아와서 디테일 페이지에 적절히 배치하기
+# 랜덤 영화 추천 페이지
 
-# 유튜브 영상 받아오기
+- 랜덤 영화 추천 페이지는 처음 생각은 버튼을 누르면 아래에 영화 카드가 나오는 방식을 생각했는데,
+- 이 과정이 생각보다 쉽지않다.
+- 현재 영화 카드에 스타일이 잔뜩 들어가 있는데 내가 원하는 사이즈로 변경하는게 쉽지가 않다.
+- 그래서 생각한 결론은 버튼을 누르면 랜덤으로 영화 디테일 페이지로 이동시키는 것이다.
 
-- 친절히도 tmdb에서는 영화에 대한 video를 제공해주는 api가 있다.
+![Untitled](8일차_류원창/Untitled.png)
 
-![Untitled](7일차_류원창/Untitled.png)
+# 페이지 다듬기
 
-- 적절히 보내서 영화의 비디오에 대한 정보를 가져오면 되겠다.
+- 현재 페이지의 디테일적인 부분이 다듬어 지지 않았다.
+- 시간이 없기 때문에 계획한 페이지들을 만들지 못할것같다.
+- 또한 네브바의 늦은 도입으로 네브바의 style을 전역으로 사용하는데, 이 때 다른 컴포넌트에도 영향을 주기 때문에
+- 현재 만들어진 페이지들을 전체적으로 다듬어야겠다.
 
-![Untitled](7일차_류원창/Untitled%201.png)
+# 장르별 영화 페이지 만들기 및 무한스크롤
 
-- 영화의 비디오 정보를 요청해서 데이터에 저장한다.
-- 이 때 지금 컴포넌트의 컴포넌트를 불러오는 구조로 되어있어 vuex가 필요하다
-- vuex에 데이터를 저장해서 사용해야 될 것 같다.
-- 이제 각 비디오에 대한 리스트를 만들고 그걸 누르면 재생이 되는 모달을 띄우면 될 것같은데
-- 썸네일을 사용해야 할 것 같은데 썸네일에 관한 정보는 제공해주지 않는다.
-- 방법을 찾아보자
+- 장르별로 영화를 보여주는 페이지를 만들었고, 무한스크롤을 구현했다.
+- 무한스크롤을 구현하는 쉬운 방식 중 하나는 inter어쩌구 api를 쓰는 것이었는데, 문서 보기가 시간이 없어서
+- 그냥 현재 스크롤 위치와 전체 높이로 대충 계산해서 data에 영화정보를 가지고있는 배열에 넣어준다.
 
-### 썸네일을 찾을 수 있을 것 같다.
+### 문제는 this
 
-- tmdb의 영화 디테일의 트레일러 재생 a태그를 살펴보니 backgroud이미지의 주소를 알아냈다.
-- 아래는 tmdb의 태그
+- mounted안에서 this는 vue를 가르키지만, mounted안의 이벤트리스너안은 this가 윈도우를 가르켜서 계속 오류가 떳다.
+- 그래서, 이벤트리스너를 익명함수로 사용하였더니 this가 제대로 vue를 가르키고, 함수 또한 제대로 실행 되었다.
 
-```html
-<div class="wrapper" style="background-image: url('https://i.ytimg.com/vi/1pbjFu6aIZg/hqdefault.jpg');">
-  <a class="no_click play_trailer" href="/video/play?key=1pbjFu6aIZg" data-site="YouTube" data-id="1pbjFu6aIZg" data-title="[블랙 아담] 코믹콘 영상"><div class="play_background"><span class="glyphicons_v2 play invert svg"></span></div></a>
-</div>
-```
+![Untitled](8일차_류원창/Untitled%201.png)
 
-- 저 주소에 iframe재생을 위한 키를 vi/여기/ 에 입력했더니 가져오는 것 같다
-- 썸네일은 저 주소를 이용해 접근하면 될 것 같다.
+![Untitled](8일차_류원창/Untitled%202.png)
 
-### 영화 비디오 요청 문제 및 해결
+- 스크롤이 밑에 쪽에 있으면 계속 영화의 정보를 data에 넣어준다.
 
-- created에 영화 비디오 가져오는 함수를 호출하고, console에 data에 있는 영화비디오정보를 찍어봤다.
-- 근데, 순서가 이상하다. 비동기 처리가 되어서 비디오를 가져오기 전에 호출되는 것 같다.
+# 영화 조회 페이지 진행중
 
-![Untitled](7일차_류원창/Untitled%202.png)
+- 영화를 장르별 또는 전체를 보여주는 페이지를 만들어야하는데, 디자인은 강의실에서 좀 해놨다.
+- 적절한 정보만 추가하면 될 것 같다.
 
-- 위의 예시를 보면, 코드는 분명히 데이터를 가져오는 함수를 먼저 호출하고, 데이터를 출력했는데
-- response가 더 늦게 오는 걸 확인했다.
-- setTimeout을 활용하면 되겠다.
+![Untitled]8일차_류원창/Untitled%203.png)
 
-![Untitled](7일차_류원창/Untitled%203.png)
+- 왼쪽의 네비게이션은 급하게 생각나서 만든거라 이미 전체 카드의 배치의 틀을 잡아버렸는데,
+- 추가적으로 네비게이션을 추가하기에는 시간이 오래걸린다.
+- 포지션을  absolute로 잡아버려서 조정하는 수 밖에 없다. 지금은..
 
-![Untitled](7일차_류원창/Untitled%204.png)
+# 정리 완료
 
-- 시간을 1초정도로 주면 될 것 같다. 후에 다른 영화 확인 후 더 필요하면 추가하도록 한다.
+![Untitled](8일차_류원창/Untitled%204.png)
 
-![Untitled](7일차_류원창/Untitled%205.png)
+# 다듬기 거의 완료 오늘 마무리
 
-![Untitled](7일차_류원창/Untitled%206.png)
+![Untitled](8일차_류원창/Untitled%205.png)
 
-- 일단 하나 해결
+&nbsp;
+---
+&nbsp;
 
-# 내일의 나에게
 
-- 일단 영화 디테일 페이지에서 비디오 정보까지 받아서 vuex에 저장했으니 적절히 활용하도록 해
+# 이지은
 
-![Untitled](7일차_류원창/Untitled%207.png)
+- [x]  프로필 페이지 접근
+- [x]  프로필 페이지에 찜 목록 / 방명록 기능 만들기
+- [x]  소감 📕
 
-- 대충 이런식으로 짜고 저거 누르면 iframe포함한 모달 띄울거야
-- [`https://i.ytimg.com/vi/ZS_8btMjx2U/hqdefault.jpg`](https://i.ytimg.com/vi/ZS_8btMjx2U/hqdefault.jpg) 이게 썸네일 가져오는 url
-- 일단 난 온보딩 스크롤 이벤트좀 해야될듯
+# 프로필 페이지
 
-# 영화 프레임
+### 방명록 기능
 
-- 영화 프레임은 위와 같은 디자인으로 만든다.
-- 저 이미지를 클릭하면, 모달로 유튜브 프리뷰가 띄어지게 할 것이다.
-
-![Untitled](7일차_류원창/Untitled%208.png)
-
-- 위의 주소가 썸네일을 가져오는 주소가 맞았다.
-- 이제 가운데에 누르면 재생할 것 같은 버튼을 넣었어야 되는데, 적절한 이미지를 가져왔다.
-- 이 과정에서 css의 position에 관한 지식을 좀 배웠다.
-- 일단은, 저런 형식으로 씌울려면 유튜브 버튼이 자식이고 저 썸네일이 부모다
-- 이제 부모의 포지션을 related로 주고, 자식의 포지션을 absolute로 주어 top과 left를 조절하면 된다.
-
-![Untitled](7일차_류원창/Untitled%209.png)
-
-- 시간이 없어서 태그들이 너무 보기가 싫다.
-- 다음부턴 체계적으로 정리하기로 한다.
-
-### 프리뷰 모달창 완료
-
-- 모달 창 자체는 저번에 만들어논 삭제 버튼을 누르면 나타나는 모달을 재활용했다.
-- 영화 썸네일은 v-for로 계속 돌며 이중 하나를 클릭하면 clickVideo함수에 그 상태의 video.key를 매개변수로 전해준다.
-- 이 매개변수를 데이터에 저장하여 ifram의 url주소로 활용한다.
-- 코드는 아래의 이미지를 참조
-
-![Untitled](7일차_류원창/Untitled%2010.png)
-
-![Untitled](7일차_류원창/Untitled%2011.png)
-
-![Untitled](7일차_류원창/Untitled%2012.png)
-
-# 영화 찜 api만들기
-
-- 영화 찜 하는 api만드는 것은 생각보다 간단했다.
-- 기존에 존재하는 영화 디테일을 조회하는 url에 post요청으로 추가하면 된다.
-- 자세한건 아래 코드 참고
+comments**/models.py**
 
 ```python
-# 영화 디테일 조회(GET), 영화 찜하기(POST)
-# 찜할 때는 메서드는 그냥 POST로 data없이 보내면 된다. (보낼 때의 토큰이 해당 유저와 매칭시킨다.)
-@api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticatedOrReadOnly])
-def movie_detail(request, movie_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    # 조회(GET)일 경우
-    if request.method == 'GET':
-        serializer = MovieSerializer(movie)
-        return Response(serializer.data)
-    # 찜하기(POST)일 경우
-    elif request.method == 'POST':
-        # 찜하기는 로그인한 유저만 가능하다.
-        # 찜하기를 누른 유저가 이미 찜을 눌렀는지 확인
-        if request.user in movie.like_users.all():
-            movie.like_users.remove(request.user)
-            movie_like = False
-        else:
-            movie.like_users.add(request.user)
-            movie_like = True
-        context = {
-            'msg': '찜하기 or 찜취소 접근 성공',
-            'movie_like': movie_like,
-        }
-        return Response(context, status=status.HTTP_201_CREATED)
+class Profile(models.Model):
+    usernumber = models.IntegerField()
+
+class Comment(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    content = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content
 ```
 
-![Untitled](7일차_류원창/Untitled%2013.png)
+`Profile, Comment 모델 정의`
 
-# 페이지에서 찜하기 또는 취소 요청보내기
+- 로그인 후 Intropage 에 들어오면 **Profile usernumber DB** 가 저장되는 함수 작성하기
+- usernumber이 저장되어 있어야 사용자가 usernumber을 id로 갖는 user 프로필에 접근해 댓글을 남길 수 있다.
+- 그동안 계속해서 배웠던 article_id 에 접근해 comment 를 남기는 article-comment 관계를
+- usernumber-comment 관계로 재정의
+- usernumber는 하나의 게시글 번호와 같은 것이다
+    
+    ←- 유저_id 끼리 참조하는 방법을 몰라서 일단 이렇게 사용하기로 했다 —>
+    
 
-- 영화 디테일 페이지에서 현재 로그인된 유저가 요청을 보낼 수 있어야 한다.
-- 페이지의 적절한 곳에 찜하기, 취소하기 버튼을 만들어야 한다.
+### 작업 순서
 
-![Untitled](7일차_류원창/Untitled%2014.png)
+### 1.  회원가입 한 user_id / server의 [comments.app](http://comments.app) → Profile Models에 저장
 
-![Untitled](7일차_류원창/Untitled%2015.png)
+- 회원가입을 한 사용자는 자동 로그인 후 TasteMovie.vue 로 이동하게 된다.
+- TasteMovie 에서 가입한 유저의 id 를 db에 저장
 
-- 버튼을 만들었고 함수도 정상적으로 실행이된다.
-- 근데 좀 이게 생각보다 복잡하다. 일단, 처음 위시리스트 모델을 가져와야 되고, 그 모델에 맞는 유저가
-- 위시리스트에 담았는지 확인하고 어떤 버튼을 보여줄지 정해야 한다.
-- 일단, 전체 위시리스트를 가져와서 moviesStore에 저장하는 함수를 만들어야한다.
-- 먼저 백엔드에서 전체 위시리스트를 조회할 수 있는 api를 만들어야한다.
+1. `Vue` SignUp ****<  → methods → mapAction() > →
+2.    **accountsStore**  → <actios(axios)> → 
+3. `Django` → url → DB →
+4. `Vue` →  **accountsStore** → getters → state
 
-# manytomany로 연결된 모델 가져오기
+TastMovie.vue
 
-- 현재 manytomany라는 데이베이스는 만들어졌지만, 이에 대한 모델은 없어서
-- 가져오려면 영화 전체 데이터를 조회해서 그 안에서 필터를 돌려야 한다.
-- 하지만 이 방법은 너무 비효율적이다. 또한, 양이 적은 user테이블에서 정보를 가져오려고 했는데,
-- dj-rest-auth의 방식이 제공을 안하는 것인지 역참조가 조회가 되지 않는다.
-- 그래서 찾은 방법이 중간 모델을 이요하면 될 것 같다. 아래의 블로그를 보며 따라해보면 될 것 같다.
+```jsx
+computed: {
+    ...mapGetters(accountsStore, ["user", 'authHead']),
+  },
 
-![Untitled](7일차_류원창/Untitled%2016.png)
+  methods: {
+    ...mapActions(commentsStore, ['createProfileUser'])
+  },
 
-- 위의 방법이 사용이 잘 안된다. 애초에 User모델은 다른 앱에 있다. 그리고 다른 에러도 뜬다.
-- 그래서 생각나는대로 코드를 짜봤는데, 전체 위시리스트를 조회하는 것이 아닌
-- 특정 유저의 위시리스트에 담은 영화 정보를 조회하는 것이다.
+  created() {
+    console.log(this.user)
+    this.createProfileUser({ usernumber: this.user.id,  authHead: this.authHead})
+  },
 
-![Untitled](7일차_류원창/Untitled%2017.png)
+```
 
-![Untitled](7일차_류원창/Untitled%2018.png)
+```jsx
+accountsStore
 
-![Untitled](7일차_류원창/Untitled%2019.png)
+// 프로필 페이지 유저 정보 갖고오기
+      getProfileUser( {commit, getters }, profileUserId ) {
+        axios({
+          method: "get",
+          url: `${API_URL}/accounts/profile/${profileUserId.user}`,
+          headers: getters.authHead,
+        })
+        .then((res) => {
+          console.log('@@@@@@',res.data);
+          commit('GET_PROFILE_USER', res.data.id)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      },
+```
 
-- 이정도로 될 것 같다.
+**comments-profile-DB**
 
-## 위의 것 변경
+| id | usernumber |
+| --- | --- |
+| 1 | 1 |
+| 2 | 2 |
+| 3 | 3 |
+| 4 | 4 |
+| 5 | 5 |
+| … | … |
 
-- 위의 api는 토큰을 통해 현재 유저가 위시리스트에 담은 정보를 보여준다.
-- 다른 유저가 위시리스트에 담은것은 보지 못한다.
-- 아래는 수정본이다. 자신이 아닌 특정 유저가 위시리스트에 담은 영화를 조회할 수 있다.
+## 📕`DB에 이런 식으로 저장하는 이유`
 
-![Untitled](7일차_류원창/Untitled%2020.png)
+현재 로그인 중인 사용자 A (  user_pk = 1) 가 사용자 B( user_id = 10 ) 의 프로필 페이지에 접근하여 댓글을 작성한다면 총 2개의 user data 가 필요하다.
 
-![Untitled](7일차_류원창/Untitled%2021.png)
+하나의 모델에 두개의 유저 데이터를 쓰는 방법을 생각하지 못했다. 
 
-## 디테일 페이지 다듬기
+모델 관계를 어떻게 정의 할 지 몰라서 일단은 회원가입 한 user의 id 를 username에 모두 저장해 두었다.
 
-![Untitled](77일차_류원창/Untitled%2022.png)
+A가 B의 프로필 페이지에 들어가 댓글을 단다면 Comment.Model의 profile = 10 , user_id=1 이 된다.  이렇게 되면 Article-Comment 모델 처럼 쉽게 CRUD가 가능해진다.
 
-- 이정도면 될 것 같다..
+프로젝트 기간이 촉박하여 두 유저가 직접 연결될 수 있는 방법을 생각하지는 못했지만, 플젝이 끝나고 해결책을 다시 한번 생각해보고싶다.  
 
-## 위시리스트 관련 함수, vuex만들기
+ 
 
-- 특정 유저의 위시리스트를 조회할 수 있는 api를 만들었으니, vue에서 사용하도록 한다.
+### 2. Serverer < - > Clint  ⇒  CRUD
 
-![Untitled](7일차_류원창/Untitled%2023.png)
+**Django comments/urls**
 
-![Untitled](7일차_류원창/Untitled%2024.png)
+```python
+urlpatterns = [
+    # 프로필 유저 생성
+    path('profileuser/', views.profileuser_list, name='profileuser_list'),
+  
+    # 프로필 유저 전체 댓글 조회(GET)
+    path('profileuser/<int:profile_pk>/comments/', views.comment_list, name='comment_list'),
+    # 프로필 유저 댓글 생성(POST)
+    path('profileuser/<int:profile_pk>/comment/', views.comment_create, name='comment_create'),
+    # 프로필 유저 댓글 삭제 (DELETE)
+    path('profileuser/<int:profile_pk>/comment/<int:comment_pk>/', views.comment_delete, name = 'comment_delete'),
+]
+```
 
-- 이제 이 현재 페이지의 영화를 찜 했는지 확인이 필요하다.
-- 찜 했을 경우와 아닐 경우에 보여줄 버튼이 다르기 때문이다.
-- axios요청이 제대로 오면 함수를 실행하도록 하자
-- 생각한대로 머리랑 몸이 안따라준다.
+**Django comments/views**
+
+```python
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import status
+
+from django.shortcuts import get_list_or_404, get_object_or_404
+from comments.serializers import ProfileSerializer, CommentSerializer, ProfileListSerializer
+from comments.models import Comment, Profile
+from django.contrib.auth import get_user_model
+
+# 회원가입 한 유저id 조회(GET), 생성(POST)
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def profileuser_list(request):
+    print(request)
+    if request.method == 'GET':
+        profiles = get_list_or_404(Profile.objects.order_by('-pk'))
+        serializer = ProfileListSerializer(profiles, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = ProfileSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            # serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+# 유저 프로필 페이지 댓글 조회(GET), 생성(POST), 삭제(DELETE)
+
+@api_view(['GET'])
+def comment_list(request, profile_pk):
+# 프로필 유저 전체 댓글 조회(GET)
+    profile = get_object_or_404(Profile, pk=profile_pk)
+    comments = profile.comment_set.all()
+    # 역참조 profile : comment 1:N
+    serializers = CommentSerializer(comments, many=True)
+    return Response(serializers.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def comment_create(request, profile_pk):
+# 프로필 유저 댓글 생성(POST)
+    profile = get_object_or_404(Profile, pk=profile_pk)
+    serializer = CommentSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(user=request.user, profile = profile)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def comment_delete(request, profile_pk, comment_pk):
+
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    # 상세 댓글 .filter(pk=comment_pk)
+    if request.user == comment.user:
+    # 댓글 작성자와 같은 경우 
+        comment.delete()
+        data = {
+            'delete': f'댓글 {comment_pk}번이 삭제되었습니다.'
+        }
+        return Response(data, status=status.HTTP_204_NO_CONTENT)
+    return Response(status=status.HTTP_403_FORBIDDEN)
+```
+
+**VUE commentsStore**
+
+```jsx
+import axios from "axios";
+
+const API_URL = "http://127.0.0.1:8000";
+
+const commentssStore = {
+  namespaced: true,
+  state: {
+    comments: null,
+  },
+
+  getters: {
+    comments: (state) => state.comments,
+  },
+
+  mutations: {
+    CREATE_COMMENT: (state, comment) => (state.comments.unshift(comment)),
+    GET_COMMENTS: (state, comments) => (state.comments = comments),
+  },
+
+  actions:{
+  createProfileUser( { commit }, profileUser ) {
+    axios({  
+      method: "post",
+      url: `${API_URL}/comments/profileuser/`,
+      data: {...profileUser},
+      headers: profileUser.authHead
+    })
+    .then((res) => {
+      commit
+      console.log( '프로필 유저 생성 완료', res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  },
+
+  // 댓글 생성 
+  createComment( { commit }, commentItem) {
+    axios({
+      method: "post",
+      url: `${API_URL}/comments/profileuser/${commentItem.profile}/comment/`,
+      data: {content: commentItem.content},
+      headers: commentItem.authHead,
+    })
+    .then((res) => {
+      alert('댓글 작성 완료!.')
+      commit('CREATE_COMMENT', res.data)
+      commit
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  },
+
+  // 댓글 조회(GET)
+  getComments( { commit }, profileItem) {
+    axios({
+      method: "get",
+      url: `${API_URL}/comments/profileuser/${profileItem.id}/comments/`,
+      headers: profileItem.token,
+    })
+    .then((res) => {
+      commit("GET_COMMENTS", res.data);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  },
+```

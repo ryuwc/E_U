@@ -68,6 +68,11 @@ const routes = [
     component: () => import('../views/movies/RandomMovieView.vue')
   },
   {
+    path: '/feeling',
+    name: 'FeelingMovieView',
+    component: () => import('../views/movies/FeelingMovieView.vue')
+  },
+  {
     path: '/movies/:id',
     name: 'MovieDetailInfoView',
     component: () => import('../views/movies/MovieDetailInfoView.vue')
@@ -91,6 +96,51 @@ const routes = [
     path: '/maintest',
     name: 'MainTest',
     component: () => import('../views/MainTest.vue')
+  },
+  {
+    path: '/nowmovies',
+    name: 'NowMoviesView',
+    component: () => import('../views/movies/NowMoviesView.vue')
+  },
+  {
+    path: '/actionmovies',
+    name: 'ActionsMovieView',
+    component: () => import('../views/movies/ActionsMovieView.vue')
+  },
+  {
+    path: '/animationmovies',
+    name: 'AnimationMoviesView',
+    component: () => import('../views/movies/AnimationMoviesView.vue')
+  },
+  {
+    path: '/romancemovies',
+    name: 'RomanceMoviesView',
+    component: () => import('../views/movies/RomanceMoviesView.vue')
+  },
+  {
+    path: '/crimemovies',
+    name: 'CrimeMoviesView',
+    component: () => import('../views/movies/CrimeMoviesView.vue')
+  },
+  {
+    path: '/comedymovies',
+    name: 'ComedyMoviesView',
+    component: () => import('../views/movies/ComedyMoviesView.vue')
+  },
+  {
+    path: '/search',
+    name: 'SearchListView',
+    component: () => import('../views/movies/SearchListView.vue')
+  },
+  {
+    path: '/werecommendmovies',
+    name: 'WeRecommendMoviesView',
+    component: () => import('../views/movies/WeRecommendMoviesView.vue')
+  },
+  {
+    path: '/allmovies',
+    name: 'AllMoviesView',
+    component: () => import('../views/movies/AllMoviesView.vue')
   },
   {
     path: '*',

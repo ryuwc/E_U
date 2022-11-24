@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     # 장고 기본 앱
     'accounts',
     'movies',
+    'comments',
     
     'rest_framework',
 

@@ -13,6 +13,11 @@ module.exports = {
       './src/components/PosterSlider.vue',
       './src/components/MovieClip.vue',
       './src/components/MovieDetailR.vue',
+      './src/Views/movies/NowMoviesView.vue',
+      // '/src/Views/testThreeView.vue',
+      './src/components/FooTer.vue',
+      './src/Vies/AllMovieView.vue',
+      // './src/App.vue',
     ],
   theme: {
     extend: {},

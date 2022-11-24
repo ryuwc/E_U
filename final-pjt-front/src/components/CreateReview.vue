@@ -5,7 +5,7 @@
         <div class="flex items-center ml-3">
           <div class="flex items-center mr-3">
             <img :src="user.profile_path" alt="Avatar Photo" class="w-12 h-12" />
-            <p style="margin-bottom: 0; margin-left: 10px" class="text-lg">{{ user.nickname ? user.nickname : user.username }}</p>
+            <p style="margin-bottom: 0; margin-left: 10px; color: black;" class="text-lg">{{ user.nickname ? user.nickname : user.username }}</p>
             <form name="myform" id="myform" method="post" action="./save">
               <fieldset class="mb-1 ml-10">
                 <legend></legend>
@@ -34,7 +34,7 @@
           ></textarea>
         </div>
         <div class="flex justify-between">
-          <div><button class="px-4 py-1 font-light text-white bg-gray-800 rounded hover:bg-gray-700"
+          <div><button class="px-4 py-1 mb-1 font-light text-white bg-gray-800 rounded hover:bg-gray-700"
             @click="[createReview({ content: content, movieId: movieId, rank: rank, user: user.id, authHead: authHead  }), cleanData()]"
             >작성!</button></div>
         </div>
@@ -84,6 +84,11 @@ export default {
 </script>
 
 <style scoped>
+* {
+  color: black;
+  font-family: 'Jua', sans-serif;
+}
+
 #myform fieldset{
     display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
     direction: rtl; /* 이모지 순서 반전 */

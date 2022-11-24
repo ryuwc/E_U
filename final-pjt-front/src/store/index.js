@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import accountsStore from './modules/accountsStore'
 import moviesStore from './modules/moviesStore';
+// 11.23
+import commentsStore from './modules/commentsStore';
 import createPersistedState from "vuex-persistedstate";
 import VuexPersistence from 'vuex-persistedstate'
 
@@ -26,6 +28,8 @@ export default new Vuex.Store({
   modules: {
     accountsStore: accountsStore,
     moviesStore: moviesStore,
+    // 11.23
+    commentsStore: commentsStore,
     plugins: [vuexLocal.plugin],
   }
 })

@@ -1,10 +1,16 @@
 <template>
   <div>
-    <a href="#_" class="px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"> Button Text </a>
+   <h1>임시 임시</h1>
+  
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+const commentsStore = "commentsStore";
+const accountsStore = "accountsStore";
+
+
 export default {
   name: 'TestThree',
 
@@ -12,10 +18,24 @@ export default {
     return {};
   },
 
-  mounted() {},
+  computed: {
+    ...mapGetters(accountsStore, ["user", 'authHead']),
+  },
 
-  methods: {},
+  methods: {
+    ...mapActions(commentsStore, ['createProfileUser'])
+  },
+
+  created() {
+    console.log(this.user)
+    this.createProfileUser({ usernumber: this.user.id,  authHead: this.authHead})
+  },
+
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+*{
+  color: black
+}
+</style>

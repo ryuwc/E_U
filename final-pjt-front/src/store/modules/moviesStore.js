@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "@/router";
 
 const API_URL = "http://127.0.0.1:8000";
 
@@ -37,6 +38,7 @@ const moviesStore = {
     wishList: null,
     // 현재 유저의 위시리스트
     nowUserWishList: null,
+    searchMovies: null,
 
   },
   getters: {
@@ -49,6 +51,7 @@ const moviesStore = {
     allGenres: (state) => state.allGenres,
     nowMovieVideo: (state) => state.nowMovieVideo,
     nowUserWishList: (state) => state.nowUserWishList,
+    searchMovies: (state) => state.searchMovies,
     
     // 장르별 영화들
     genre12: (state) => state.movies.filter((movie) => movie.genres.includes(12)),
@@ -83,6 +86,8 @@ const moviesStore = {
     g5: (state) => state.movies.filter((movie) => movie.genres.includes(14) &&  movie.genres.includes(878)),
     // 장르 (전쟁)
     g6: (state) => state.movies.filter((movie) => movie.genres.includes(10752)),
+    // 장르 (로맨스, 드라마)
+    g7: (state) => state.movies.filter((movie) => movie.genres.includes(10749) &&  movie.genres.includes(18)),
     // 감독 (봉준호)
 
     // 배우 (톰쿠르즈)
@@ -104,6 +109,10 @@ const moviesStore = {
     DELETE_REVIEW: (state, reviewId) => (state.reviews = state.reviews.filter((review) => review.id !== reviewId)),
     SET_NOW_MOVIE_VIDEO: (state, nowMovieVideo) => (state.nowMovieVideo = nowMovieVideo),
     GET_NOW_USER_WISH_LIST: (state, wishList) => (state.nowUserWishList = wishList),
+    SEARCH_MOVIES_FIND: (state, searchMovies) => {
+      state.searchMovies = searchMovies
+      router.push('/search')
+    },
     // 영화 찜하거나 취소
   },
   actions: {
@@ -252,6 +261,22 @@ const moviesStore = {
       res
       // console.log(res.data)
     })
+  },
+
+  // 검색한 내용 찾는 함수
+  searchMoviesFind({ state, commit }, searchWord) {
+    commit
+    searchWord
+    const tmpMovies = []
+    // console.log('state.movies', state.movies);
+    state.movies.forEach((movie) => {
+      // console.log('개별 영화 정보', movie);
+      if (movie.title.includes(searchWord) || movie.overview.includes(searchWord)) {
+        tmpMovies.push(movie)
+      }
+    })
+    // console.log(tmpMovies);
+    commit('SEARCH_MOVIES_FIND', tmpMovies)
   },
   // setWishList({ commit }){
   // }

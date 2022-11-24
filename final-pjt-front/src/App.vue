@@ -3,100 +3,83 @@
     <body>
       <header id="header">
         <div class="header">
-          
-          <img src="./image/logo.png"
-          style="width: 65px; height: 65px; margin-left: 20px; margin-top: 20px; margin-bottom: 20px;"
-          >
-
+          <router-link style="margin-left: 100px; position: relative;" to="/home">
+            <img src="./image/logo2.png" style="width: 65px; height: 65px; margin-left: 100px; margin-top: 20px; margin-bottom: 20px"
+          /></router-link>
           <nav>
             <ul>
-              <li>
+              <li style="margin-left: 100px;">
                 <div class="list">
-                  <h3 class="nav_text">임시</h3>
+                  <router-link to="/allmovies"><h3 style="font-size: 40px;" class="nav_text">영화</h3></router-link>
                   <div class="hidden_nav_list">
                     <a href="">
-                      <router-link  to="/home"><p class="hidden_nav_list_text">Home</p></router-link>
-                    </a>
-                    <a href="" @click.prevent="logOut">
-                      <p class="hidden_nav_list_text">로그아웃</p>
+                      <router-link to="/allmovies"><p style="font-size: 25px;" class="hidden_nav_list_text">전체영화</p></router-link>
                     </a>
                     <a href="">
-                      <router-link to="/edit"><p class="hidden_nav_list_text">정보수정</p></router-link>
+                      <router-link to="/nowmovies"><p style="font-size: 25px;" class="hidden_nav_list_text">최신영화</p></router-link>
                     </a>
+                    
                     <a href="">
-                      <router-link to="/profile"><p class="hidden_nav_list_text">프로필</p></router-link>
+                      <router-link to="/actionmovies"><p style="font-size: 25px; width: 160px;" class="text-transparent hidden_nav_list_text">이:유 추천영화</p></router-link>
                     </a>
                   </div>
                 </div>
               </li>
               <li>
                 <div class="list">
-                  <h3 class="nav_text">nav2</h3>
-                  <div class="hidden_nav_list">
-                    <a href="">
-                      <p class="hidden_nav_list_text">nav2-1</p>
-                    </a>
-                    <a href="">
-                      <p class="hidden_nav_list_text">nav2-2</p>
-                    </a>
-                    <a href="">
-                      <p class="hidden_nav_list_text">nav2-3</p>
-                    </a>
-                    <a href="">
-                      <p class="hidden_nav_list_text">nav2-4</p>
-                    </a>
-                  </div>
+                  <router-link to="/feeling"
+                    ><a href=""><h3 style="font-size: 40px;" class="nav_text">내기분</h3></a></router-link
+                  >
                 </div>
               </li>
               <li>
                 <div class="list">
-                  <h3 class="nav_text">nav3</h3>
-                  <div class="hidden_nav_list">
-                    <a href="">
-                      <p class="hidden_nav_list_text">nav3-1</p>
-                    </a>
-                    <a href="">
-                      <p class="hidden_nav_list_text">nav3-2</p>
-                    </a>
-                    <a href="">
-                      <p class="hidden_nav_list_text">nav3-3</p>
-                    </a>
-                    <a href="">
-                      <p class="hidden_nav_list_text">nav3-4</p>
-                    </a>
-                  </div>
+                  <router-link to="/random"
+                    ><a href=""><h3 style="font-size: 40px; width: 140px;" class="nav_text">랜덤영화</h3></a></router-link
+                  >
                 </div>
               </li>
-              <li>
-                <div class="list">
-                  <h3 class="nav_text">nav4</h3>
-                  <div class="hidden_nav_list">
-                    <a href="">
-                      <p class="hidden_nav_list_text">nav4-1</p>
-                    </a>
-                    <a href="">
-                      <p class="hidden_nav_list_text">nav4-2</p>
-                    </a>
-                    <a href="">
-                      <p class="hidden_nav_list_text">nav4-3</p>
-                    </a>
-                    <a href="">
-                      <p class="hidden_nav_list_text">nav4-4</p>
-                    </a>
+              
+              <!-- 서치바 -->
+              <li style="margin-left: 200px; width: 360px;">
+                <div id="searchBox">
+                  <div id="search" @click="searchClick">
+                    <i style="color: black;" class="fa-solid fa-magnifying-glass"></i>
                   </div>
+                <div id="searchInput">
+                  <input style="background: rgba(255, 255, 255, 0.5); color: black;"  type="text" placeholder="영화를 검색해주세요!"
+                  v-model="searchContent" @keyup.enter="searchMoviesFind(searchContent)" />
+                  >
+                </div>
+                <div id="close" @click="searchClick">
+                  <i style="color: black;" class="fa-solid fa-xmark"></i>
+                </div>
+                </div>
+              </li>
+              
+              <!-- 유저 프로필 -->
+              <li v-if="isLogin" style="margin-left: 0px;">
+                <div class="dropdown hover:scale-125">
+                  <div class="" type="button" data-bs-toggle="dropdown">
+                    <img :src="user.profile_path" alt="Avatar Photo" class="w-16 h-16" />
+                  </div>
+                  <ul style="border: none;background-color: rgba(0, 0, 0, 0);position: absolute;inset: 0px auto auto 0px;margin: 0px;transform: translate(0px, 50px);position: relative;" class="dropdown-menu">
+                    <li style="padding-left: 1px; padding-right: 1px;" @click="[getProfileUser({ user: user.id, nickname: nickname })]"><router-link :to="{ name:'ProfileView', params: { id: user.id } }"><a id="profilemenu" class="dropdown-item" href="#"> 프로필</a></router-link></li>
+                    <li style="padding-left: 1px; padding-right: 1px;"><router-link to="/edit"><a id="profilemenu" class="dropdown-item" href="#">정보수정</a></router-link></li>
+                    <li style="padding-left: 1px; padding-right: 1px;" @click.prevent="logOut"><a id="profilemenu" class="dropdown-item" href="#">로그아웃</a></li>
+                  </ul>
                 </div>
               </li>
             </ul>
           </nav>
 
-          <div class="header_button_group">
-            <router-link v-if="!isLogin" to="/login"><button class="header_button_signin" style="color: black;">Sign in</button></router-link>
-            <router-link v-if="!isLogin" to="/signup"><button class="header_button_signup">Sign up</button></router-link>
+          <div class="header_button_group" style="margin-left: 100px;">
+            <router-link v-if="!isLogin" to="/login"><button class="header_button_signin" style="color: black; background-color: white; width: 80px;">Sign in</button></router-link>
+            <router-link v-if="!isLogin" to="/signup"><button class="header_button_signup" style="width: 80px;">Sign up</button></router-link>
           </div>
         </div>
       </header>
     </body>
-
 
     <!-- 임시로 사용한 네브바 -->
     <!-- <nav>
@@ -120,6 +103,8 @@ const moviesStore = 'moviesStore';
 
 export default {
   name: 'App',
+  components: {
+  },
 
   data() {
     return {
@@ -128,12 +113,13 @@ export default {
       navText: null,
       hiddenNavText: null,
       headerBtnSignin: null,
+      searchContent: null,
+      searchMovies: null,
     };
   },
   methods: {
-    ...mapActions('accountsStore', ['logOut']),
-    ...mapActions(moviesStore, ['getMovies']),
-    ...mapActions(moviesStore, ['getNowMovies']),
+    ...mapActions('accountsStore', ['getProfileUser','logOut']),
+    ...mapActions(moviesStore, ['getNowMovies', 'searchMoviesFind', 'getMovies']),
     getId: (id) => {
       return document.getElementById(id);
     },
@@ -172,10 +158,14 @@ export default {
     main: () => {
       // header = this.getId('header');
     },
+    searchClick() {
+      const searchBox = document.querySelector('#searchBox');
+      searchBox.classList.toggle('active');
+    },
   },
   computed: {
-    ...mapGetters('accountsStore', ['isLogin']),
-    ...mapGetters('accountsStore', ['nickname']),
+    ...mapGetters('accountsStore', ['isLogin', 'nickname', 'username', 'user']),
+    ...mapGetters(moviesStore, ['movies']),
   },
   created() {
     this.getMovies(), this.getNowMovies();
@@ -193,8 +183,14 @@ export default {
 };
 </script>
 
+<style>
+#profilemenu:hover {
+  background-color: white;
+}
 
-<style scoped>
+* {
+  font-family: 'Jua', sans-serif;
+}
 
 body {
   margin: 0;
@@ -264,10 +260,11 @@ button:active {
 }
 
 header {
-  position: fixed;
+  position: absolute;
+  top: 0;
   width: 100%;
   /* height: 300px; */
-  height: 100px;
+  height: 90px;
   transition: 0.2s ease-in-out;
   z-index: 100;
   background-color: rgba(0, 0, 0, 0);
@@ -276,7 +273,7 @@ header {
 
 #header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .header {
@@ -446,5 +443,66 @@ header {
   }
 }
 
-</style>
+#searchBox {
+  position: relative;
+  width: 58px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-between;
+  transition: 0.5s;
+  overflow: hidden;
+  /* box-shadow: 0 25px 35px rgba(0, 0, 0, 0.1); */
+}
 
+#searchBox.active {
+  width: 360px;
+}
+
+#searchBox #search {
+  position: relative;
+  min-width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+#searchBox #close {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.25em;
+}
+
+#searchBox.active #close {
+  scale: 1;
+  transition-delay: 0.5s;
+}
+
+#searchBox #searchInput {
+  position: absolute;
+  left: 60px;
+  width: calc(100% - 120px);
+  line-height: 60px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+#searchBox #searchInput input {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: auto;
+  border: none;
+  outline: none;
+  font-size: 1.25em;
+}
+</style>

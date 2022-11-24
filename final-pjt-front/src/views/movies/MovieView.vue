@@ -5,7 +5,7 @@
       <!-- 영상 재생 -->
       <div>
         <div id='area'>
-          <h2 class="welcome">Welcome</h2>
+          <h2 style="padding-top: 70px;" class="welcome">Welcome</h2>
           <iframe id='video' :src=videoURL
           frameborder="0" allow="autoplay">
           </iframe>
@@ -15,7 +15,7 @@
       <!-- 영화 카테고리 시작-->
       <div class="mx-5">
 
-
+        <h1 style="font-size:50px">{{ user.nickname }} 님이 찜한 영화와 비슷한 영화</h1>
         <!-- 알고리즘 추천 영화 담기 2-3개-->
         <div class="mt-5">
           <p class="">@@@@@@@@@@</p>
@@ -244,6 +244,7 @@ import { mapGetters, mapActions } from 'vuex';
 
 
 const moviesStore = 'moviesStore'
+const accountsStore = 'accountsStore'
 
 export default {
   name: 'MovieView',
@@ -266,6 +267,7 @@ export default {
   computed: {
     ...mapGetters(moviesStore, ['g1', 'g2', 'g3', 'g4', 'g5', 'g6']),
     ...mapGetters(moviesStore, ['movies', 'nowmovies', 'loading',]),
+    ...mapGetters(accountsStore, ['user']),
     
     videoURL() {
       return `https://www.youtube.com/embed/${this.playMovie}?autoplay=1&mute=1`
@@ -408,6 +410,7 @@ export default {
 #area {
   position: relative; /* absolute는 부모가 relative일 때 부모를 따라간다. */
   width: 100%;
+  height: 830px;
   padding-bottom: 35%;
   padding-left: 15%; /* 16:9 비율 */
   justify-content: center;
@@ -426,7 +429,7 @@ export default {
   margin-top: 3%;
   animation: fadein 10s;
   animation-delay: 10s; 
-  -webkit-animation: fadein 15s; /* Safari and Chrome */
+  -webkit-animation: fadein 5s; /* Safari and Chrome */
 }
 @keyframes fadein {
     from {
@@ -442,6 +445,7 @@ export default {
 
 }
 .card-item {
+  border-radius: 20px;
   margin-right: 20px;
     position: relative;
     -webkit-transition: all 0.35s ease-in-out;
@@ -449,23 +453,27 @@ export default {
     transition: all 0.35s ease-in-out;
   }
   .card-item img {
+      border-radius: 20px;
     width: 100%;
     height: 100%;
   }
   
   .card-item{
+      border-radius: 20px;
     position: relative;
     width:270px;
     height: 270px;
     border-radius: 50%;
   }
   .card-item .img {
+      border-radius: 20px;
     position: relative;
     width: 270px;
     height: 270px;
     border-radius: 50%;
   }
   .card-item .img:before {
+      border-radius: 20px;
     position: absolute;
     display: block;
     content: '';
@@ -477,6 +485,7 @@ export default {
     transition: all 0.35s ease-in-out;
   }
   .card-item .info {
+      border-radius: 20px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -487,11 +496,13 @@ export default {
     backface-visibility: hidden;
   }
 .effect11 {
+    border-radius: 20px;
     -webkit-perspective: 900px;
     -moz-perspective: 900px;
     perspective: 900px;
   }
 .effect11 .img {
+    border-radius: 20px;
     opacity: 1;
     -webkit-transform-origin: 50% 50%;
     -moz-transform-origin: 50% 50%;
@@ -503,9 +514,11 @@ export default {
     transition: all 0.35s ease-in-out;
   }
 .effect11.colored .info {
+    border-radius: 20px;
     background: #1a4a72;
   }
 .effect11 .info {
+    border-radius: 20px;
     background: rgb(58, 55, 55);
     opacity: 0;
     visibility: hidden;

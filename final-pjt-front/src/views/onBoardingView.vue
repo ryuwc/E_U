@@ -1,6 +1,6 @@
 <template>
-  <div></div>
-  <!-- <body>
+  <!-- <div></div> -->
+  <body>
     <section class="section">
       <div class="section_text section_header">
         <div>
@@ -70,32 +70,88 @@
         <img src="https://www.sll.co.kr/jtbcstudio/images/introduction/mainVisual/2020/04/main_visual_img3.jpg" alt="section5_img" />
       </div>
     </section>
-  </body> -->
+  </body>
 </template>
 
 <script>
+// const lastPage = 6;
+
 export default {
   name: 'OnBoardingView',
 
   data() {
     return {
-      
+      page: 1,
+      scroll: true,
+      positionTop: 0,
     };
   },
   computed: {
-    
+    section() {
+      return document.getElementById(`section_${this.page}_title`);
+    },
   },
   methods: {
+    fullPageScroll() {
+      const html = document.querySelector('html');
+      const wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+
+      html.scrollTo({ top: this.positionTop, behavior: 'smooth' });
+      if (this.page === 1) {
+        this.section.style.opacity = 1;
+        this.section.style.margin = 0;
+      }
+
+      const lastPage = 6;
+
+      window.addEventListener(
+        wheelEvent,
+        (e) => {
+          e.preventDefault();
+
+          if (Math.floor(html.scrollTop) === this.positionTop && scroll) {
+            this.scroll = false;
+
+            let delta = e.deltaY;
+
+            if (delta > 0) {
+              if (this.page == lastPage) return;
+              this.page++;
+            } else if (delta < 0) {
+              if (this.page == 1) return;
+              this.page--;
+            }
+
+            this.positionTop = (this.page - 1) * window.innerHeight;
+            html.scrollTo({ top: this.positionTop, behavior: 'smooth' });
+            const sec = document.getElementById(`section_${this.page}_title`);
+            sec.style.opacity = 1;
+            sec.style.margin = 0;
+            if (this.page === 6) {
+              const btn = document.getElementById('section_6_btn');
+              btn.style.opacity = 1;
+              btn.style.transform = 'translateY(0)';
+            }
+            setTimeout(() => {
+              this.scroll = true;
+            }, 1500);
+          }
+        },
+        { passive: false },
+      );
+    },
   },
   mounted() {
-    
+    // console.log(this.section);
+    // console.log(this.test);
+    this.fullPageScroll();
   },
   beforeUpdate() {},
 };
 </script>
 
 <style scoped>
-/* .section {
+.section {
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -171,6 +227,5 @@ export default {
 
 #section_1_title {
   margin-left: 0;
-} */
-
+}
 </style>
