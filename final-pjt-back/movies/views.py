@@ -172,3 +172,14 @@ def wish_list(request, user_id):
     movies = get_list_or_404(Movie, like_users=user)
     serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
+
+# 유저가 디테일 페이지 방문시 user_click필드 1증가
+# url: movies/click/<int:movie_pk>/
+# method: POST
+# data필요 없음
+@api_view(['POST'])
+def user_click(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    movie.user_click += 1
+    movie.save()
+    return Response({'msg': f'{movie_pk}번 영화의 클릭수가 1 증가했습니다.'}, status=status.HTTP_200_OK)

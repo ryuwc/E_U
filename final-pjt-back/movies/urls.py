@@ -27,4 +27,7 @@ urlpatterns = [
 
     # 특정 유저가 위시리스트에 추가한 영화 조회(GET)
     path('wish/<int:user_id>/', views.wish_list, name='wish_list'),
+
+    # 유저가 영화 디테일 페이지에 오면 user_click +1
+    path('click/<int:movie_pk>/', views.user_click, name='user_click'),
 ]

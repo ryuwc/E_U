@@ -98,7 +98,6 @@ export default {
   methods: {
     ...mapActions(moviesStore, ['getMovieDetail']),
     ...mapActions(moviesStore, ['getReview']),
-    // 여기다가 요청 무비포스터 axios 요청 보내는 함수 넣어주고
 
     // 11.21 집에서 작성
     getMoviePoster() {
@@ -128,7 +127,18 @@ export default {
     ...mapActions(moviesStore, ['addMovieToWishList']),
     ...mapActions(moviesStore, ['getNowUserWishList']),
 
+    // 클릭 수 1 증가시키는 함수
+    increaseClickCount() {
+      axios({
+        method: 'post',
+        url: `http://localhost:8000/movies/click/${this.movieId}/`,
+        headers: this.authHead,
+      }).then((res) => {
+        console.log('클릭 수 1 증가 완료: ', res.data);
+      });
+    },
   },
+  
   created() {
     const movieId = this.$route.params.id;
     this.getMovieDetail(movieId);
@@ -153,7 +163,7 @@ export default {
         this.isWish = true;
       }
     })
-
+    this.increaseClickCount();
   },
 };
 </script>

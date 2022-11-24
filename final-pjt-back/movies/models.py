@@ -20,6 +20,7 @@ class Movie(models.Model):
     genres = models.ManyToManyField(Genre)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL)
     actors = models.ManyToManyField(Actor)
+    user_click = models.IntegerField(default=0)
 
 # Movie 모델의 like_users를 연결시켜주는 중간 모델
 class Like(models.Model):

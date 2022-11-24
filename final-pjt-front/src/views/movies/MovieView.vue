@@ -265,6 +265,8 @@ export default {
       // 현재 유저가 위시리스트에 담은 영화들에서 관련 배우들이 출연한 영화들을 저장할 빈 배열
       actorMoviesWishList: [],
 
+      
+
     }
   },
   computed: {
@@ -280,6 +282,10 @@ export default {
       // return `https://www.youtube.com/embed/CkeiTBtCm7Y?autoplay=1&mute=1`
       return `https://www.youtube.com/embed/WscLMTs-9Rw?autoplay=1&mute=1`
       // return `https://www.youtube.com/embed/2JomSAO_TGo?autoplay=1&mute=1`
+    },
+    // 유저의 클릭수가 제일 많은 영화를 순서대로 나열 (user_click 키가 0이면 안가져옴)
+    userClickMovies() {
+      return _.orderBy(this.movies, ['user_click'], ['desc']).filter(movie => movie.user_click > 0)
     },
   },
 
@@ -322,7 +328,22 @@ export default {
       this.mg6 = m6
     },
     // 현재 유저의 위시리스트에 담긴 영화 정보 중 배우들이 출연한 다른 영화들을 불러오는 함수
-
+    getActorInNowWishList() {
+      // 현재 유저의 위시리스트에 담긴 영화들의 배우들이 출연한 영화들을 불러온다.
+      this.movies.forEach(movie => {
+        movie.actors.forEach(actor => {
+          this.nowUserWishList.forEach(wishMovie => {
+            wishMovie.actors.forEach(wishActor => {
+              if (actor === wishActor) {
+                this.actorMoviesWishList.push(movie)
+              }
+            })
+          })
+        })
+        // 중복된 영화들을 제거한다.
+        this.actorMoviesWishList = _.uniqBy(this.actorMoviesWishList, 'id')
+      })
+    },
   },
   created() {
 
@@ -342,6 +363,7 @@ export default {
     this.nowUser['userId'] = this.nowUser['id']
     this.nowUser['authHead'] = this.authHead
     this.getNowUserWishList(this.nowUser)
+    this.getActorInNowWishList()
 
   },
 };
