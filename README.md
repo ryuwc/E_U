@@ -2,7 +2,7 @@
 
 `이유있는 영화 추천 이:유`
 
-[프로젝트 메모 및 공유 : Notion]('https://rose-mushroom-2f9.notion.site/1791c848606e4b30a543c6bc34284f95')
+[프로젝트 메모 및 공유 : Notion](https://rose-mushroom-2f9.notion.site/1791c848606e4b30a543c6bc34284f95)
 
 # 1. 팀원 정보 및 업무 분담 내역
 
@@ -19,4 +19,4 @@
 # 3. 데이터 베이스 모델링 (ERD)
 
 ![ERD](img/ERD.jpg)
-[ERD 보러가기]('https://app.quickdatabasediagrams.com/#/d/7lRpZ6')
+[ERD 보러가기](https://app.quickdatabasediagrams.com/#/d/7lRpZ6)
