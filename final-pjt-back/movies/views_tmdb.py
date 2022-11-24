@@ -128,10 +128,10 @@ def now_playing_data(page=1): # 현재 상영중인 영화 20편 저장
 def tmdb_data(request):
     Genre.objects.all().delete()
     Actor.objects.all().delete()
-    Movie.objects.all().delete()
+    # Movie.objects.all().delete()
     Nowplaying.objects.all().delete()
     now_playing_data(1)
     tmdb_genres()
-    for i in range(1, 30):
+    for i in range(1, 60):
         movie_data(i)
     return HttpResponse('OK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')

@@ -30,7 +30,6 @@ export default {
   computed: {
     ...mapGetters(accountsStore, ['profileuser', 'authHead']),
     ...mapGetters(commentsStore, ['comments', ])
-  
   },
 
   methods: {

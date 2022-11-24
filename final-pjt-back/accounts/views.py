@@ -31,6 +31,7 @@ def profile(request, user_id):
             serializer.save()
             return Response(serializer.data)
 
+        
 # 유저 이름으로 접근
 @api_view(['GET', 'PUT'])
 def profile_username(request, username):

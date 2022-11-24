@@ -12,226 +12,244 @@
         </div>
       </div>
 
-      <!-- 영화 카테고리 시작-->
-      <div class="mx-5" id="sectionarea">
+    <!-- 영화 카테고리 시작-->
+    <div class="mx-5" style="margin-top:4%">
+  
 
-        <h1 style="font-size:50px">{{ user.nickname }} 님이 찜한 영화와 비슷한 영화</h1>
-        <!-- 알고리즘 추천 영화 담기 2-3개-->
-        <div class="mt-5">
-          <p class="">@@@@@@@@@@</p>
-          <div class="d-flex scroll type2">
-            <div v-for="(movie, index) in mg6" :key='index'>
-              <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
-              <div class="card-item effect11 left_to_right">
-                <a href="#">
-                  <div class="img w-100">
-                    <img 
-                    :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
-                    alt="img">
-                  </div>
-                <div class="info">
-                  <h3>{{ movie.title }}</h3>
-                  <br>
-                  <br>
-                  <p>{{ movie.release_date }}</p>
+      <!-- 사용자들이 가장 많이 조회한 영화 순위별 추천 -->
+
+      <h1>실시간 인기 영화</h1>
+      <div class="grid d-flex md:gap-10 scroll type2">
+        <div class="relative m-auto overflow-hidden rounded-lg shadow-lg group"
+          v-for="(movie, index) in userClickMovies" :key='index'>
+          <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
+            <img style="width: 100%; height: 20vw;" :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`">
+          </router-link>
+            <div style="position: relative; left:10px; top: -15px;"><h1 class="d-flex" id="rank">{{index+1}}</h1></div>
+        </div>  
+      </div>
+
+      
+      <div class="category" style="margin-top:4%">
+        <h1 style="font-size:50px">{{ user.nickname }}님이 좋아할 만한 영화</h1>
+      </div>
+
+      <!-- 찜 한 목록에 가장 많이 등장한 장르 영화 추천-->
+      <div class="mt-5">
+        <p class="">당신이 좋아할 만한 장르</p>
+        <div class="d-flex scroll type2">
+          <div v-for="(movie, index) in mg6" :key='index'>
+            <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
+            <div class="card-item effect11 left_to_right">
+              <a href="#">
+                <div class="img w-100">
+                  <img 
+                  :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
+                  alt="img">
                 </div>
-                </a>
+              <div class="info">
+                <h3>{{ movie.title }}</h3>
+                <br>
+                <br>
+                <p>{{ movie.release_date }}</p>
               </div>
-              </router-link>
+              </a>
             </div>
-          </div>
-        </div>
-
-        <!-- # 장르 카테고리 분류 시작 -->
-
-        <!-- 장르 (코미디 + 드라마) -->
-        <div class="mt-5">
-          <p class="">배꼽 빠지게 웃긴 코미디</p>
-          <!-- <div class="d-flex" style="white-space:nowrap; overflow:auto;  width:100%;"> -->
-          <div class="d-flex scroll type2" >
-            <div v-for="(movie, index) in mg1" :key='index'>
-              <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
-              <div class="card-item effect11 left_to_right">
-                <a href="#" >
-                  <div class="img w-100">
-                    <img 
-                    :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
-                    alt="img">
-                  </div>
-                <div class="info">
-                  <h3>{{ movie.title }}</h3>
-                  <br>
-                  <br>
-                  <p>{{ movie.release_date }}</p>
-                </div>
-                </a>
-              </div>
-              </router-link>
-            </div>
-          </div>
-        </div>
-
-        <!-- 장르 (공포) -->
-        <div class="mt-5">
-          <p class="">등골이 서늘해지는 공포</p>
-          <div class="d-flex scroll type2">
-            <div v-for="(movie, index) in mg2" :key='index'>
-              <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
-              <div class="card-item effect11 left_to_right">
-                <a href="#">
-                  <div class="img w-100">
-                    <img 
-                    :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
-                    alt="img">
-                  </div>
-                <div class="info">
-                  <h3>{{ movie.title }}</h3>
-                  <br>
-                  <br>
-                  <p>{{ movie.release_date }}</p>
-                </div>
-                </a>
-              </div>
             </router-link>
-            </div>
           </div>
         </div>
+      </div>
 
-        <!-- 장르 ( 범죄 + 스릴러 ) -->
-        <div class="mt-5">
-          <p class="">범인은 누구..범죄 스릴러</p>
-          <div class="d-flex scroll type2">
-            <div v-for="(movie, index) in mg3" :key='index'>
-              <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
-              <div class="card-item effect11 left_to_right">
-                <a href="#">
-                  <div class="img w-100">
-                    <img 
-                    :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
-                    alt="img">
-                  </div>
+      <!-- 찜 한 목록에 등장한 배우가 출현한 영화 추천-->
+      <div class="mt-5">
+        <p class="">당신이 선택한 배우가 출현한 영화</p>
+
+        <div class="d-flex scroll type2">
+          <div v-for="(movie, index) in actorMoviesWishList" :key='index'>
+            <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
+            <div class="card-item effect11 left_to_right">
+              <a href="#">
+                <div class="img w-100">
+                  <img 
+                  :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
+                  alt="img">
+                </div>
+              <div class="info">
+                <h3>{{ movie.title }}</h3>
+                <br>
+                <br>
+                <p>{{ movie.release_date }}</p>
+              </div>
+              </a>
+            </div>
+            </router-link>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- # 장르 카테고리 분류 시작 -->
+      
+      <!-- 장르 (코미디 + 드라마) -->
+      <div class="mt-5">
+        <p class="">배꼽 빠지게 웃긴 코미디</p>
+        <!-- <div class="d-flex" style="white-space:nowrap; overflow:auto;  width:100%;"> -->
+        <div class="d-flex scroll type2" >
+          <div v-for="(movie, index) in mg1" :key='index'>
+            <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
+            <div class="card-item effect11 left_to_right">
+              <a href="#" >
+                <div class="img w-100">
+                  <img 
+                  :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
+                  alt="img">
+                </div>
+              <div class="info">
+                <h3>{{ movie.title }}</h3>
+                <br>
+                <br>
+                <p>{{ movie.release_date }}</p>
+              </div>
+              </a>
+            </div>
+            </router-link>
+          </div>
+        </div>
+      </div>
+
+      <!-- 장르 (공포) -->
+      <div class="mt-5">
+        <p class="">등골이 서늘해지는 공포</p>
+        <div class="d-flex scroll type2">
+          <div v-for="(movie, index) in mg2" :key='index'>
+            <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
+            <div class="card-item effect11 left_to_right">
+              <a href="#">
+                <div class="img w-100">
+                  <img 
+                  :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
+                  alt="img">
+                </div>
+              <div class="info">
+                <h3>{{ movie.title }}</h3>
+                <br>
+                <br>
+                <p>{{ movie.release_date }}</p>
+              </div>
+              </a>
+            </div>
+          </router-link>
+          </div>
+        </div>
+      </div>
+
+      <!-- 장르 ( 범죄 + 스릴러 ) -->
+      <div class="mt-5">
+        <p class="">범인은 누구..범죄 스릴러</p>
+        <div class="d-flex scroll type2">
+          <div v-for="(movie, index) in mg3" :key='index'>
+            <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
+            <div class="card-item effect11 left_to_right">
+              <a href="#">
+                <div class="img w-100">
+                  <img 
+                  :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
+                  alt="img">
+                </div>
+              <div class="info">
+                <h3>{{ movie.title }}</h3>
+                <br>
+                <br>
+                <p>{{ movie.release_date }}</p>
+              </div>
+              </a>
+            </div>
+            </router-link>
+          </div>
+        </div>
+      </div>
+
+      <!-- 장르 ( 애니메이션 + 가족 )-->
+      <div class="mt-5">
+        <p class="">자녀와 함께보는 가족 영화</p>
+        <div class="d-flex scroll type2">
+          <div v-for="(movie, index) in mg4" :key='index'>
+            <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
+            <div class="card-item effect11 left_to_right">
+              <a href="#">
+                <div class="img w-100">
+                  <img 
+                  :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
+                  alt="img">
+                </div>
                 <div class="info">
                   <h3>{{ movie.title }}</h3>
                   <br>
                   <br>
-                  <p>{{ movie.release_date }}</p>
-                </div>
-                </a>
+                <p>{{ movie.release_date }}</p>
               </div>
-              </router-link>
+              </a>
             </div>
+            </router-link>
           </div>
         </div>
+      </div>
 
-        <!-- 장르 ( 애니메이션 + 가족 )-->
-        <div class="mt-5">
-          <p class="">자녀와 함께보는 가족 영화</p>
-          <div class="d-flex scroll type2">
-            <div v-for="(movie, index) in mg4" :key='index'>
-              <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
-              <div class="card-item effect11 left_to_right">
-                <a href="#">
-                  <div class="img w-100">
-                    <img 
-                    :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
-                    alt="img">
-                  </div>
-                  <div class="info">
-                    <h3>{{ movie.title }}</h3>
-                    <br>
-                    <br>
-                  <p>{{ movie.release_date }}</p>
+      <!-- 장르 (판타지 + SF) -->
+      <div class="mt-5">
+        <p class="">판타지와 SF의 세계로</p>
+        <div class="d-flex scroll type2">
+          <div v-for="(movie, index) in mg5" :key='index'>
+            <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
+            <div class="card-item effect11 left_to_right">
+              <a href="#">
+                <div class="img w-100">
+                  <img 
+                  :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
+                  alt="img">
                 </div>
-                </a>
+              <div class="info">
+                <h3>{{ movie.title }}</h3>
+                <br>
+                <br>
+                <p>{{ movie.release_date }}</p>
               </div>
-              </router-link>
+              </a>
             </div>
+            </router-link>
           </div>
         </div>
+      </div>
 
-        <!-- 장르 (판타지 + SF) -->
-        <div class="mt-5">
-          <p class="">판타지와 SF의 세계로</p>
-          <div class="d-flex scroll type2">
-            <div v-for="(movie, index) in mg5" :key='index'>
-              <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
-              <div class="card-item effect11 left_to_right">
-                <a href="#">
-                  <div class="img w-100">
-                    <img 
-                    :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
-                    alt="img">
-                  </div>
-                <div class="info">
-                  <h3>{{ movie.title }}</h3>
-                  <br>
-                  <br>
-                  <p>{{ movie.release_date }}</p>
+      <!-- 장르 ( 전쟁 ) -->
+      <div class="mt-5">
+        <p class="">전쟁의 참혹함..</p>
+        <div class="d-flex scroll type2">
+          <div v-for="(movie, index) in mg6" :key='index'>
+            <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
+            <div class="card-item effect11 left_to_right">
+              <a href="#">
+                <div class="img w-100">
+                  <img 
+                  :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
+                  alt="img">
                 </div>
-                </a>
+              <div class="info">
+                <h3>{{ movie.title }}</h3>
+                <br>
+                <br>
+                <p>{{ movie.release_date }}</p>
               </div>
-              </router-link>
+              </a>
             </div>
+            </router-link>
           </div>
         </div>
-
-        <!-- 장르 ( 전쟁 ) -->
-        <div class="mt-5">
-          <p class="">전쟁의 참혹함..</p>
-          <div class="d-flex scroll type2">
-            <div v-for="(movie, index) in mg6" :key='index'>
-              <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
-              <div class="card-item effect11 left_to_right">
-                <a href="#">
-                  <div class="img w-100">
-                    <img 
-                    :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
-                    alt="img">
-                  </div>
-                <div class="info">
-                  <h3>{{ movie.title }}</h3>
-                  <br>
-                  <br>
-                  <p>{{ movie.release_date }}</p>
-                </div>
-                </a>
-              </div>
-              </router-link>
-            </div>
-          </div>
-        </div>
-
-        <!-- 배우 카테고리 분류 시작 -->
-
-        <!-- 배우 (톰쿠르즈) -->
-        <div class="mt-5">
-          <p class="">탑건의 톰크루즈가 출연한 영화</p>
-          <div class="d-flex scroll type2">
-            <div v-for="(movie, index) in mg6" :key='index'>
-              <router-link :to="{ name:'MovieDetailInfoView', params: { id: movie.id } }">
-              <div class="card-item effect11 left_to_right">
-                <a href="#">
-                  <div class="img w-100">
-                    <img 
-                    :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`" 
-                    alt="img">
-                  </div>
-                <div class="info">
-                  <h3>{{ movie.title }}</h3>
-                  <br>
-                  <br>
-                  <p>{{ movie.release_date }}</p>
-                </div>
-                </a>
-              </div>
-              </router-link>
-            </div>
-          </div>
-        </div>
+      </div>
 
 
-
-      <!-- 영화 카테고리 끝-->
+    <!-- 영화 카테고리 끝-->
       </div>
     </div>
   </div>
@@ -281,9 +299,19 @@ export default {
       // return `https://www.youtube.com/embed/p0_F0R1AWiA?autoplay=1&mute=1`
     },
     // 유저의 클릭수가 제일 많은 영화를 순서대로 나열 (user_click 키가 0이면 안가져옴)
-    userClickMovies() {
+    tempUserClickMovies() {
       return _.orderBy(this.movies, ['user_click'], ['desc']).filter(movie => movie.user_click > 0)
     },
+    // 클릭수가 0 이상인 영화가 7개 이상이면 클릭수가 높은 순으로 6개 까지만 나열 (20개 이하면 모두 나열)
+    userClickMovies() {
+      if (this.tempUserClickMovies.length > 6) {
+        return this.tempUserClickMovies.slice(0, 6)
+      }
+       else {
+        return this.tempUserClickMovies
+       }
+    } 
+
   },
 
   methods: {
@@ -311,6 +339,8 @@ export default {
 
     // 홈페이지에 보여 줄 영화 카테고리 불러오기 
     getSectionMovies() {
+      console.log('main실행');
+
       const m1 = _.sampleSize(this.g1, 12)
       this.mg1 = m1
       const m2 = _.sampleSize(this.g2, 12)
@@ -339,6 +369,7 @@ export default {
         })
         // 중복된 영화들을 제거한다.
         this.actorMoviesWishList = _.uniqBy(this.actorMoviesWishList, 'id')
+
       })
     },
   },
@@ -361,7 +392,7 @@ export default {
     this.nowUser['authHead'] = this.authHead
     this.getNowUserWishList(this.nowUser)
     this.getActorInNowWishList()
-
+    
   },
 };
 </script>
@@ -382,6 +413,12 @@ export default {
   font-weight: 7500;
   color: black;
   /* background-color: black; */
+}
+#rank{
+  font-size: 40px;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: black;
+  text-shadow: -2px 0 rgb(255, 255, 255), 0 2px rgb(255, 255, 255), 2px 0 rgb(255, 255, 255), 0 -2px rgb(255, 255, 255);
 }
 #bg{
   /* background-color: rgb(1, 13, 23); */
@@ -427,13 +464,13 @@ export default {
 /* 스크롤바 막대 설정*/
 .type2::-webkit-scrollbar-thumb{
     height: 17%;
-    background-color: rgb(34, 36, 33);
+    background-color: #98cff5;
     border-radius: 10px;  
 }
 
 /* 스크롤바 뒷 배경 설정*/
 .type2::-webkit-scrollbar-track{
-    background-color: rgba(71, 34, 34, 0.33);
+    background-color: #b4daf3;
 }
 
 #area {

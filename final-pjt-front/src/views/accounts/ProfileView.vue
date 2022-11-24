@@ -1,31 +1,25 @@
 <script setup></script>
-<template>
+<template >
   <div class="pt-5 mt-5">
 
     <!-- 프로필-->
     <div class="justify-center mt-5 mb-5 d-flex">
-      <div class="neon">Hello</div>
-      <div class="flux">{{ profileuser.nickname }}'s Profile Page</div>
+      <h2>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500">Hello, {{ profileuser.nickname }}'s profile</span>
+      </h2>
     </div>
-      <!-- 프로필 이미지 -->
-    <!-- <div class="mt-5 profile-info-box">
-      <div class="mt-5 mb-5 profile-info-box-2">
-        <img class="w-30 h-30" :src="profileuser.profile_path">    
-        <div class="ml-5">
-          <h1>{{ profileuser.nickname }}</h1>
-        </div>
-      </div>
-    </div> -->
+
 
     
     <!-- 하단 바 / 찜 & 댓글 -->
-    <div class="flex justify-center mt-5">
+    <div class="flex justify-center clickbar">
       <a href="#_" @click.prevent="currentTab = 'PickMovie'" class="px-5 py-2.5 text-black font-medium mx-2 bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm">찜</a>
       <a href="#_" @click.prevent="currentTab = 'ProfileComment'" class="px-5 py-2.5 text-black font-medium mx-2 bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm">방명록</a>
     </div>
 
-    <component :is="currentTabComponent"></component>
-
+    <div class="choiceCP">
+      <component :is="currentTabComponent"></component>
+    </div>
     <!-- 찜한 영화 목록 -->
 
 
@@ -87,6 +81,17 @@ export default {
 
 <style scoped>
 
+.choiceCP {
+
+  margin-left: 10%;
+  margin-right: 10%;
+
+}
+.clickbar{
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
 #_body {
   height: 2500px;
 }
@@ -126,56 +131,6 @@ body {
   vertical-align: middle;
 }
 
-.neon {
-  font-family: neon;
-  color: #FB4264;
-  font-size: 40px;
-  line-height: 40px;
-  text-shadow: 0 0 1vw #F40A35;
-}
 
-.flux {
-  font-family: neon;
-  color: #426DFB;
-  font-size: 40px;
-  line-height: 40px;
-  text-shadow: 0 0 1vw #2356FF;
-}
 
-.neon {
-  animation: neon 1s ease infinite;
-  -moz-animation: neon 1s ease infinite;
-  -webkit-animation: neon 1s ease infinite;
-}
-
-@keyframes neon {
-  0%,
-  100% {
-    text-shadow: 0 0 1vw #FA1C16, 0 0 3vw #FA1C16, 0 0 10vw #FA1C16, 0 0 10vw #FA1C16, 0 0 .4vw #FED128, .5vw .5vw .1vw #d7b128;
-    color: #FED128;
-  }
-  50% {
-    text-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #800E0B, 0 0 5vw #800E0B, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .5vw .5vw .1vw #40340A;
-    color: #806914;
-  }
-}
-
-.flux {
-  animation: flux 2s linear infinite;
-  -moz-animation: flux 2s linear infinite;
-  -webkit-animation: flux 2s linear infinite;
-  -o-animation: flux 2s linear infinite;
-}
-
-@keyframes flux {
-  0%,
-  100% {
-    text-shadow: 0 0 1vw #1041FF, 0 0 3vw #1041FF, 0 0 10vw #1041FF, 0 0 10vw #1041FF, 0 0 .4vw #8BFDFE, .5vw .5vw .1vw #67cede;
-    color: #28D7FE;
-  }
-  50% {
-    text-shadow: 0 0 .5vw #082180, 0 0 1.5vw #082180, 0 0 5vw #082180, 0 0 5vw #082180, 0 0 .2vw #082180, .5vw .5vw .1vw #0A3940;
-    color: #146C80;
-  }
-}
 </style>

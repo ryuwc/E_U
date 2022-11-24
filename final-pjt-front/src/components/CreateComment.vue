@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="ml-5">
     <div class="flex">
       <input 
-      class="ml-5"
+      style="margin-top:5%; margin-left:5%;"
       type="text" 
       v-model.trim="content" 
       placeholder="방명록을 작성하세요">
-      <button type="button" class="btn-hover color-11" @click="[createComment({ content: content, profile: profileuser , user: user.id, authHead: authHead  }), cleanData()]">등록하기</button>
+      <button style="margin-top:5.5%" type="button" class="btn-hover color-11" @click="[createComment({ content: content, profile: profileuser , user: user.id, authHead: authHead  }), cleanData()]">등록하기</button>
     </div>
   </div>
 </template>
@@ -29,7 +29,6 @@ export default {
     ...mapGetters(accountsStore, ['profileuser']),
 
   },
-
   methods: {
     cleanData() {
       this.content = null;

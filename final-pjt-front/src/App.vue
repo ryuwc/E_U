@@ -19,8 +19,9 @@
                       <router-link to="/nowmovies"><p style="font-size: 25px;" class="hidden_nav_list_text">최신영화</p></router-link>
                     </a>
                     
+                    <!-- 우리가 추천하는 영화 라우터 링크 걸어놈 -->
                     <a href="">
-                      <router-link to="/actionmovies"><p style="font-size: 25px; width: 160px;" class="text-transparent hidden_nav_list_text">이:유 추천영화</p></router-link>
+                      <router-link to="/werecommendmovies"><p style="font-size: 25px; width: 160px;" class="text-transparent hidden_nav_list_text">이:유 추천영화</p></router-link>
                     </a>
                   </div>
                 </div>

@@ -33,11 +33,9 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import _ from 'lodash';
-
 const moviesStore = 'moviesStore';
 const accountsStore = 'accountsStore';
 const commentsStore = "commentsStore";
-
 export default {
   name: 'AddWishListView',
   data() {
@@ -64,7 +62,9 @@ export default {
   },
   mounted() {
     this.getRandomMovie();
-    this.createProfileUser({ usernumber: this.user.id,  authHead: this.authHead})
+    setTimeout(() => {
+      this.createProfileUser({ nowUser: this.nowUser, authHead: this.authHead });
+    }, 500);
   },
 };
 </script>
@@ -78,7 +78,6 @@ export default {
   min-height: 100vh;
   background: linear-gradient(#4ba9e9, #4ba9e9 50%, #fff 50%, #fff 100%);
 }
-
 #card {
   position: relative;
   width: 500px; 
@@ -90,7 +89,6 @@ export default {
   transition: 0.5s ease-in-out;
   animation: fadein 3s;
 }
-
 @keyframes fadein {
   from {
     opacity: 0;
@@ -99,11 +97,9 @@ export default {
     opacity: 1;
   }
 }
-
 #card:hover {
   width: 1000px; 
 }
-
 #imgBx {
   position: relative; 
   min-width: 500px; height: 
@@ -114,11 +110,9 @@ export default {
   overflow: hidden;
   z-index: 0;
 }
-
 #img {
   max-width: 500px;
 }
-
 #details {
   position: relative;
   width: 500px;
@@ -131,7 +125,6 @@ export default {
   flex-direction: column;
   z-index: 1;
 }
-
 #details::before {
   content: '';
   position: absolute;
@@ -142,12 +135,10 @@ export default {
   border-bottom: 10px solid transparent;
   border-left: 10px solid #fff;
 }
-
 #details h3 {
   text-transform: uppercase;
   font-weight: 600;
   font-size: 1.5em;
   line-height: 1em;
 }
-
 </style>
