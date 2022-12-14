@@ -10,7 +10,7 @@
             <ul>
               <li style="margin-left: 100px;">
                 <div class="list">
-                  <router-link to="/allmovies"><h3 style="font-size: 40px;" class="nav_text">영화</h3></router-link>
+                  <router-link to="/allmovies"><h3 style="font-size: 40px;" class="nav_text">Movie</h3></router-link>
                   <div class="hidden_nav_list">
                     <a href="">
                       <router-link to="/allmovies"><p style="font-size: 25px;" class="hidden_nav_list_text">전체영화</p></router-link>
@@ -29,14 +29,14 @@
               <li>
                 <div class="list">
                   <router-link to="/feeling"
-                    ><a href=""><h3 style="font-size: 40px;" class="nav_text">내기분</h3></a></router-link
+                    ><a href=""><h3 style="font-size: 40px;" class="nav_text">Feel</h3></a></router-link
                   >
                 </div>
               </li>
               <li>
                 <div class="list">
                   <router-link to="/random"
-                    ><a href=""><h3 style="font-size: 40px; width: 140px;" class="nav_text">랜덤영화</h3></a></router-link
+                    ><a href=""><h3 style="font-size: 40px; width: 140px;" class="nav_text">Random</h3></a></router-link
                   >
                 </div>
               </li>

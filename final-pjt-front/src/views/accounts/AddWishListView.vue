@@ -63,7 +63,8 @@ export default {
   mounted() {
     this.getRandomMovie();
     setTimeout(() => {
-      this.createProfileUser({ nowUser: this.nowUser, authHead: this.authHead });
+      console.log(this.nowUser, '@@@@')
+      this.createProfileUser({ usernumber: this.nowUser.id, authHead: this.authHead });
     }, 500);
   },
 };

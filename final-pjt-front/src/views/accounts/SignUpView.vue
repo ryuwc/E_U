@@ -39,7 +39,7 @@
                 </div>
                 <div class="flex items-center">
                   <input type="checkbox" id="remember_me" name="remember_me" class="w-4 h-4 text-blue-500 border border-gray-300 rounded focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
-                  <span class="ml-2 text-sm font-medium">개인정보 제공에 동의합니다</span>
+                  <span class="ml-2 text-sm font-medium" style="color: black;">개인정보 제공에 동의합니다</span>
                 </div>
                 <div>
                   <button type="submit" class="inline-flex items-center justify-center w-full px-4 py-3 space-x-2 font-semibold leading-6 text-white border rounded border-cyan-500 bg-cyan-500 focus:outline-none hover:text-white hover:bg-cyan-600 hover:border-cyan-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50 active:bg-blue-700 active:border-blue-700">

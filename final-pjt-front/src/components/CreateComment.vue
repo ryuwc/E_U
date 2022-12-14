@@ -45,7 +45,7 @@ export default {
 <style>
 input {
   width:80%;
-  height: 80px;
+  height: 180px;
   border-radius: 20px;
   font-size: 20px;
 }
